@@ -34,7 +34,13 @@
       <tr>
         <td><%= item.item_name %></td>
         <td><%= item.item_description %></td>
-        <td><%= item.item_image_id %></td>
+        <td><% if item.post_images.present? %>
+          <% item.post_images.each do |image| %>
+            <%= attachment_image_tag image, :image, :fill, 200, 200 %>
+          <% end %>
+          <% else %>
+            <%= image_tag 'no_image.jpg', size: '200x200' %>
+        <% end %></td>
         <td><%= item.item_qr %></td>
         <td><%= item.item_price %></td>
         <td><%= item.item_active %></td>
