@@ -15,6 +15,8 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
+    # refileで画像を投稿できるようにしている
+    @item.post_images.build
   end
 
   # GET /items/1/edit
@@ -69,6 +71,7 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:item_name, :item_description, :item_image_id, :item_qr, :item_price, :item_active)
+      params.require(:item).permit(:item_name, :item_description, :item_image_id, :item_qr, :item_price, :item_active, post_images_images: [])
+      # 複数画像を投稿できるように[]をつけている
     end
 end

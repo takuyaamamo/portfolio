@@ -24,6 +24,7 @@
   <div class="field">
     <%= form.label :item_image_id %>
     <%= form.text_field :item_image_id %>
+    <p>商品画像：<%= form.attachment_field :post_images_images, multiple: true %></p>
   </div>
 
   <div class="field">
