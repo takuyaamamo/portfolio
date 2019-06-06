@@ -67,4 +67,6 @@ gem 'dotenv-rails'
 # bootstrap4を導入
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
+# 管理者で使用するdeviseの導入
+gem 'devise'
 # ==============================================================================
