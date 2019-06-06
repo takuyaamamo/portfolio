@@ -69,4 +69,8 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 # 管理者で使用するdeviseの導入
 gem 'devise'
+# refileはファイルアップロード用のgem
+gem "refile", require: "refile/rails", github: 'manfe/refile'
+# refile-mini_magickはアップロードした画像のリサイズを簡単に実装するgem
+gem "refile-mini_magick"
 # ==============================================================================
