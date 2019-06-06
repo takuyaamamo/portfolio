@@ -7,7 +7,10 @@
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
-
+  <div class="field">
+     <%= f.label :admin_name %> <br />
+     <%= f.text_field :admin_name %>
+   </div>
   <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>

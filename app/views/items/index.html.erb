@@ -1,3 +1,17 @@
+<h1>ログインアプリ</h1>
+
+<% if admin_signed_in? %> <!-- ユーザーがログインしているか調べる -->
+  <!-- ユーザーがログインしていた時の処理 -->
+
+  <h4> メールアドレス： <%= current_admin.email %> </h4>
+  <h2> 現在 <%= current_admin.admin_name %> さんがログインしています </h2> <!-- ここを追加します -->
+  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete %> <!-- ログアウトをする -->
+<% else %>
+  <!-- ユーザーがログインしていなかった時の処理 -->
+  <h2> 現在ログインしていません </h2>
+  <%= link_to "ログイン", new_admin_session_path, class: 'post' %> <!-- ログイン画面に移行する -->
+  <%= link_to "新規登録", new_admin_registration_path, class: 'post' %> <!-- 新規登録画面に移行する -->
+<% end %>
 <p id="notice"><%= notice %></p>
 
 <h1>Items</h1>
