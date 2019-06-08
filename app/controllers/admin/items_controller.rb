@@ -19,6 +19,7 @@ class Admin::ItemsController < Admin::Base
     @item = Item.new
     # refileで画像を投稿できるようにしている
     @item.post_images.build
+    @item.item_description = "まねきねこはねこです。"
   end
 
   # GET /items/1/edit

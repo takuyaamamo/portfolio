@@ -124,55 +124,8 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
         </div>
-        <!-- Modalボディ部分 -->
-        <div class="modal-body">
-          <div class="container-fluid bd-example-row">
-            <div id="NewItem"></div>
-            <form>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="itemname">商品名</label>
-                  <input type="text" class="form-control" id="itemname" placeholder="日本人形">
-                  <label for="itemimage">商品画像</label>
-                  <input type="file" class="form-control-file" id="itemimage">
-                  <label for="itemmoney">金額</label>
-                  <input type="text" class="form-control" id="itemmoney" placeholder="税抜きカンマ不要">
-                  <label for="itemcount">在庫数</label>
-                  <input type="text" class="form-control" id="itemcount" placeholder="半角">
-                </div>
-                <div class="form-group col-md-6">
-                  <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="itemdescription">商品説明</label>
-                <textarea id="itemdescription" class="form-control" rows="3">まねきねこまねきねこ</textarea>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="tag">タグ選択</label>
-                  <select id="tag" class="form-control">
-                    <option selected="selected">Choose...</option>
-                    <option>...</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="newtag">タグ入力</label>
-                  <input type="text" class="form-control" id="newtag">
-                </div>
-                <div class="form-group col-md-2 d-flex align-items-end">
-                  <button type="button" class="btn btn-link">タグ追加</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Modalボディ部分終了 -->
-          <!-- Modalフッター部分 -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">登録</button>
-          </div>
-        </form>
+        <!-- render用div -->
+        <div id="NewItem"></div>
       </div>
       <!-- Modal部分終了3 -->
     </div>
