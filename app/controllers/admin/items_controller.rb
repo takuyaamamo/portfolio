@@ -61,6 +61,17 @@ class Admin::ItemsController < Admin::Base
     end
   end
 
+  def statuschange
+    item = Item.find(params[:id])
+    if item.item_active == 0
+      item.item_active = 1
+      item.save
+    else
+      item.item_active = 0
+      item.save
+    end
+    redirect_to admin_items_path
+  end
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy

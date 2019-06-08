@@ -6,7 +6,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.string :item_image_id
       t.string :item_qr
       t.integer :item_price
-      t.integer :item_active
+      t.integer :item_active, default: 0
 
       t.timestamps
     end

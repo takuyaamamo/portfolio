@@ -457,7 +457,7 @@
               <tbody>
                 <!-- 繰り返し開始 -->
                 <% @items.each do |item| %>
-                  <tr id=<%= "item#{item.id}" %> >
+                  <tr id=<%= "item#{item.id}" %>>
                     <th scope="row">
                       <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
                       <%= item.id %>
@@ -487,44 +487,21 @@
               </a>
             </td>
             <td>
-              <a href="#" class="btn active  btn-outline-light table-innercustom-a  text-success" role="button" aria-pressed="true">販売中</td>
-            </tr>
-          <% end %>
-          <tr>
-            <th scope="row" data-toggle="modal" data-target="#editItemModal">2</th>
-            <td data-toggle="modal" data-target="#editItemModal">まねき猫</td>
-            <td data-toggle="modal" data-target="#editItemModal">650円</td>
-            <td data-toggle="modal" data-target="#editItemModal">54</td>
-            <td>
-              <a href="#" data-toggle="modal" data-target="#qrItemModal" class="btn btn-outline-light active table-innercustom-a" role="button" aria-pressed="true">
-                <i class="fas fa-qrcode"></i>
-              </a>
-            </td>
-            <td>
-              <a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">未販売</a>
+              <% if item.item_active == 0 %>
+                <%= link_to '未販売', admin_statuschange_path(item), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+              <% else %>
+                <%= link_to '販売中', admin_statuschange_path(item), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+              <% end %>
             </td>
           </tr>
-          <tr>
-            <th scope="row" data-toggle="modal" data-target="#editItemModal">3</th>
-            <td data-toggle="modal" data-target="#editItemModal">だるま</td>
-            <td data-toggle="modal" data-target="#editItemModal">790円</td>
-            <td data-toggle="modal" data-target="#editItemModal">12</td>
-            <td>
-              <a href="#" data-toggle="modal" data-target="#qrItemModal" class="btn btn-outline-light active table-innercustom-a" role="button" aria-pressed="true">
-                <i class="fas fa-qrcode"></i>
-              </a>
-            </td>
-            <td>
-              <a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">未販売</a>
-            </td>
-          </tr>
-        </tbody>
-        <!-- 繰り返し終了 -->
-      </table>
-      <!-- 商品一覧,table -->
-    </div>
+        <% end %>
+      </tbody>
+      <!-- 繰り返し終了 -->
+    </table>
+    <!-- 商品一覧,table -->
   </div>
-  <!-- 商品一覧col -->
+</div>
+<!-- 商品一覧col -->
 </div>
 <!-- 商品一覧row -->
 </div>
@@ -537,56 +514,56 @@
 
 <!-- 注文一覧table -->
 <div class="row">
-  <div class="col">
-    <div class="table-responsive">
-      <table class="table table-dark table-hover">
-        <!-- 注文一覧ヘッダ -->
-        <thead>
-          <tr class="">
-            <th scope="col">#</th>
-            <th scope="col">日付</th>
-            <th scope="col">名前</th>
-            <th scope="col">金額</th>
-            <th scope="col">状況</th>
+<div class="col">
+  <div class="table-responsive">
+    <table class="table table-dark table-hover">
+      <!-- 注文一覧ヘッダ -->
+      <thead>
+        <tr class="">
+          <th scope="col">#</th>
+          <th scope="col">日付</th>
+          <th scope="col">名前</th>
+          <th scope="col">金額</th>
+          <th scope="col">状況</th>
+        </tr>
+      </thead>
+      <!-- 繰り返し -->
+      <tbody>
+        <tr>
+          <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">1</th>
+          <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/7/6</td>
+          <td data-toggle="modal" data-target="#purchaseHistoryModal">天野 拓哉</td>
+          <td data-toggle="modal" data-target="#purchaseHistoryModal">3500円</td>
+          <td>
+            <a href="#" class="btn active  btn-outline-light table-innercustom-a  text-success" role="button" aria-pressed="true">未発送</td>
           </tr>
-        </thead>
-        <!-- 繰り返し -->
-        <tbody>
           <tr>
-            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">1</th>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/7/6</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">天野 拓哉</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">3500円</td>
+            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">2</th>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/8/4</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">あいう えお</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">5400円</td>
             <td>
-              <a href="#" class="btn active  btn-outline-light table-innercustom-a  text-success" role="button" aria-pressed="true">未発送</td>
-            </tr>
-            <tr>
-              <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">2</th>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/8/4</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">あいう えお</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">5400円</td>
-              <td>
-                <a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">発送済</a>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">3</th>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/9/2</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">かきく けこさ</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">13090円</td>
-              <td>
-                <a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">発送済</a>
-              </td>
-            </tr>
-          </tbody>
-          <!-- 繰り返し終了 -->
-        </table>
-        <!-- 注文一覧,table -->
-      </div>
+              <a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">発送済</a>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">3</th>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/9/2</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">かきく けこさ</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">13090円</td>
+            <td>
+              <a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">発送済</a>
+            </td>
+          </tr>
+        </tbody>
+        <!-- 繰り返し終了 -->
+      </table>
+      <!-- 注文一覧,table -->
     </div>
-    <!-- 注文一覧col -->
   </div>
-  <!-- 注文一覧row -->
+  <!-- 注文一覧col -->
+</div>
+<!-- 注文一覧row -->
 </div>
 <!-- nav-profile終了 -->
 <!--==================================================================--->
@@ -595,49 +572,49 @@
 <!-- nav-contact -->
 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
 
-  <!-- 顧客一覧table -->
-  <div class="row">
-    <div class="col">
-      <div class="table-responsive">
-        <table class="table table-dark table-hover">
-          <!-- 顧客一覧ヘッダ -->
-          <thead>
-            <tr class="">
-              <th scope="col">#</th>
-              <th scope="col">名前</th>
-              <th scope="col">電話番号</th>
-              <th scope="col">メールアドレス</th>
-            </tr>
-          </thead>
-          <!-- 繰り返し -->
-          <tbody>
-            <tr>
-              <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">1</th>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">天野 拓哉</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
-            </tr>
-            <tr>
-              <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">2</th>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">あいう えお</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
-            </tr>
-            <tr>
-              <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">3</th>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">かきく けこさ</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
-              <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
-            </tr>
-          </tbody>
-          <!-- 繰り返し終了 -->
-        </table>
-        <!-- 注文一覧,table -->
-      </div>
+<!-- 顧客一覧table -->
+<div class="row">
+  <div class="col">
+    <div class="table-responsive">
+      <table class="table table-dark table-hover">
+        <!-- 顧客一覧ヘッダ -->
+        <thead>
+          <tr class="">
+            <th scope="col">#</th>
+            <th scope="col">名前</th>
+            <th scope="col">電話番号</th>
+            <th scope="col">メールアドレス</th>
+          </tr>
+        </thead>
+        <!-- 繰り返し -->
+        <tbody>
+          <tr>
+            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">1</th>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">天野 拓哉</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
+          </tr>
+          <tr>
+            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">2</th>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">あいう えお</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
+          </tr>
+          <tr>
+            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">3</th>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">かきく けこさ</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
+            <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
+          </tr>
+        </tbody>
+        <!-- 繰り返し終了 -->
+      </table>
+      <!-- 注文一覧,table -->
     </div>
-    <!-- 注文一覧col -->
   </div>
-  <!-- 注文一覧row -->
+  <!-- 注文一覧col -->
+</div>
+<!-- 注文一覧row -->
 </div>
 <!-- nav-profile終了 -->
 <!--==================================================================--->
@@ -645,44 +622,44 @@
 <!-- ========================QRtable============================= -->
 <!-- nav-qr -->
 <div class="tab-pane fade" id="nav-qr" role="tabpanel" aria-labelledby="nav-qr-tab">
-  <div class="card-columns">
-    <div class="card">
-      <%= image_tag 'exampleqr.png', width: '100%' %>
-      <div class="card-body">
-        <h5 class="card-title text-center">まねき猫</h5>
-      </div>
-    </div>
-    <div class="card">
-      <%= image_tag 'exampleqr.png', width: '100%' %>
-      <div class="card-body">
-        <h5 class="card-title text-center">まねき猫</h5>
-      </div>
-    </div>
-    <div class="card">
-      <%= image_tag 'exampleqr.png', width: '100%' %>
-      <div class="card-body">
-        <h5 class="card-title text-center">まねき猫</h5>
-      </div>
-    </div>
-    <div class="card">
-      <%= image_tag 'exampleqr.png', width: '100%' %>
-      <div class="card-body">
-        <h5 class="card-title text-center">まねき猫</h5>
-      </div>
-    </div>
-    <div class="card">
-      <%= image_tag 'exampleqr.png', width: '100%' %>
-      <div class="card-body">
-        <h5 class="card-title text-center">まねき猫</h5>
-      </div>
-    </div>
-    <div class="card">
-      <%= image_tag 'exampleqr.png', width: '100%' %>
-      <div class="card-body">
-        <h5 class="card-title text-center">まねき猫</h5>
-      </div>
+<div class="card-columns">
+  <div class="card">
+    <%= image_tag 'exampleqr.png', width: '100%' %>
+    <div class="card-body">
+      <h5 class="card-title text-center">まねき猫</h5>
     </div>
   </div>
+  <div class="card">
+    <%= image_tag 'exampleqr.png', width: '100%' %>
+    <div class="card-body">
+      <h5 class="card-title text-center">まねき猫</h5>
+    </div>
+  </div>
+  <div class="card">
+    <%= image_tag 'exampleqr.png', width: '100%' %>
+    <div class="card-body">
+      <h5 class="card-title text-center">まねき猫</h5>
+    </div>
+  </div>
+  <div class="card">
+    <%= image_tag 'exampleqr.png', width: '100%' %>
+    <div class="card-body">
+      <h5 class="card-title text-center">まねき猫</h5>
+    </div>
+  </div>
+  <div class="card">
+    <%= image_tag 'exampleqr.png', width: '100%' %>
+    <div class="card-body">
+      <h5 class="card-title text-center">まねき猫</h5>
+    </div>
+  </div>
+  <div class="card">
+    <%= image_tag 'exampleqr.png', width: '100%' %>
+    <div class="card-body">
+      <h5 class="card-title text-center">まねき猫</h5>
+    </div>
+  </div>
+</div>
 </div>
 <!-- nav-qr終了 -->
 <!--==================================================================--->
@@ -729,37 +706,37 @@
 <table>
 <thead>
 <tr>
-  <th>Item name</th>
-  <th>Item description</th>
-  <th>Item image</th>
-  <th>Item qr</th>
-  <th>Item price</th>
-  <th>Item active</th>
-  <th colspan="3"></th>
+<th>Item name</th>
+<th>Item description</th>
+<th>Item image</th>
+<th>Item qr</th>
+<th>Item price</th>
+<th>Item active</th>
+<th colspan="3"></th>
 </tr>
 </thead>
 
 <tbody>
 <% @items.each do |item| %>
-  <tr>
-    <td><%= item.item_name %></td>
-    <td><%= item.item_description %></td>
-    <td>
-      <% if item.post_images.present? %>
-        <% item.post_images.each do |image| %>
-          <%= attachment_image_tag image, :image, :fill, 200, 200 %>
-        <% end %>
-      <% else %>
-        <%= image_tag 'no_image.jpg', size: '200x200' %>
+<tr>
+  <td><%= item.item_name %></td>
+  <td><%= item.item_description %></td>
+  <td>
+    <% if item.post_images.present? %>
+      <% item.post_images.each do |image| %>
+        <%= attachment_image_tag image, :image, :fill, 200, 200 %>
       <% end %>
-    </td>
-    <td><%= item.item_qr %></td>
-    <td><%= item.item_price %></td>
-    <td><%= item.item_active %></td>
-    <td><%= link_to 'Show', item %></td>
-    <td><%= link_to 'Edit', edit_item_path(item) %></td>
-    <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+    <% else %>
+      <%= image_tag 'no_image.jpg', size: '200x200' %>
+    <% end %>
+  </td>
+  <td><%= item.item_qr %></td>
+  <td><%= item.item_price %></td>
+  <td><%= item.item_active %></td>
+  <td><%= link_to 'Show', item %></td>
+  <td><%= link_to 'Edit', edit_item_path(item) %></td>
+  <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+</tr>
 <% end %>
 </tbody>
 </table>

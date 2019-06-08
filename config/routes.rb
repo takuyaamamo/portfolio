@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # namespaceでadmin配下にitemsを配置
   namespace :admin do
     resources :items
+    put 'statuschange/:id', to: 'items#statuschange', as: 'statuschange'
   end
   # 一般のページ
   resources :items
