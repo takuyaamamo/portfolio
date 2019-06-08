@@ -1,0 +1,17 @@
+<tr>
+  <th scope="row" data-toggle="modal" data-target="#editItemModal"><%= item.id %></th>
+  <td data-toggle="modal" data-target="#editItemModal"><%= item.item_name %></td>
+  <td data-toggle="modal" data-target="#editItemModal"><%= item.item_price %></td>
+  <td data-toggle="modal" data-target="#editItemModal">
+    <% if item.stock.present? %>
+      <%= item.stock.stock_count %>
+    <% end %>
+  </td>
+  <td>
+    <a href="#" data-toggle="modal" data-target="#qrItemModal" class="btn btn-outline-light active table-innercustom-a" role="button" aria-pressed="true">
+      <i class="fas fa-qrcode"></i>
+    </a>
+  </td>
+  <td>
+    <a href="#" class="btn active  btn-outline-light table-innercustom-a  text-success" role="button" aria-pressed="true">販売中</td>
+  </tr>

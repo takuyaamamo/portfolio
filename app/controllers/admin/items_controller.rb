@@ -34,9 +34,11 @@ class Admin::ItemsController < Admin::Base
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
+        format.js   { @status = "success"}
       else
         format.html { render :new }
         format.json { render json: @item.errors, status: :unprocessable_entity }
+        format.js   { @status = "fail" }
       end
     end
   end
