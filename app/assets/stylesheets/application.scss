@@ -14,3 +14,140 @@
  */
  // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
+/* =====================Bootstrapオーバーライド================================= */
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+.card {
+  width: 100%;
+}
+.button-remove-background {
+  background-color: rgba(0, 0, 0, 0);
+  border-style: none;
+}
+button:focus {
+    outline: none;
+}
+/* ========================================================================== */
+
+/* =================================全体====================================== */
+.portforio-text-style {
+  margin-top: 60px;
+  line-height: 2.5rem;
+}
+.top-margin-title {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.circle-color {
+  border: solid 2px rgba(255, 219, 175, 0.7);
+}
+.top-margin {
+  margin-top: 100px;
+}
+
+.background-hight {
+  height: 100%;
+  width: 100%;
+}
+
+.background-shape {
+  border-radius: 40px 40px 0px 0px;
+}
+
+.background-portforio {
+  background-color: rgba(255, 229, 197, 0.5);
+}
+
+.background-item {
+  background-color: rgba(255, 194, 120, 0.3);
+}
+
+/* ========================================================================== */
+
+/* =============================メールアイコン================================= */
+.mail-icon {
+  position: fixed;
+  z-index: 1049;
+  padding: 10px;
+  bottom: 10px;
+  right: 20px;
+}
+
+.mail-icon-size {
+  font-size: 1.5rem;
+}
+/* ========================================================================== */
+
+/* ==============================モーダル内デザイン============================= */
+.cart-section-position {
+  left: -150px;
+  margin-bottom: 15px;
+}
+
+.cart-list-position {
+  position: absolute;
+}
+
+.cart-item-list {
+  position: relative;
+  left: 10%;
+  bottom: 60px;
+}
+
+.cart-image-size {
+  display: inline-block;
+  width: 60px;
+}
+
+.cart-item-list {
+  display: inline-block;
+  width: 100%;
+}
+
+.cart-item-list img {
+  display: inline-block;
+  width: 100%;
+}
+.display-none {
+  display: none;
+}
+.apple-pay-size {
+  font-size: 3rem;
+}
+.count-size-textalign {
+  width: 100%;
+  text-align: left;
+}
+.count-margin {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.inline-block {
+  display: inline-block;
+}
+.width-change-item {
+  width: 70%;
+}
+
+.width-cart-image {
+  width: 10%;
+}
+
+.top-margin-item {
+  margin-top: 60px;
+}
+
+.cart-del-button {
+  position: relative;
+  z-index: 2000;
+  top: 20px;
+  right: 20px;
+}
+/* ========================================================================== */

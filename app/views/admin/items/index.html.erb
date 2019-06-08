@@ -1,3 +1,593 @@
+<!--ダッシュボード全体container-fluid--->
+<div class="container-fluid">
+  <!--========================= ヘッダー ===================================--->
+  <header class="row">
+    <div class="col">
+      <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-2 col-md-2 mr-0" href="#">MARUMI</a>
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="#">Sign out</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!--====================================================================--->
+
+
+  <!--========================= 商品編集登録モーダル ==================================--->
+  <!-- 練習用ボタン -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gridSystemModal" hidden>
+    Launch demo modal
+  </button>
+  <!-- Modal部分 -->
+  <div id="gridSystemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <!-- Modalヘッダー部分 -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="gridModalLabel">Grids in modals</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <!-- Modalボディ部分 -->
+        <div class="modal-body">
+          <div class="container-fluid bd-example-row">
+            <div class="row">
+              <div class="col-md-4">.col-md-4</div>
+              <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 ml-auto">.col-md-3 .ml-auto</div>
+              <div class="col-md-2 ml-auto">.col-md-2 .ml-auto</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ml-auto">.col-md-6 .ml-auto</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-9">
+                Level 1: .col-sm-9
+                <div class="row">
+                  <div class="col-8 col-sm-6">
+                    Level 2: .col-8 .col-sm-6
+                  </div>
+                  <div class="col-4 col-sm-6">
+                    Level 2: .col-4 .col-sm-6
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- Modalボディ部分終了 -->
+        <!-- Modalフッター部分 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div><!-- Modal部分終了3 -->
+    </div><!-- Modal部分終了2 -->
+  </div><!-- Modal部分終了1 -->
+  <!--====================================================================--->
+
+  <!--========================= 削除確認モーダル ==================================--->
+  <!-- 練習用ボタン -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delOKModal" hidden>
+    Launch demo modal
+  </button>
+  <!-- Modal部分 -->
+  <div id="delOKModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <!-- Modalヘッダー部分 -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="gridModalLabel">商品を削除します</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <!-- Modalボディ部分 -->
+        <div class="modal-body">
+          <p>削除したら元には戻せません。</p>
+          <p>在庫情報も削除されます。</p>
+        </div>
+        <!-- Modalフッター部分 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">削除する</button>
+        </div>
+      </div><!-- Modal部分終了3 -->
+    </div><!-- Modal部分終了2 -->
+  </div><!-- Modal部分終了1 -->
+  <!--====================================================================--->
+
+  <!--========================= 商品登録モーダル ==================================--->
+  <!-- 練習用ボタン -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createItemModal" hidden>
+    Launch demo modal
+  </button>
+  <!-- Modal部分 -->
+  <div id="createItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modalヘッダー部分 -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="createItemModalLabel">商品登録</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <!-- Modalボディ部分 -->
+        <div class="modal-body">
+          <div class="container-fluid bd-example-row">
+            <form>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="itemname">商品名</label>
+                  <input type="text" class="form-control" id="itemname" placeholder="日本人形">
+                  <label for="itemimage">商品画像</label>
+                  <input type="file" class="form-control-file" id="itemimage">
+                  <label for="itemmoney">金額</label>
+                  <input type="text" class="form-control" id="itemmoney" placeholder="税抜きカンマ不要">
+                  <label for="itemcount">在庫数</label>
+                  <input type="text" class="form-control" id="itemcount" placeholder="半角">
+                </div>
+                <div class="form-group col-md-6">
+                  <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="itemdescription">商品説明</label>
+                <textarea id="itemdescription" class="form-control" rows="3">まねきねこまねきねこ</textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="tag">タグ選択</label>
+                  <select id="tag" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="newtag">タグ入力</label>
+                  <input type="text" class="form-control" id="newtag">
+                </div>
+                <div class="form-group col-md-2 d-flex align-items-end">
+                  <button type="button" class="btn btn-link">タグ追加</button>
+                </div>
+              </div>
+          </div>
+        </div><!-- Modalボディ部分終了 -->
+        <!-- Modalフッター部分 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">登録</button>
+        </div>
+        </form>
+      </div><!-- Modal部分終了3 -->
+    </div><!-- Modal部分終了2 -->
+  </div><!-- Modal部分終了1 -->
+  <!--====================================================================--->
+
+  <!--========================= 商品編集モーダル ==================================--->
+  <!-- 練習用ボタン -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editItemModal" hidden>
+    Launch demo modal
+  </button>
+  <!-- Modal部分 -->
+  <div id="editItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modalヘッダー部分 -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="editItemModalLabel">商品編集</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <!-- Modalボディ部分 -->
+        <div class="modal-body">
+          <div class="container-fluid bd-example-row">
+            <form>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="itemname">商品名</label>
+                  <input type="text" class="form-control" id="itemname" placeholder="日本人形">
+                  <label for="itemimage">商品画像</label>
+                  <input type="file" class="form-control-file" id="itemimage">
+                  <label for="itemmoney">金額</label>
+                  <input type="text" class="form-control" id="itemmoney" placeholder="税抜きカンマ不要">
+                  <label for="itemcount">在庫数</label>
+                  <input type="text" class="form-control" id="itemcount" placeholder="半角">
+                </div>
+                <div class="form-group col-md-6">
+                  <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="itemdescription">商品説明</label>
+                <textarea id="itemdescription" class="form-control" rows="3">まねきねこまねきねこ</textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="tag">タグ選択</label>
+                  <select id="tag" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="newtag">タグ入力</label>
+                  <input type="text" class="form-control" id="newtag">
+                </div>
+                <div class="form-group col-md-2 d-flex align-items-end">
+                  <button type="button" class="btn btn-link">タグ追加</button>
+                </div>
+              </div>
+          </div>
+        </div><!-- Modalボディ部分終了 -->
+        <!-- Modalフッター部分 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button data-dismiss="modal" data-toggle="modal" data-target="#delOKModal" href="#" class="btn btn-outline-light active text-danger" role="button" aria-pressed="true">削除</button>
+          <button type="button" class="btn btn-primary">編集完了</button>
+        </div>
+        </form>
+      </div><!-- Modal部分終了3 -->
+    </div><!-- Modal部分終了2 -->
+  </div><!-- Modal部分終了1 -->
+  <!--====================================================================--->
+
+  <!--========================= QRコード表示モーダル ==================================--->
+  <!-- 練習用ボタン -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#qrItemModal" hidden>
+    Launch demo modal
+  </button>
+  <!-- Modal部分 -->
+  <div id="qrItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrItemModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modalヘッダー部分 -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="qrItemModalLabel">まねき猫</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <!-- Modalボディ部分 -->
+        <div class="modal-body">
+          <div class="container-fluid bd-example-row">
+            <%= image_tag 'exampleqr.png', width: '100%' %>
+          </div>
+        </div><!-- Modalボディ部分終了 -->
+        <!-- Modalフッター部分 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- Modal部分終了3 -->
+    </div><!-- Modal部分終了2 -->
+  </div><!-- Modal部分終了1 -->
+  <!--====================================================================--->
+
+  <!--  ========================注文履歴表示モーダル========================= -->
+  <!-- モーダル表示ボタンメモ -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseHistoryModal" hidden>
+    Launch demo modal
+  </button>
+  <!-- Modal部分 -->
+  <div class="modal fade" id="purchaseHistoryModal" tabindex="-1" role="dialog" aria-labelledby="purchaseHistoryModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modalヘッダー部分 -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="purchaseHistoryModalTitle">注文内容</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- Modalボディ部分 -->
+        <div class="modal-body">
+
+
+          <div class="card">
+            <div class="card-body">
+              <dl>
+                <dt>注文日</dt>
+                <dd>2019年9月5日</dd>
+
+                <dt>注文者</dt>
+                <dd>天野　拓哉</dd>
+
+                <dt>メールアドレス</dt>
+                <dd>abcde@gmail.com</dd>
+
+                <dt>電話番号</dt>
+                <dd>080-1234-5678</dd>
+
+                <dt>郵便番号</dt>
+                <dd>〒1240001</dd>
+
+                <dt>住所</dt>
+                <dd>東京都葛飾区12-33-44</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="card">
+            <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                1個 <div class="inline-block">350</div>円（税込み）
+              </li>
+              <li class="list-group-item">
+                1個
+              </li>
+              <li class="list-group-item">
+                合計 <div class="inline-block">350</div>円（税込み）
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                1個 <div class="inline-block">350</div>円（税込み）
+              </li>
+              <li class="list-group-item">
+                1個
+              </li>
+              <li class="list-group-item">
+                合計 <div class="inline-block">350</div>円（税込み）
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                1個 <div class="inline-block">350</div>円（税込み）
+              </li>
+              <li class="list-group-item">
+                1個
+              </li>
+              <li class="list-group-item">
+                合計 <div class="inline-block">350</div>円（税込み）
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- Modalボディ部分終了 -->
+
+        <!-- Modalフッター部分 -->
+        <div class="modal-footer">
+          <div class="inline-block">
+            総合計 <div class="inline-block">350</div>円（税込み）
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- Modal部分終了3 -->
+    </div><!-- Modal部分終了2 -->
+  </div><!-- Modal部分終了1 -->
+  <!--  ===================================================================== -->
+
+  <!--========================= ナビ部分 ==================================--->
+  <nav class="row">
+    <div class="col">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active col-3" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fas fa-briefcase"></i> 商品</a>
+        <a class="nav-item nav-link col-3" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fas fa-truck"></i> 注文</a>
+        <a class="nav-item nav-link col-3" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fas fa-address-card"></i> 顧客</a>
+        <a class="nav-item nav-link col-3" id="nav-qr-tab" data-toggle="tab" href="#nav-qr" role="tab" aria-controls="nav-qr" aria-selected="false"><i class="fas fa-qrcode"></i> QR</a>
+      </div>
+    </div>
+  </nav>
+  <!--====================================================================--->
+
+  <!--====================== ナビ配下ボディ部分 =============================--->
+  <div class="tab-content" id="nav-tabContent">
+
+    <!-- ========================商品一覧table============================= -->
+    <!-- nav-home -->
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      <!-- 商品一覧table -->
+      <div class="row">
+        <div class="col">
+          <div class="table-responsive">
+            <table class="table table-dark table-hover">
+              <!-- 商品一覧ヘッダ -->
+              <thead>
+                <tr class="">
+                  <th scope="col">#</th>
+                  <th scope="col">名前</th>
+                  <th scope="col">金額</th>
+                  <th scope="col">在庫</th>
+                  <th scope="col"></th>
+                  <th scope="col"><a data-toggle="modal" data-target="#createItemModal" href="#" class="btn btn-outline-light active table-innercustom-a text-info" role="button" aria-pressed="true">登録</th>
+                </tr>
+              </thead>
+              <!-- 繰り返し -->
+              <tbody>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#editItemModal">1</th>
+                  <td data-toggle="modal" data-target="#editItemModal">日本人形</td>
+                  <td data-toggle="modal" data-target="#editItemModal">2300円</td>
+                  <td data-toggle="modal" data-target="#editItemModal">23</td>
+                  <td><a href="#" data-toggle="modal" data-target="#qrItemModal" class="btn btn-outline-light active table-innercustom-a" role="button" aria-pressed="true"><i class="fas fa-qrcode"></i></a></td>
+                  <td><a href="#" class="btn active  btn-outline-light table-innercustom-a  text-success" role="button" aria-pressed="true">販売中</td>
+                </tr>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#editItemModal">2</th>
+                  <td data-toggle="modal" data-target="#editItemModal">まねき猫</td>
+                  <td data-toggle="modal" data-target="#editItemModal">650円</td>
+                  <td data-toggle="modal" data-target="#editItemModal">54</td>
+                  <td><a href="#" data-toggle="modal" data-target="#qrItemModal" class="btn btn-outline-light active table-innercustom-a" role="button" aria-pressed="true"><i class="fas fa-qrcode"></i></a></td>
+                  <td><a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">未販売</a></td>
+                </tr>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#editItemModal">3</th>
+                  <td data-toggle="modal" data-target="#editItemModal">だるま</td>
+                  <td data-toggle="modal" data-target="#editItemModal">790円</td>
+                  <td data-toggle="modal" data-target="#editItemModal">12</td>
+                  <td><a href="#" data-toggle="modal" data-target="#qrItemModal" class="btn btn-outline-light active table-innercustom-a" role="button" aria-pressed="true"><i class="fas fa-qrcode"></i></a></td>
+                  <td><a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">未販売</a></td>
+                </tr>
+              </tbody><!-- 繰り返し終了 -->
+            </table><!-- 商品一覧,table -->
+          </div>
+        </div><!-- 商品一覧col -->
+      </div><!-- 商品一覧row -->
+    </div><!-- nav-home終了 -->
+    <!--==================================================================--->
+
+    <!-- ========================注文一覧table============================= -->
+    <!-- nav-profile -->
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+      <!-- 注文一覧table -->
+      <div class="row">
+        <div class="col">
+          <div class="table-responsive">
+            <table class="table table-dark table-hover">
+              <!-- 注文一覧ヘッダ -->
+              <thead>
+                <tr class="">
+                  <th scope="col">#</th>
+                  <th scope="col">日付</th>
+                  <th scope="col">名前</th>
+                  <th scope="col">金額</th>
+                  <th scope="col">状況</th>
+                </tr>
+              </thead>
+              <!-- 繰り返し -->
+              <tbody>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">1</th>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/7/6</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">天野 拓哉</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">3500円</td>
+                  <td><a href="#" class="btn active  btn-outline-light table-innercustom-a  text-success" role="button" aria-pressed="true">未発送</td>
+                </tr>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">2</th>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/8/4</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">あいう えお</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">5400円</td>
+                  <td><a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">発送済</a></td>
+                </tr>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">3</th>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/9/2</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">かきく けこさ</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">13090円</td>
+                  <td><a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">発送済</a></td>
+                </tr>
+              </tbody><!-- 繰り返し終了 -->
+            </table><!-- 注文一覧,table -->
+          </div>
+        </div><!-- 注文一覧col -->
+      </div><!-- 注文一覧row -->
+    </div><!-- nav-profile終了 -->
+    <!--==================================================================--->
+
+    <!-- ========================顧客一覧table============================= -->
+    <!-- nav-contact -->
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+      <!-- 顧客一覧table -->
+      <div class="row">
+        <div class="col">
+          <div class="table-responsive">
+            <table class="table table-dark table-hover">
+              <!-- 顧客一覧ヘッダ -->
+              <thead>
+                <tr class="">
+                  <th scope="col">#</th>
+                  <th scope="col">名前</th>
+                  <th scope="col">電話番号</th>
+                  <th scope="col">メールアドレス</th>
+                </tr>
+              </thead>
+              <!-- 繰り返し -->
+              <tbody>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">1</th>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">天野 拓哉</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
+                </tr>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">2</th>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">あいう えお</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
+                </tr>
+                <tr>
+                  <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">3</th>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">かきく けこさ</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
+                  <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
+                </tr>
+              </tbody><!-- 繰り返し終了 -->
+            </table><!-- 注文一覧,table -->
+          </div>
+        </div><!-- 注文一覧col -->
+      </div><!-- 注文一覧row -->
+    </div><!-- nav-profile終了 -->
+    <!--==================================================================--->
+
+    <!-- ========================QRtable============================= -->
+    <!-- nav-qr -->
+    <div class="tab-pane fade" id="nav-qr" role="tabpanel" aria-labelledby="nav-qr-tab">
+      <div class="card-columns">
+<div class="card">
+  <%= image_tag 'exampleqr.png', width: '100%' %>
+  <div class="card-body">
+    <h5 class="card-title text-center">まねき猫</h5>
+  </div>
+</div>
+<div class="card">
+  <%= image_tag 'exampleqr.png', width: '100%' %>
+  <div class="card-body">
+    <h5 class="card-title text-center">まねき猫</h5>
+  </div>
+</div>
+<div class="card">
+  <%= image_tag 'exampleqr.png', width: '100%' %>
+  <div class="card-body">
+    <h5 class="card-title text-center">まねき猫</h5>
+  </div>
+</div>
+<div class="card">
+  <%= image_tag 'exampleqr.png', width: '100%' %>
+  <div class="card-body">
+    <h5 class="card-title text-center">まねき猫</h5>
+  </div>
+</div>
+<div class="card">
+  <%= image_tag 'exampleqr.png', width: '100%' %>
+  <div class="card-body">
+    <h5 class="card-title text-center">まねき猫</h5>
+  </div>
+</div>
+<div class="card">
+  <%= image_tag 'exampleqr.png', width: '100%' %>
+  <div class="card-body">
+    <h5 class="card-title text-center">まねき猫</h5>
+  </div>
+</div>
+</div>
+    </div><!-- nav-qr終了 -->
+    <!--==================================================================--->
+
+  </div><!-- ナビ全体 -->
+  <!--====================================================================--->
+
+</div>
+<!--ダッシュボード全体container-fluid--->
+
 <h1>ログインアプリ</h1>
 
 <% if admin_signed_in? %> <!-- ユーザーがログインしているか調べる -->
