@@ -1,4 +1,5 @@
-class Admin::ItemsController < ApplicationController
+class Admin::ItemsController < Admin::Base
+  # 上記の < Admin::Baseでbase.rbを継承するように指示
   before_action :authenticate_admin!
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
