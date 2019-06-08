@@ -1,52 +1,102 @@
-<h1>Editing Item</h1>
+<!-- Modalボディ部分 -->
 <%# adminをnamespase化している為model: [ :admin, @item ]として指定 %>
 <%= form_with model: [ :admin, @item ],url: admin_item_path(@item.id), method: :put do |form| %>
-  <% if item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+<div class="modal-body">
+  <div class="container-fluid bd-example-row">
+    <!-- render用div -->
+    <div id="NewItem"></div>
+      <% if item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(item.errors.count, "error") %>
+            prohibited this item from being saved:</h2>
 
-      <ul>
-      <% item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+            <% item.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <%= form.label :item_name, "商品名" %>
+          <%= form.text_field :item_name, class: "form-control", placeholder: "日本人形" %>
+          <%= form.label :post_images_images, "商品画像" %>
+          <%= form.attachment_field :post_images_images, multiple: true, class: "form-control-file" %>
+          <%= form.label :item_price, "金額" %>
+          <%= form.number_field :item_price, class: "form-control", placeholder: "税抜きカンマ不要" %>
+          <%= form.fields_for :stock do |fin| %>
+            <%= fin.label :stock_count, "在庫数" %>
+            <%= fin.number_field :stock_count, class: "form-control", placeholder: "半角" %>
+          <% end %>
+      </div>
+      <div class="form-group col-md-6">
+        <div class="preview">
+          <% if @item.post_images.present? %>
+            <% @item.post_images.each do |image| %>
+              <%= attachment_image_tag image, :image, width: "100%" %>
+            <% end %>
+            <% else %>
+              <%= image_tag 'no_image.jpg', size: '200x200' %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :item_name %>
-    <%= form.text_field :item_name %>
+    <div class="form-group">
+      <%= form.label :item_description, "商品説明" %>
+      <%= form.text_area :item_description, class: "form-control", rows: "3" %>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="tag">タグ選択</label>
+        <select id="tag" class="form-control">
+          <option selected="selected">Choose...</option>
+          <option>...</option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="newtag">タグ入力</label>
+        <input type="text" class="form-control" id="newtag">
+      </div>
+      <div class="form-group col-md-2 d-flex align-items-end">
+        <button type="button" class="btn btn-link">タグ追加</button>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :item_description %>
-    <%= form.text_area :item_description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :item_image_id %>
-    <%= form.text_field :item_image_id %>
-    <p>商品画像：<%= form.attachment_field :post_images_images, multiple: true %></p>
-  </div>
-
-  <div class="field">
-    <%= form.label :item_qr %>
-    <%= form.text_field :item_qr %>
-  </div>
-
-  <div class="field">
-    <%= form.label :item_price %>
-    <%= form.number_field :item_price %>
-  </div>
-
-  <div class="field">
-    <%= form.label :item_active %>
-    <%= form.number_field :item_active %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+</div>
+<!-- Modalボディ部分終了 -->
+<!-- Modalフッター部分 -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <%= form.submit "編集完了", class: "btn btn-primary" %>
+</div>
 <% end %>
-<%= link_to 'Show', @item %> |
-<%= link_to 'Back', items_path %>
+
+<script type="text/javascript">
+$(function () {
+  //画像ファイルプレビュー表示のイベント追加 fileを選択時に発火するイベントを登録
+  $('form').on('change', 'input[type="file"]', function (e) {
+    var file = e.target.files[0],
+      reader = new FileReader(),
+      $preview = $(".preview");
+    t = this;
+
+    // 画像ファイル以外の場合は何もしない
+    if (file.type.indexOf("image") < 0) {
+      return false;
+    }
+
+    // ファイル読み込みが完了した際のイベント登録
+    reader.onload = (function (file) {
+      return function (e) {
+        //既存のプレビューを削除
+        $preview.empty();
+        // .prevewの領域の中にロードした画像を表示するimageタグを追加
+        $preview.html($('<img>').attr({src: e.target.result, width: "100%", class: "preview", title: file.name}));
+      };
+    })(file);
+
+    reader.readAsDataURL(file);
+  });
+});
+</script>

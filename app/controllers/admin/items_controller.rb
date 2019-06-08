@@ -26,7 +26,6 @@ class Admin::ItemsController < Admin::Base
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
-    @item.post_images.build
   end
 
   # POST /items
@@ -50,6 +49,7 @@ class Admin::ItemsController < Admin::Base
   # PATCH/PUT /items/1
   # PATCH/PUT /items/1.json
   def update
+    @item = Item.find(params[:id])
     respond_to do |format|
       if @item.update(item_params)
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
