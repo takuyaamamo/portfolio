@@ -23,6 +23,8 @@ class Admin::ItemsController < Admin::Base
 
   # GET /items/1/edit
   def edit
+    @item = Item.find(params[:id])
+    @item.post_images.build
   end
 
   # POST /items
@@ -50,9 +52,11 @@ class Admin::ItemsController < Admin::Base
       if @item.update(item_params)
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
+        format.js   { @status = "success"}
       else
         format.html { render :edit }
         format.json { render json: @item.errors, status: :unprocessable_entity }
+        format.js   { @status = "fail" }
       end
     end
   end

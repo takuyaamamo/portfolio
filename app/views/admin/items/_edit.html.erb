@@ -1,0 +1,52 @@
+<h1>Editing Item</h1>
+<%# adminをnamespase化している為model: [ :admin, @item ]として指定 %>
+<%= form_with model: [ :admin, @item ],url: admin_item_path(@item.id), method: :put do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :item_name %>
+    <%= form.text_field :item_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item_description %>
+    <%= form.text_area :item_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item_image_id %>
+    <%= form.text_field :item_image_id %>
+    <p>商品画像：<%= form.attachment_field :post_images_images, multiple: true %></p>
+  </div>
+
+  <div class="field">
+    <%= form.label :item_qr %>
+    <%= form.text_field :item_qr %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item_price %>
+    <%= form.number_field :item_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item_active %>
+    <%= form.number_field :item_active %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+<%= link_to 'Show', @item %> |
+<%= link_to 'Back', items_path %>
