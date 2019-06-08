@@ -9,4 +9,9 @@ class Item < ApplicationRecord
   accepts_attachments_for :post_images, attachment: :image
   # ===========================================================================
 
+  # ====================formにhasmanyをネストさせる===============================
+  accepts_nested_attributes_for :stock
+  # ===========================================================================
+
+
 end

@@ -71,7 +71,8 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:item_name, :item_description, :item_image_id, :item_qr, :item_price, :item_active, post_images_images: [])
+      params.require(:item).permit(:item_name, :item_description, :item_image_id, :item_qr, :item_price, :item_active, post_images_images: [],stock_attributes: [:id, :stock_count])
       # 複数画像を投稿できるように[]をつけている
+      # フォームにhasoneのstockを含めている
     end
 end
