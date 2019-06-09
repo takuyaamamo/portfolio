@@ -2,6 +2,10 @@ class Admin::ItemsController < Admin::Base
   # 上記の < Admin::Baseでbase.rbを継承するように指示
   before_action :authenticate_admin!
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  # qr生成用メソッドの呼び出し
+  require 'rqrcode'
+  require 'rqrcode_png'
+  require 'chunky_png'
 
   # GET /items
   # GET /items.json
@@ -13,14 +17,8 @@ class Admin::ItemsController < Admin::Base
   # GET /items/1.json
   def show
     item = Item.find(params[:id])
-    require 'rqrcode'
-    require 'rqrcode_png'
-    require 'chunky_png' # to_data_urlはchunky_pngのメソッド
-    content = item.item_qr
-    size    = 4           # 1..40
-    level   = :h            # l, m, q, h
-
-    @qr = RQRCode::QRCode.new(content, size: size, level: level).as_svg.html_safe
+    # svgでqr生成
+    @qr = RQRCode::QRCode.new(item.item_qr).as_svg.html_safe
   end
 
   # GET /items/new

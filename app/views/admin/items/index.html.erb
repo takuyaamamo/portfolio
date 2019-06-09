@@ -536,42 +536,18 @@
 <!-- nav-qr -->
 <div class="tab-pane fade" id="nav-qr" role="tabpanel" aria-labelledby="nav-qr-tab">
 <div class="card-columns">
-  <div class="card">
-    <%= image_tag 'exampleqr.png', width: '100%' %>
-    <div class="card-body">
-      <h5 class="card-title text-center">まねき猫</h5>
-    </div>
-  </div>
-  <div class="card">
-    <%= image_tag 'exampleqr.png', width: '100%' %>
-    <div class="card-body">
-      <h5 class="card-title text-center">まねき猫</h5>
-    </div>
-  </div>
-  <div class="card">
-    <%= image_tag 'exampleqr.png', width: '100%' %>
-    <div class="card-body">
-      <h5 class="card-title text-center">まねき猫</h5>
-    </div>
-  </div>
-  <div class="card">
-    <%= image_tag 'exampleqr.png', width: '100%' %>
-    <div class="card-body">
-      <h5 class="card-title text-center">まねき猫</h5>
-    </div>
-  </div>
-  <div class="card">
-    <%= image_tag 'exampleqr.png', width: '100%' %>
-    <div class="card-body">
-      <h5 class="card-title text-center">まねき猫</h5>
-    </div>
-  </div>
-  <div class="card">
-    <%= image_tag 'exampleqr.png', width: '100%' %>
-    <div class="card-body">
-      <h5 class="card-title text-center">まねき猫</h5>
-    </div>
-  </div>
+  <% @items.each do |item| %>
+    <% if item.item_qr.present? %>
+      <% qr  = RQRCode::QRCode.new(item.item_qr) %>
+      <% qr_base64 = qr.to_img.resize(300, 300).to_data_url %>
+      <div class="card">
+          <%= image_tag qr_base64, width: '100%' %>
+        <div class="card-body">
+          <h5 class="card-title text-center"><%= item.item_name %></h5>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 </div>
 </div>
 <!-- nav-qr終了 -->
