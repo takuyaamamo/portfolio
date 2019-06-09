@@ -34,7 +34,7 @@ class Admin::ItemsController < Admin::Base
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
-    @item.tags.build
+    @tags = Tag.new
   end
 
   # POST /items
@@ -61,8 +61,14 @@ class Admin::ItemsController < Admin::Base
   # PATCH/PUT /items/1.json
   def update
     @item = Item.find(params[:id])
+    @tag = Tag.new(tag_params)
     respond_to do |format|
       if @item.update(item_params)
+        @tag.save
+        @item_tag = ItemTag.new
+        @item_tag.item_id = @item.id
+        @item_tag.tag_id = @tag.id
+        @item_tag.save
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
         format.js   { @status = "success"}
@@ -106,5 +112,8 @@ class Admin::ItemsController < Admin::Base
       params.require(:item).permit(:item_name, :item_description, :item_image_id, :item_qr, :item_price, :item_active, post_images_images: [],stock_attributes: [:id, :item_id, :stock_count], tags_attributes: [:id, :tag_name, :_destroy], tag_ids: [])
       # 複数画像を投稿できるように[]をつけている
       # フォームにhasoneのstockを含めている
+    end
+    def tag_params
+      params.require(:tag).permit(:tag_name)
     end
 end
