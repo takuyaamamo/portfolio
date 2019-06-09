@@ -65,10 +65,7 @@ class Admin::ItemsController < Admin::Base
     respond_to do |format|
       if @item.update(item_params)
         @tag.save
-        @item_tag = ItemTag.new
-        @item_tag.item_id = @item.id
-        @item_tag.tag_id = @tag.id
-        @item_tag.save
+        ItemTag.create(item_id: @item.id, tag_id: @tag.id)
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
         format.js   { @status = "success"}
