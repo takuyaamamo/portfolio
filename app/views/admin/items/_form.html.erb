@@ -38,27 +38,35 @@
       <%= form.label :item_description, "商品説明" %>
       <%= form.text_area :item_description, class: "form-control", rows: "3" %>
     </div>
-    <%#= form.fields_for :item_tags do |item_tag| %>
     <div class="form-row">
       <div class="form-group col-md-4">
-        <%#= item_tag.collection_check_boxes :item_tag_id, ItemTag.all %>
-        <%# end %>
-        <label for="tag">タグ選択</label>
-        <select id="tag" class="form-control">
-          <option selected="selected">Choose...</option>
-          <option>...</option>
-        </select>
-      </div>
-      <div class="form-group col-md-6">
+        <label>タグ選択</label>
+        <div class="form_control">
+          <%= collection_check_boxes(:item, :tag_ids, Tag.all, :id, :tag_name) do |tag_name| %>
+          <%= tag_name.label do %>
+          <%= tag_name.check_box %>
+          <%= tag_name.text %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="form-group col-8">
         <%= form.fields_for :tags do |tag| %>
-          <%= tag.label :tag_name, "タグ入力" %>
+        <%= tag.label :tag_name, "タグ入力" %>
+        <%#= render "tag_fields", tag: tag %>
           <%= tag.text_field :tag_name, class: "form-control", placeholder: "新規追加の場合入力して下さい" %>
-       <% end %>
-        <%#= tag.text_field :tags_new, class: "form-control", placeholder: "新規追加の場合入力して下さい" %>
+        <% end %>
       </div>
-      <div class="form-group col-md-2 d-flex align-items-end">
-        <button type="button" class="btn btn-link">タグ追加</button>
+      <div class="form-group col-4 d-flex align-items-end">
+        <!-- <div class="links"> -->
+        <%#= link_to_add_association "タグ追加", form, :tags %>
+          <!-- </div> -->
+          <button type="button" class="btn btn-link">タグ追加</button>
+        </div>
       </div>
+    </div>
   </div>
 </div>
 </div>

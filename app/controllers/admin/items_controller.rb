@@ -27,6 +27,7 @@ class Admin::ItemsController < Admin::Base
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
+    @item.tags.build
   end
 
   # POST /items
@@ -93,7 +94,7 @@ class Admin::ItemsController < Admin::Base
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:item_name, :item_description, :item_image_id, :item_qr, :item_price, :item_active, post_images_images: [],stock_attributes: [:id, :item_id, :stock_count], tags_attributes: [:tag_name])
+      params.require(:item).permit(:item_name, :item_description, :item_image_id, :item_qr, :item_price, :item_active, post_images_images: [],stock_attributes: [:id, :item_id, :stock_count], tags_attributes: [:id, :tag_name, :_destroy], tag_ids: [])
       # 複数画像を投稿できるように[]をつけている
       # フォームにhasoneのstockを含めている
     end

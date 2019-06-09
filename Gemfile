@@ -73,4 +73,6 @@ gem 'devise'
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 # refile-mini_magickはアップロードした画像のリサイズを簡単に実装するgem
 gem "refile-mini_magick"
+# nestしたformを整形する
+gem "cocoon"
 # ==============================================================================
