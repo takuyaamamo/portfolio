@@ -178,7 +178,7 @@
   </button>
   <!-- Modal部分 -->
   <div id="qrItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrItemModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <!-- Modalヘッダー部分 -->
         <div class="modal-header">
@@ -186,13 +186,8 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
         </div>
-        <!-- Modalボディ部分 -->
-        <div class="modal-body">
-          <div class="container-fluid bd-example-row">
-            <%= image_tag 'exampleqr.png', width: '100%' %>
-          </div>
-        </div>
-        <!-- Modalボディ部分終了 -->
+        <!-- render用div -->
+        <div id="ShowItem"></div>
         <!-- Modalフッター部分 -->
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -400,9 +395,9 @@
               <% end %>
             </td>
             <td>
-              <a href="#" data-toggle="modal" data-target="#qrItemModal" class="btn btn-outline-light active table-innercustom-a" role="button" aria-pressed="true">
-                <i class="fas fa-qrcode"></i>
-              </a>
+              <%= link_to admin_item_path(item), remote: true, class: "btn btn-outline-light active table-innercustom-a" do %>
+              <i class="fas fa-qrcode"></i>
+              <% end %>
             </td>
             <td>
               <% if item.item_active == 0 %>

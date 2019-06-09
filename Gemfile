@@ -39,6 +39,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # ===================================追加gem====================================
+  gem 'pry-rails'
+  gem 'pry-nav'
+  # ==============================================================================
 end
 
 group :development do
@@ -75,4 +79,8 @@ gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
 # nestしたformを整形する
 gem "cocoon"
+# QRコード表示
+gem "rqrcode"
+gem "rqrcode_png"
+gem "chunky_png"
 # ==============================================================================

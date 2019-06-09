@@ -12,6 +12,15 @@ class Admin::ItemsController < Admin::Base
   # GET /items/1
   # GET /items/1.json
   def show
+    item = Item.find(params[:id])
+    require 'rqrcode'
+    require 'rqrcode_png'
+    require 'chunky_png' # to_data_urlはchunky_pngのメソッド
+    content = item.item_qr
+    size    = 4           # 1..40
+    level   = :h            # l, m, q, h
+
+    @qr = RQRCode::QRCode.new(content, size: size, level: level).as_svg.html_safe
   end
 
   # GET /items/new
@@ -34,9 +43,11 @@ class Admin::ItemsController < Admin::Base
   # POST /items.json
   def create
     @item = Item.new(item_params)
-
     respond_to do |format|
       if @item.save
+        # QRコードのURLを生成
+        @item.item_qr = "localhost:3000/#item#{@item.id}"
+        @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
         format.js   { @status = "success"}
