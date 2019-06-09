@@ -1,6 +1,8 @@
 class Item < ApplicationRecord
   # ==========================アソシエーション====================================
   has_many :post_images, dependent: :destroy
+  has_many :item_tags, dependent: :destroy
+  has_many :tags, through: :item_tags
   has_one  :stock, dependent: :destroy
   # ===========================================================================
 
@@ -10,7 +12,9 @@ class Item < ApplicationRecord
   # ===========================================================================
 
   # ====================formにhasmanyをネストさせる===============================
-  accepts_nested_attributes_for :stock
+  accepts_nested_attributes_for :stock, allow_destroy: true
+  accepts_nested_attributes_for :item_tags, allow_destroy: true
+  accepts_nested_attributes_for :tags, allow_destroy: true
   # ===========================================================================
 
 
