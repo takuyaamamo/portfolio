@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2019_06_09_011654) do
     t.text "item_description"
     t.string "item_qr"
     t.integer "item_price"
-    t.integer "item_active"
+    t.integer "item_active", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

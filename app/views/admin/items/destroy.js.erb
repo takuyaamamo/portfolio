@@ -1,0 +1,7 @@
+console.log('hi');
+<% if @status == 'success' %>
+  location.reload();
+  $("#delOKModal").modal("hide");
+<%  elsif @status == 'fail' %>
+alert('error!');
+<% end %>

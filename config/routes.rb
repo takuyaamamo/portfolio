@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :items
     put 'statuschange/:id', to: 'items#statuschange', as: 'statuschange'
+    get 'confirm/:id', to: 'items#confirm', as: 'confirm'
   end
   # 一般のページ
   resources :items

@@ -80,6 +80,7 @@
 <!-- Modalフッター部分 -->
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<%= link_to "削除", admin_confirm_path(@item), remote: true, class: "btn btn-outline-light active text-danger" %>
 <%= form.submit "編集完了", class: "btn btn-primary" %>
 </div>
 <% end %>
