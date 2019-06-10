@@ -4,6 +4,10 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
+    # カートで使用するSession確認
+    if session[:cart] == nil
+      session[:cart] = {}
+    end
     @items = Item.all
   end
 
@@ -12,6 +16,8 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
     @tax_included = (BigDecimal(@item.item_price) * BigDecimal("1.08")).ceil
+    @purchased_history = PurchasedHistory.new
+    @purchased_item = PurchasedItem.new
   end
 
   # GET /items/new
@@ -72,8 +78,8 @@ class ItemsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def item_params
-      params.require(:item).permit(:item_name, :item_description, :item_image_id, :item_qr, :item_price, :item_active, post_images_images: [],stock_attributes: [:id, :stock_count])
+    def purchase_history_params
+      params.require(:purchase_history).permit(:user_name, :postal_code, :address, :phone_number, :email_address, :shipping, purchased_items_attributes: [:id, :purchased_history_id, :item_id, :item_count, :_destroy])
       # 複数画像を投稿できるように[]をつけている
       # フォームにhasoneのstockを含めている
     end

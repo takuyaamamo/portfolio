@@ -1,12 +1,13 @@
 <!-- Modalボディ部分 -->
+<%= form_with model: @purchased_history do |form| %>
 <div class="modal-body">
   <div class="card">
     <% if item.post_images.present? %>
       <% item.post_images.each do |image| %>
         <%= attachment_image_tag image, :image, :fill, 600, 600, width: "100%" %>
       <% end %>
-      <% else %>
-        <%= image_tag 'no_image.jpg', size: '200x200', width: "100%" %>
+    <% else %>
+      <%= image_tag 'no_image.jpg', size: '200x200', width: "100%" %>
     <% end %>
     <div class="card-body">
       <h5 class="card-title"><%= item.item_name %></h5>
@@ -18,29 +19,67 @@
         <div class="inline-block"><%= tax_included %></div>円（税込み）
       </li>
       <li class="list-group-item">
+        <!-- ネストしたフォーム下部javascript管理 -->
+        <%= form.fields_for :purchased_item do |purchased_item| %>
         <div class="inline-block count-size-textalign">
-          <i class="fas fa-minus-circle"></i>
-          <div class="inline-block count-margin">3</div>
-          <i class="fas fa-plus-circle"></i>
+          <button id="minus" type="button" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
+          <div id="item_count_div" class="inline-block count-margin">1</div>
+          <%= purchased_item.number_field :item_count, hidden: true, id: "item_count_input" %>
+          <button id="plus" type="button" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
         </div>
-      </li>
-      <li class="list-group-item">
-        合計
-        <div class="inline-block"><%= tax_included %></div>円（税込み）
-      </li>
-    </ul>
-    <div class="card-body mx-auto">
-      <button class="button-remove-background">
-        <span class="apple-pay-size">
-          <i class="fab fa-apple-pay"></i>
-        </span>
-      </button>
-    </div>
+      <% end %>
+    </li>
+    <li class="list-group-item">
+      合計
+      <div id="total_price_div" class="inline-block"><%= tax_included %></div>円（税込み）
+    </li>
+  </ul>
+  <div class="card-body mx-auto">
+    <button class="button-remove-background">
+      <span class="apple-pay-size">
+        <i class="fab fa-apple-pay"></i>
+      </span>
+    </button>
   </div>
+</div>
 </div>
 <!-- Modalボディ部分終了 -->
 <!-- Modalフッター部分 -->
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-  <button type="button" class="btn btn-primary">カートに追加</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<%= form.submit "カートに追加", class: "btn btn-primary" %>
 </div>
+<% end %>
+
+<script type="text/javascript">
+$("#minus").click(function () {
+  const item_price = parseInt(<%= tax_included %>);
+  const item_count_div = $("#item_count_div");
+  let item_count = parseInt(item_count_div.text());
+  const total_price_div = $("#total_price_div");
+  let total_price = parseInt(total_price_div.text());
+  const item_count_input = $("#item_count_input");
+if (total_price <= item_price && item_count == 1) {
+  console.log("これ以上少なく出来ません");
+} else {
+  total_price = total_price - item_price;
+  item_count -= 1;
+  item_count_div.text(item_count);
+  item_count_input.val(item_count);
+  total_price_div.text(total_price);
+}
+});
+$("#plus").click(function () {
+  const item_price = parseInt(<%= tax_included %>);
+  const item_count_div = $("#item_count_div");
+  let item_count = parseInt(item_count_div.text());
+  const total_price_div = $("#total_price_div");
+  let total_price = parseInt(total_price_div.text());
+  const item_count_input = $("#item_count_input");
+total_price = total_price + item_price;
+item_count += 1;
+item_count_div.text(item_count);
+item_count_input.val(item_count);
+total_price_div.text(total_price);
+});
+</script>

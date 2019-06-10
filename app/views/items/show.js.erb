@@ -1,5 +1,5 @@
 // index.html.erb中のDivに対して、新規作成用のformをレンダリング
-console.log('hi');
-$("#ShowItem").html("<%= escape_javascript(render 'show', item: @item, tax_included: @tax_included) %>");
+console.log('hi')
+$("#ShowItem").html("<%= escape_javascript(render 'show', item: @item, tax_included: @tax_included, purchased_history: @purchased_history,purchased_item: @purchased_item) %>")
 // デフォルトのbootstrapでmodalを開いても良いが、タイミングが早すぎてrender間に合わない
-$("#ItemModalCenter").modal("show");
+$("#ItemModalCenter").modal("show")

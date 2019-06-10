@@ -3,6 +3,8 @@ class Item < ApplicationRecord
   has_many :post_images, dependent: :destroy
   has_many :item_tags, dependent: :destroy
   has_many :tags, through: :item_tags
+  has_many :purchased_items
+  has_many :purchased_histories, through: :purchased_items
   has_one  :stock, dependent: :destroy
   # ===========================================================================
 
