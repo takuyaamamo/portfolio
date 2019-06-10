@@ -15,7 +15,7 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
         1個
-        <div class="inline-block"><%= item.item_price %></div>円（税込み）
+        <div class="inline-block"><%= tax_included %></div>円（税込み）
       </li>
       <li class="list-group-item">
         <div class="inline-block count-size-textalign">
@@ -26,7 +26,7 @@
       </li>
       <li class="list-group-item">
         合計
-        <div class="inline-block"><%= item.item_price %></div>円（税込み）
+        <div class="inline-block"><%= tax_included %></div>円（税込み）
       </li>
     </ul>
     <div class="card-body mx-auto">

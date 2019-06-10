@@ -10,7 +10,8 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
-    @items = Item.find(params[:id])
+    @item = Item.find(params[:id])
+    @tax_included = (BigDecimal(@item.item_price) * BigDecimal("1.08")).ceil
   end
 
   # GET /items/new
