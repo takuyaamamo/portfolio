@@ -21,6 +21,7 @@
       <li class="list-group-item">
         <!-- ネストしたフォーム下部javascript管理 -->
         <%= form.fields_for :purchased_item do |purchased_item| %>
+        <%= purchased_item.number_field :item_id, hidden: true, value: item.id %>
         <div class="inline-block count-size-textalign">
           <button id="minus" type="button" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
           <div id="item_count_div" class="inline-block count-margin">1</div>
@@ -53,12 +54,12 @@
 
 <script type="text/javascript">
 $("#minus").click(function () {
-  const item_price = parseInt(<%= tax_included %>);
-  const item_count_div = $("#item_count_div");
-  let item_count = parseInt(item_count_div.text());
-  const total_price_div = $("#total_price_div");
-  let total_price = parseInt(total_price_div.text());
-  const item_count_input = $("#item_count_input");
+const item_price = parseInt(<%= tax_included %>);
+const item_count_div = $("#item_count_div");
+let item_count = parseInt(item_count_div.text());
+const total_price_div = $("#total_price_div");
+let total_price = parseInt(total_price_div.text());
+const item_count_input = $("#item_count_input");
 if (total_price <= item_price && item_count == 1) {
   console.log("これ以上少なく出来ません");
 } else {
@@ -70,12 +71,12 @@ if (total_price <= item_price && item_count == 1) {
 }
 });
 $("#plus").click(function () {
-  const item_price = parseInt(<%= tax_included %>);
-  const item_count_div = $("#item_count_div");
-  let item_count = parseInt(item_count_div.text());
-  const total_price_div = $("#total_price_div");
-  let total_price = parseInt(total_price_div.text());
-  const item_count_input = $("#item_count_input");
+const item_price = parseInt(<%= tax_included %>);
+const item_count_div = $("#item_count_div");
+let item_count = parseInt(item_count_div.text());
+const total_price_div = $("#total_price_div");
+let total_price = parseInt(total_price_div.text());
+const item_count_input = $("#item_count_input");
 total_price = total_price + item_price;
 item_count += 1;
 item_count_div.text(item_count);

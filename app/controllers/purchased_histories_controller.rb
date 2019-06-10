@@ -24,16 +24,18 @@ class PurchasedHistoriesController < ApplicationController
   # POST /purchased_histories
   # POST /purchased_histories.json
   def create
-    @purchased_history = PurchasedHistory.new(purchased_history_params)
-
+    # item_count
+    item_count = params[:purchased_history][:purchased_item][:item_count].to_i
+    item = { item_count: item_count }
+    # item_idはstring
+    params[:item_id] = params[:purchased_history][:purchased_item][:item_id]
+    if session[:cart].has_key?(params[:item_id])
+          session[:cart][params[:item_id]]["item_count"] +=  item_count
+        else
+          session[:cart][params[:item_id]] = item
+        end
     respond_to do |format|
-      if @purchased_history.save
-        format.html { redirect_to @purchased_history, notice: 'Purchased history was successfully created.' }
-        format.json { render :show, status: :created, location: @purchased_history }
-      else
-        format.html { render :new }
-        format.json { render json: @purchased_history.errors, status: :unprocessable_entity }
-      end
+        format.js
     end
   end
 
@@ -69,6 +71,6 @@ class PurchasedHistoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchased_history_params
-      params.require(:purchased_history).permit(:user_name, :postal_code, :address, :phone_number, :email_address, :shipping, :created_at, :updated_at)
+      params.require(:purchased_history).permit(:user_name, :postal_code, :address, :phone_number, :email_address, :shipping, :created_at, :updated_at, purchased_items_attributes: [:id, :purchased_history_id, :item_id, :item_count, :_destroy])
     end
 end
