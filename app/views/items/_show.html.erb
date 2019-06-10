@@ -1,0 +1,46 @@
+<!-- Modalボディ部分 -->
+<div class="modal-body">
+  <div class="card">
+    <% if item.post_images.present? %>
+      <% item.post_images.each do |image| %>
+        <%= attachment_image_tag image, :image, :fill, 600, 600, width: "100%" %>
+      <% end %>
+      <% else %>
+        <%= image_tag 'no_image.jpg', size: '200x200', width: "100%" %>
+    <% end %>
+    <div class="card-body">
+      <h5 class="card-title"><%= item.item_name %></h5>
+      <p class="card-text"><%= item.item_description %></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        1個
+        <div class="inline-block"><%= item.item_price %></div>円（税込み）
+      </li>
+      <li class="list-group-item">
+        <div class="inline-block count-size-textalign">
+          <i class="fas fa-minus-circle"></i>
+          <div class="inline-block count-margin">3</div>
+          <i class="fas fa-plus-circle"></i>
+        </div>
+      </li>
+      <li class="list-group-item">
+        合計
+        <div class="inline-block"><%= item.item_price %></div>円（税込み）
+      </li>
+    </ul>
+    <div class="card-body mx-auto">
+      <button class="button-remove-background">
+        <span class="apple-pay-size">
+          <i class="fab fa-apple-pay"></i>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Modalボディ部分終了 -->
+<!-- Modalフッター部分 -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary">カートに追加</button>
+</div>
