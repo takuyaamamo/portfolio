@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :admins
 
   # トップページをitemsのindexに設定
@@ -8,11 +7,13 @@ Rails.application.routes.draw do
   # namespaceでadmin配下にitemsを配置
   namespace :admin do
     resources :items
+    resources :purchased_histories
     put 'statuschange/:id', to: 'items#statuschange', as: 'statuschange'
     get 'confirm/:id', to: 'items#confirm', as: 'confirm'
   end
   # 一般のページ
   resources :items
+  resources :purchased_histories
 
   # refilegem用
   resources :post_images, only: [:new, :create, :index, :show]
