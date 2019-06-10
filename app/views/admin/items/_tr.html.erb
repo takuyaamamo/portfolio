@@ -1,17 +1,37 @@
-<tr>
-  <th scope="row" data-toggle="modal" data-target="#editItemModal"><%= item.id %></th>
-  <td data-toggle="modal" data-target="#editItemModal"><%= item.item_name %></td>
-  <td data-toggle="modal" data-target="#editItemModal"><%= item.item_price %></td>
-  <td data-toggle="modal" data-target="#editItemModal">
-    <% if item.stock.present? %>
-      <%= item.stock.stock_count %>
+<tr id=<%= "item#{item.id}" %>>
+    <th scope="row">
+      <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
+      <%= item.id %>
     <% end %>
-  </td>
+  </th>
   <td>
-    <a href="#" data-toggle="modal" data-target="#qrItemModal" class="btn btn-outline-light active table-innercustom-a" role="button" aria-pressed="true">
-      <i class="fas fa-qrcode"></i>
-    </a>
-  </td>
-  <td>
-    <a href="#" class="btn active  btn-outline-light table-innercustom-a  text-success" role="button" aria-pressed="true">販売中</td>
-  </tr>
+    <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
+    <%= item.item_name %>
+  <% end %>
+</td>
+<td>
+  <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
+  <%= item.item_price %>
+<% end %>
+</td>
+
+<td>
+<%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
+<% if item.stock.present? %>
+  <%= item.stock.stock_count %>
+<% end %>
+<% end %>
+</td>
+<td>
+<%= link_to admin_item_path(item), remote: true, class: "btn btn-outline-light active table-innercustom-a" do %>
+<i class="fas fa-qrcode"></i>
+<% end %>
+</td>
+<td>
+<% if item.item_active == 0 %>
+<%= link_to '未販売', admin_statuschange_path(item), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+<% else %>
+<%= link_to '販売中', admin_statuschange_path(item), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+<% end %>
+</td>
+</tr>
