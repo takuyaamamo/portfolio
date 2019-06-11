@@ -21,21 +21,23 @@ class PurchasedHistoriesController < ApplicationController
   def edit
   end
 
-  # POST /purchased_histories
-  # POST /purchased_histories.json
   def create
+  end
+
+  def sessioncreate
     # item_count
-    item_count = params[:purchased_history][:purchased_item][:item_count].to_i
+    item_count = params[:post][:purchased_item][:item_count].to_i
     item = { item_count: item_count }
     # item_idはstring
-    params[:item_id] = params[:purchased_history][:purchased_item][:item_id]
+    params[:item_id] = params[:post][:purchased_item][:item_id]
     if session[:cart].has_key?(params[:item_id])
-          session[:cart][params[:item_id]]["item_count"] +=  item_count
-        else
-          session[:cart][params[:item_id]] = item
-        end
+      session[:cart][params[:item_id]]["item_count"] +=  item_count
+    else
+      session[:cart][params[:item_id]] = item
+      @item = Item.find(params[:item_id].to_i)
+    end
     respond_to do |format|
-        format.js
+      format.js
     end
   end
 

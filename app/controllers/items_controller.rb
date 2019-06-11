@@ -7,6 +7,8 @@ class ItemsController < ApplicationController
     # カートで使用するSession確認
     if session[:cart] == nil
       session[:cart] = {}
+    else
+      @cart = session[:cart].map { |item_id, item_count| Item.find(item_id.to_i) }
     end
     @items = Item.all
   end

@@ -1,5 +1,5 @@
 <!-- Modalボディ部分 -->
-<%= form_with model: @purchased_history do |form| %>
+<%= form_with scope: :post, url: sessioncreate_path do |form| %>
 <div class="modal-body">
   <div class="card">
     <% if item.post_images.present? %>

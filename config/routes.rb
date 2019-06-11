@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # 一般のページ
   resources :items
   resources :purchased_histories
+  post 'purchased_histories/sessioncreate', to: 'purchased_histories#sessioncreate', as: 'sessioncreate'
 
   # refilegem用
   resources :post_images, only: [:new, :create, :index, :show]
