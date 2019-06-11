@@ -24,19 +24,17 @@
 <section class="fixed-bottom cart-section-position">
   <button type="button" class="cart-list-position button-remove-background" data-toggle="modal" data-target="#CartModalCenter">
     <div class="cart-item-list">
-      <div class="cart-image-size"><%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color"%></div>
-      <div class="cart-item-list">
-        <div class="cart-image-size"><%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color"%></div>
-        <div class="cart-item-list">
-          <div class="cart-image-size"><%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color"%></div>
-          <div class="cart-item-list">
-            <div class="cart-image-size"><%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color"%></div>
-            <div class="cart-item-list">
-              <div class="cart-image-size"><%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color"%></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div><%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color"%></div>
+    </div>
+  </button>
+  <button type="button" class="cart-list-position button-remove-background" data-toggle="modal" data-target="#CartModalCenter">
+    <div class="cart-item-list">
+      <div><%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color"%></div>
+    </div>
+  </button>
+  <button type="button" class="cart-list-position button-remove-background" data-toggle="modal" data-target="#CartModalCenter">
+    <div class="cart-item-list">
+      <div><%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color"%></div>
     </div>
   </button>
 </section>
@@ -543,7 +541,7 @@
 
         <div class="row">
           <% @items.each do |item| %>
-            <%= link_to item, class: "col-6 col-md-3 top-margin-item button-remove-background", remote: true do %>
+            <%= link_to item, class: "col-6 col-md-3 top-margin-item button-remove-background", remote: true,id: "Item#{item.id}", data: {target: "#Item#{item.id}"} do %>
             <% if item.post_images.present? %>
               <% item.post_images.each do |image| %>
                 <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
@@ -626,87 +624,15 @@
 <!-- お土産屋イメージ背景 -->
 
 <script type="text/javascript">
-// ==========モーダル制御、URLの最後に#exampleを付けるとそのモーダルが開く=============
+// ==========モーダル制御、URLの最後に#exampleを付けるとそのモーダルが開く==============
 $(function () {
   if (location.hash) {
-    var target = location.hash;
+    let target = location.hash;
     console.log(target);
-    $(target).modal('show')
+   $(target)[0].click();
   }
 });
-// ===========================================================================
+// ============================================================================
+
+
 </script>
-
-<h1>ログインアプリ</h1>
-
-<% if admin_signed_in? %>
-<!-- ユーザーがログインしているか調べる -->
-<!-- ユーザーがログインしていた時の処理 -->
-
-<h4>
-  メールアドレス：
-  <%= current_admin.email %>
-</h4>
-<h2>
-  現在
-  <%= current_admin.admin_name %>
-  さんがログインしています
-</h2>
-<!-- ここを追加します -->
-<%= link_to "ログアウト", destroy_admin_session_path, method: :delete %>
-<!-- ログアウトをする -->
-<% else %>
-<!-- ユーザーがログインしていなかった時の処理 -->
-<h2>
-  現在ログインしていません
-</h2>
-<%= link_to "ログイン", new_admin_session_path, class: 'post' %>
-<!-- ログイン画面に移行する -->
-<%= link_to "新規登録", new_admin_registration_path, class: 'post' %>
-<!-- 新規登録画面に移行する -->
-<% end %>
-<p id="notice"><%= notice %></p>
-
-<h1>Items</h1>
-
-<table>
-<thead>
-  <tr>
-    <th>Item name</th>
-    <th>Item description</th>
-    <th>Item image</th>
-    <th>Item qr</th>
-    <th>Item price</th>
-    <th>Item active</th>
-    <th colspan="3"></th>
-  </tr>
-</thead>
-
-<tbody>
-  <% @items.each do |item| %>
-    <tr>
-      <td><%= item.item_name %></td>
-      <td><%= item.item_description %></td>
-      <td>
-        <% if item.post_images.present? %>
-          <% item.post_images.each do |image| %>
-            <%= attachment_image_tag image, :image, :fill, 200, 200 %>
-          <% end %>
-        <% else %>
-          <%= image_tag 'no_image.jpg', size: '200x200' %>
-        <% end %>
-      </td>
-      <td><%= item.item_qr %></td>
-      <td><%= item.item_price %></td>
-      <td><%= item.item_active %></td>
-      <td><%= link_to 'Show', item %></td>
-      <td><%= link_to 'Edit', edit_item_path(item) %></td>
-      <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-</tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Item', new_item_path %>
