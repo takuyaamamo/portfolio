@@ -3,13 +3,13 @@
 <div class="modal-body">
   <% @cart.each do |item| %>
     <% tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil %>
-      <div class="card">
+      <div class="card" id="item<%= item.id %>">
         <div class="cart-del-button">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <%= link_to purchased_history_path(item.id), method: :delete, remote: true, class: "" do %>
             <span aria-hidden="true">
               <i class="far fa-trash-alt"></i>
             </span>
-          </button>
+          <% end %>
         </div>
         <% if item.post_images.present? %>
           <% item.post_images.each do |image| %>

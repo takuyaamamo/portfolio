@@ -144,9 +144,12 @@ button:focus {
 }
 
 .cart-del-button {
-  position: relative;
+  position: absolute;
   z-index: 2000;
   top: 20px;
   right: 20px;
+}
+.cart-del-button a {
+  color: dimgray;
 }
 /* ========================================================================== */

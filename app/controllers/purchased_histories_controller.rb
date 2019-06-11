@@ -63,10 +63,11 @@ class PurchasedHistoriesController < ApplicationController
   # DELETE /purchased_histories/1
   # DELETE /purchased_histories/1.json
   def destroy
-    @purchased_history.destroy
+    session[:cart].delete(params[:id])
     respond_to do |format|
       format.html { redirect_to purchased_histories_url, notice: 'Purchased history was successfully destroyed.' }
       format.json { head :no_content }
+      format.js
     end
   end
 
