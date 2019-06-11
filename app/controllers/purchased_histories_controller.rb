@@ -14,7 +14,12 @@ class PurchasedHistoriesController < ApplicationController
 
   # GET /purchased_histories/new
   def new
+    @cart = session[:cart].map { |item_id, item_count| Item.find(item_id.to_i) }
     @purchased_history = PurchasedHistory.new
+    @purchased_item = PurchasedItem.new
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /purchased_histories/1/edit
