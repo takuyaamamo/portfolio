@@ -5,7 +5,7 @@
     <% tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil %>
       <div class="card" id="item<%= item.id %>">
         <div class="cart-del-button">
-          <%= link_to purchased_history_path(item.id), method: :delete, remote: true, class: "" do %>
+          <%= link_to sessiondestroy_path(item.id), remote: true, class: "" do %>
             <span aria-hidden="true">
               <i class="far fa-trash-alt"></i>
             </span>

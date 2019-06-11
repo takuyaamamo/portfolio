@@ -24,7 +24,7 @@
 <section class="fixed-bottom cart-section-position">
   <%= link_to new_purchased_history_path, remote: true, class: "cart-link", id: "cart-icon" do %>
   <% @cart.each do |item| %>
-    <%= button_tag class: "cart-list-position button-remove-background" do %>
+    <%= button_tag class: "cart-list-position button-remove-background", id: "cart-position" do %>
     <div class="cart-item-list">
       <% if item.post_images.present? %>
         <% item.post_images.each do |image| %>

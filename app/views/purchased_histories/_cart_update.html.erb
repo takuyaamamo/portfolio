@@ -1,0 +1,17 @@
+  <% @cart.each do |item| %>
+    <%= button_tag class: "cart-list-position button-remove-background" do %>
+    <div class="cart-item-list" id="cartitem<%= item.id %>">
+      <% if item.post_images.present? %>
+        <% item.post_images.each do |image| %>
+          <div>
+            <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color" %>
+          </div>
+        <% end %>
+      <% else %>
+        <div>
+          <%= image_tag 'no_image.jpg', size: '400✕400', class: "rounded-circle shadow circle-color" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <% end %>
