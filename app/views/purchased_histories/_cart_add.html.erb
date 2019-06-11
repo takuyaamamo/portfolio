@@ -1,5 +1,5 @@
     <%= button_tag class: "cart-list-position button-remove-background" do %>
-    <div class="cart-item-list">
+    <div class="cart-item-list" id="cartitem<%= item.id %>">
       <% if item.post_images.present? %>
         <% item.post_images.each do |image| %>
           <div>
