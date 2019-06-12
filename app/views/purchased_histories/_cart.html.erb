@@ -1,17 +1,17 @@
+<%= form_with scope: :post, url: purchased_histories_path do |form| %>
 <!-- Modalヘッダー部分 -->
 <div class="modal-header">
   <h5 class="modal-title" id="CartModalCenterTitle">カート内容</h5>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <button type="button" class="close" aria-label="Close" id="close_button">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <!-- Modalボディ部分 -->
-<%= form_with scope: :post, url: purchased_histories_path do |form| %>
 <div class="modal-body">
   <% @cart.each do |item| %>
     <!-- 先に税込金額と商品の個数を抜き出しておく -->
     <% tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil %>
-      <% item_count = session[:cart][item.id.to_s]["item_count"] %>
+      <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
         <div class="card" id="item<%= item.id %>">
           <div class="cart-del-button">
             <%= link_to sessiondestroy_path(item.id), remote: true, class: "" do %>
@@ -38,12 +38,11 @@
           </li>
           <li class="list-group-item">
             <!-- ネストしたフォーム下部javascript管理 -->
-            <%= form.fields_for :purchased_item do |purchased_item| %>
-            <%= purchased_item.number_field :item_id, hidden: true, value: item.id %>
+            <%= form.fields_for "purchased_item[]", item do |purchased_item| %>
             <div class="inline-block count-size-textalign">
               <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
               <div class="item_count_div inline-block count-margin"><%= item_count %></div>
-              <%= purchased_item.number_field :item_count, hidden: true, id: "item_count_input", value: item_count %>
+              <%= purchased_item.number_field :item_count, hidden: true, class: "item_count_input", value: item_count %>
               <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
             </div>
           <% end %>
@@ -72,14 +71,25 @@
 <div class="modal-footer">
   <div class="inline-block">
     合計
-    <div class="inline-block">350</div>円（税込み）
+    <div id="final_amount" class="inline-block"></div>円（税込み）
   </div>
-  <%= form.submit class: "btn btn-primary" %>
+  <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
+  <%= form.submit "Close", class: "btn btn-secondary", name: "close", id: "form_end_button" %>
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 </div>
 <% end %>
 
 <script type="text/javascript">
+  const finalamount = () => {
+    final_amount = 0;
+    $(".total_price_div").each(function(index, total_price){
+      final_amount = final_amount + parseInt($(total_price).text());
+    });
+    $('#final_amount').text(final_amount);
+  };
+
+  finalamount();
+
 $(".minus").click(function () {
   // 親要素を取得
   const parent_card = $(this).closest('.card');
@@ -100,8 +110,10 @@ $(".minus").click(function () {
     item_count -= 1;
     item_count_div.text(item_count);
     item_count_input.val(item_count);
-    console.log(item_count_input.val(item_count));
+    console.log(item_count_input.val());
     total_price_div.text(total_price);
+
+    finalamount();
   }
 });
 $(".plus").click(function () {
@@ -121,7 +133,12 @@ $(".plus").click(function () {
   item_count += 1;
   item_count_div.text(item_count);
   item_count_input.val(item_count);
-  console.log(item_count_input.val(item_count));
+  console.log(item_count_input.val());
   total_price_div.text(total_price);
+
+  finalamount();
 });
+$("#close_button").click(function() {
+    $('#form_end_button').click();
+    });
 </script>

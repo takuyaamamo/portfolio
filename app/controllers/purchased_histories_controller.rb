@@ -27,6 +27,10 @@ class PurchasedHistoriesController < ApplicationController
   end
 
   def create
+    if params[:close]
+      session[:cart] = params[:post][:purchased_item]
+    else
+    end
   end
 
   def sessioncreate
