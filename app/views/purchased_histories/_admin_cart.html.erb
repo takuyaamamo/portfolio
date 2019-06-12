@@ -1,6 +1,6 @@
 <!-- Modalヘッダー部分 -->
 <div class="modal-header">
-  <h5 class="modal-title" id="CartModalCenterTitle">カート内容</h5>
+  <h5 class="modal-title" id="CartModalCenterTitle">管理者カート内容</h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -27,7 +27,6 @@
         <% end %>
         <div class="card-body">
           <h5 class="card-title"><%= item.item_name %></h5>
-          <p class="card-text"><%= item.item_description %></p>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
@@ -55,24 +54,13 @@
   <% end %>
 </div>
 <!-- Modalボディ部分終了 -->
-
-<!-- applepay表示 -->
-<hr>
-<div class="mx-auto">
-  <button class="button-remove-background">
-    <span class="apple-pay-size">
-      <i class="fab fa-apple-pay"></i>
-    </span>
-  </button>
-</div>
-<br>
 <!-- Modalフッター部分 -->
 <div class="modal-footer">
   <div class="inline-block">
-    合計
+    総合計
     <div class="inline-block">350</div>円（税込み）
   </div>
-  <%= form.submit class: "btn btn-primary" %>
+  <%= form.submit "在庫更新", class: "btn btn-primary" %>
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 </div>
 <% end %>

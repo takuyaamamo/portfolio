@@ -23,21 +23,23 @@
 <!-- =============================左下のカート表示============================ -->
 <section class="fixed-bottom cart-section-position">
   <%= link_to new_purchased_history_path, remote: true, class: "cart-link", id: "cart-icon" do %>
-  <% @cart.each do |item| %>
-    <%= button_tag class: "cart-list-position button-remove-background", id: "cart-position" do %>
-    <div class="cart-item-list">
-      <% if item.post_images.present? %>
-        <% item.post_images.each do |image| %>
+  <% if @cart.present? %>
+    <% @cart.each do |item| %>
+      <%= button_tag class: "cart-list-position button-remove-background", id: "cart-position" do %>
+      <div class="cart-item-list">
+        <% if item.post_images.present? %>
+          <% item.post_images.each do |image| %>
+            <div>
+              <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color" %>
+            </div>
+          <% end %>
+        <% else %>
           <div>
-            <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color" %>
+            <%= image_tag 'no_image.jpg', size: '400✕400', class: "rounded-circle shadow circle-color" %>
           </div>
         <% end %>
-      <% else %>
-        <div>
-          <%= image_tag 'no_image.jpg', size: '400✕400', class: "rounded-circle shadow circle-color" %>
-        </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
 <% end %>
@@ -79,13 +81,6 @@ Launch demo modal
 <div class="modal fade" id="CartModalCenter" tabindex="-1" role="dialog" aria-labelledby="CartModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
 <div class="modal-content">
-  <!-- Modalヘッダー部分 -->
-  <div class="modal-header">
-    <h5 class="modal-title" id="CartModalCenterTitle">カート内容</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
   <div id="CartItem"></div>
 </div>
 <!-- Modal部分終了3 -->
