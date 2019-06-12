@@ -1,20 +1,20 @@
+<%= form_with scope: :post, url: purchased_histories_path do |form| %>
 <!-- Modalヘッダー部分 -->
 <div class="modal-header">
   <h5 class="modal-title" id="CartModalCenterTitle">管理者カート内容</h5>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <button type="button" class="close" aria-label="Close" id="close_button">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <!-- Modalボディ部分 -->
-<%= form_with url: item_path, method: :put do |form| %>
-<div class="modal-body">
+<div class="modal-body" id="card_have">
   <% @cart.each do |item| %>
     <!-- 先に税込金額と商品の個数を抜き出しておく -->
     <% tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil %>
-      <% item_count = session[:cart][item.id.to_s]["item_count"] %>
+      <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
         <div class="card" id="item<%= item.id %>">
           <div class="cart-del-button">
-            <%= link_to sessiondestroy_path(item.id), remote: true, class: "" do %>
+            <%= link_to sessiondestroy_path(item.id), remote: true do %>
             <span aria-hidden="true">
               <i class="far fa-trash-alt"></i>
             </span>
@@ -33,42 +33,95 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             1個
-            <div class="inline-block"><%= tax_included %></div>円（税込み）
+            <div class="inline-block tax_included"><%= tax_included %></div>円（税込み）
           </li>
           <li class="list-group-item">
             <!-- ネストしたフォーム下部javascript管理 -->
-            <%= form.fields_for "item[]", item do |items| %>
-            <%#= items.number_field :item_id, hidden: true, value: item.id %>
-              <div class="inline-block count-size-textalign">
-                <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
-                <div class="item_count_div inline-block count-margin"><%= item_count %></div>
-                <%= items.number_field :item_count, hidden: true, id: "item_count_input", value: item_count %>
-                <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
+            <%= form.fields_for "purchased_item[]", item do |purchased_item| %>
+            <div class="inline-block count-size-textalign">
+              <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
+              <div class="item_count_div inline-block count-margin"><%= item_count %></div>
+              <%= purchased_item.number_field :item_count, hidden: true, id: "item_count_input", value: item_count %>
+              <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
+              <div class="inline-block">
+                理論在庫<p class="inline-block text-right">　<%= Stock.find_by(item_id: item.id).stock_count %>　</p>点
               </div>
-            <% end %>
-          </li>
-          <li class="list-group-item">
-            合計
-            <div class="total_price_div inline-block"><%= tax_included * item_count %></div>円（税込み）
-          </li>
-        </ul>
-      </div>
-    <% end %>
-  </div>
-  <!-- Modalボディ部分終了 -->
-  <!-- Modalフッター部分 -->
-  <div class="modal-footer">
-    <div class="inline-block">
-      総合計
-      <div class="inline-block">350</div>円（税込み）
+            </div>
+          <% end %>
+        </li>
+        <li class="list-group-item">
+          合計
+          <div class="total_price_div inline-block"><%= tax_included * item_count %></div>円（税込み）
+        </li>
+      </ul>
     </div>
-    <%= form.submit "在庫更新", class: "btn btn-primary" %>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <% end %>
+</div>
+<!-- Modalボディ部分終了 -->
+<!-- Modalフッター部分 -->
+<div class="modal-footer">
+  <div class="inline-block">
+    総合計
+    <div  id="final_amount" class="inline-block"></div>円（税込み）
   </div>
+  <%= form.submit "在庫更新", class: "btn btn-primary" %>
+  <%= form.submit "Close", class: "btn btn-secondary", name: "close", id: "form_end_button" %>
+</div>
 <% end %>
 
-<!-- <script type="text/javascript"> $("#minus").click(function () { const item_price = parseInt(<#%= tax_included %>); const item_count_div = $("#item_count_div"); let item_count = parseInt(item_count_div.text()); const total_price_div =
-$("#total_price_div"); let total_price = parseInt(total_price_div.text()); const item_count_input = $("#item_count_input"); if (total_price <= item_price && item_count == 1) { console.log("これ以上少なく出来ません"); } else { total_price = total_price -
-item_price; item_count -= 1; item_count_div.text(item_count); item_count_input.val(item_count); total_price_div.text(total_price); } }); $("#plus").click(function () { const item_price = parseInt(<#%= tax_included %>); const item_count_div =
-$("#item_count_div"); let item_count = parseInt(item_count_div.text()); const total_price_div = $("#total_price_div"); let total_price = parseInt(total_price_div.text()); const item_count_input = $("#item_count_input"); total_price = total_price +
-item_price; item_count += 1; item_count_div.text(item_count); item_count_input.val(item_count); total_price_div.text(total_price); }); </script> -->
+<script type="text/javascript">
+
+finalamount();
+
+$(".minus").click(function () {
+  // 親要素を取得
+  const parent_card = $(this).closest('.card');
+  // 子要素.tax_includedの税込み金額を取得
+  const item_price = parseInt(parent_card.find('.tax_included').text());
+  // 子要素.item_count_divとその個数を取得
+  const item_count_div = parent_card.find('.item_count_div');
+  let item_count = parseInt(item_count_div.text());
+  // 子要素.total_price_divとその金額を取得
+  const total_price_div = parent_card.find('.total_price_div');
+  let total_price = parseInt(total_price_div.text());
+  // 子要素のhiddeninputとそのvalueを取得
+  const item_count_input = parent_card.find('.item_count_input');
+  if (total_price <= item_price && item_count == 1) {
+    console.log("これ以上少なく出来ません");
+  } else {
+    total_price = total_price - item_price;
+    item_count -= 1;
+    item_count_div.text(item_count);
+    item_count_input.val(item_count);
+    console.log(item_count_input.val());
+    total_price_div.text(total_price);
+
+    finalamount();
+  }
+});
+$(".plus").click(function () {
+  // 親要素を取得
+  const parent_card = $(this).closest('.card');
+  // 子要素.tax_includedの税込み金額を取得
+  const item_price = parseInt(parent_card.find('.tax_included').text());
+  // 子要素.item_count_divとその個数を取得
+  const item_count_div = parent_card.find('.item_count_div');
+  let item_count = parseInt(item_count_div.text());
+  // 子要素.total_price_divとその金額を取得
+  const total_price_div = parent_card.find('.total_price_div');
+  let total_price = parseInt(total_price_div.text());
+  // 子要素のhiddeninputを取得
+  const item_count_input = parent_card.find('.item_count_input');
+  total_price = total_price + item_price;
+  item_count += 1;
+  item_count_div.text(item_count);
+  item_count_input.val(item_count);
+  console.log(item_count_input.val());
+  total_price_div.text(total_price);
+
+  finalamount();
+});
+$("#close_button").click(function () {
+  $('#form_end_button').click();
+});
+</script>

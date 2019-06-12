@@ -7,7 +7,7 @@
   </button>
 </div>
 <!-- Modalボディ部分 -->
-<div class="modal-body">
+<div class="modal-body" id="card_have">
   <% @cart.each do |item| %>
     <!-- 先に税込金額と商品の個数を抜き出しておく -->
     <% tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil %>
