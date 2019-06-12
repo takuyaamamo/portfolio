@@ -14,7 +14,7 @@
       <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
         <div class="card" id="item<%= item.id %>">
           <div class="cart-del-button">
-            <%= link_to sessiondestroy_path(item.id), remote: true, class: "" do %>
+            <%= link_to sessiondestroy_path(item.id), remote: true do %>
             <span aria-hidden="true">
               <i class="far fa-trash-alt"></i>
             </span>
@@ -56,7 +56,6 @@
   <% end %>
 </div>
 <!-- Modalボディ部分終了 -->
-
 <!-- applepay表示 -->
 <hr>
 <div class="mx-auto">
@@ -75,20 +74,12 @@
   </div>
   <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
   <%= form.submit "Close", class: "btn btn-secondary", name: "close", id: "form_end_button" %>
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 </div>
 <% end %>
 
 <script type="text/javascript">
-  const finalamount = () => {
-    final_amount = 0;
-    $(".total_price_div").each(function(index, total_price){
-      final_amount = final_amount + parseInt($(total_price).text());
-    });
-    $('#final_amount').text(final_amount);
-  };
 
-  finalamount();
+finalamount();
 
 $(".minus").click(function () {
   // 親要素を取得
@@ -138,7 +129,7 @@ $(".plus").click(function () {
 
   finalamount();
 });
-$("#close_button").click(function() {
-    $('#form_end_button').click();
-    });
+$("#close_button").click(function () {
+  $('#form_end_button').click();
+});
 </script>

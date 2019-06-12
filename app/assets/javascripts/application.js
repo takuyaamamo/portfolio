@@ -18,3 +18,11 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+let finalamount = () => {
+  final_amount = 0;
+  $(".total_price_div").each(function (index, total_price) {
+    final_amount = final_amount + parseInt($(total_price).text());
+  });
+  $('#final_amount').text(final_amount);
+};
