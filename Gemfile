@@ -40,8 +40,12 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # ===================================追加gem====================================
+  # コンソールを途中で止めることが出来る
   gem 'pry-rails'
   gem 'pry-nav'
+  # エラー画面を見やすくする、コンソールもそこでいじれる
+  gem 'better_errors'
+  gem 'binding_of_caller'
   # ==============================================================================
 end
 
@@ -83,4 +87,6 @@ gem "cocoon"
 gem "rqrcode"
 gem "rqrcode_png"
 gem "chunky_png"
+# Itemの倫理削除を実装
+gem "paranoia"
 # ==============================================================================

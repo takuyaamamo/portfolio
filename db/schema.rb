@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_10_071351) do
+ActiveRecord::Schema.define(version: 2019_06_11_233152) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 2019_06_10_071351) do
     t.integer "item_active", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_items_on_deleted_at"
   end
 
   create_table "post_images", force: :cascade do |t|
