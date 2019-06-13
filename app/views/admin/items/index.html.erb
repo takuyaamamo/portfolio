@@ -397,22 +397,22 @@
             <td>
               <%= link_to admin_item_path(item), remote: true, class: "btn btn-outline-light active table-innercustom-a" do %>
               <i class="fas fa-qrcode"></i>
-              <% end %>
-            </td>
-            <td>
-              <% if item.item_active == 0 %>
-                <%= link_to '未販売', admin_statuschange_path(item), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
-              <% else %>
-                <%= link_to '販売中', admin_statuschange_path(item), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-      <!-- 繰り返し終了 -->
-    </table>
-    <!-- 商品一覧,table -->
-  </div>
+            <% end %>
+          </td>
+          <td>
+            <% if item.item_active == 0 %>
+              <%= link_to '未販売', admin_statuschange_path(item), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+            <% else %>
+              <%= link_to '販売中', admin_statuschange_path(item), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <!-- 繰り返し終了 -->
+  </table>
+  <!-- 商品一覧,table -->
+</div>
 </div>
 <!-- 商品一覧col -->
 </div>
@@ -428,53 +428,66 @@
 <!-- 注文一覧table -->
 <div class="row">
 <div class="col">
-  <div class="table-responsive">
-    <table class="table table-dark table-hover">
-      <!-- 注文一覧ヘッダ -->
-      <thead>
-        <tr class="">
-          <th scope="col">#</th>
-          <th scope="col">日付</th>
-          <th scope="col">名前</th>
-          <th scope="col">金額</th>
-          <th scope="col">状況</th>
-        </tr>
-      </thead>
-      <!-- 繰り返し -->
-      <tbody>
-        <tr>
-          <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">1</th>
-          <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/7/6</td>
-          <td data-toggle="modal" data-target="#purchaseHistoryModal">天野 拓哉</td>
-          <td data-toggle="modal" data-target="#purchaseHistoryModal">3500円</td>
-          <td>
-            <a href="#" class="btn active  btn-outline-light table-innercustom-a  text-success" role="button" aria-pressed="true">未発送</td>
-          </tr>
-          <tr>
-            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">2</th>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/8/4</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">あいう えお</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">5400円</td>
+<div class="table-responsive">
+  <table class="table table-dark table-hover">
+    <!-- 注文一覧ヘッダ -->
+    <thead>
+      <tr class="">
+        <th scope="col">#</th>
+        <th scope="col">日付</th>
+        <th scope="col">名前</th>
+        <th scope="col">金額</th>
+        <th scope="col">状況</th>
+      </tr>
+    </thead>
+    <!-- 繰り返し -->
+    <tbody>
+      <!-- 繰り返し開始 -->
+      <% @purchased_histories.each do |purchased_history| %>
+        <% purchased_items = PurchasedItem.where(purchased_history_id: purchased_history.id) %>
+          <% final_price = 0 %>
+            <% purchased_items.each do |purchased_item| %>
+              <% item_price = Item.find(purchased_item.item_id).item_price %>
+                <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
+                  <% final_price = final_price + tax_included_item_price %><% end %>
+                  <tr id=<%= "purchased-history#{purchased_history.id}" %>>
+                    <th scope="row">
+                      <%= link_to edit_admin_item_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                      <%= purchased_history.id %>
+                    <% end %>
+                  </th>
+                  <td>
+                    <%= link_to edit_admin_item_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                    <%= purchased_history.created_at.strftime('%Y年%m月%d日') %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to edit_admin_item_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                  <%= purchased_history.user_name %>
+                <% end %>
+              </td>
+
+              <td>
+                <%= link_to edit_admin_item_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                <%= final_price %>円
+              <% end %>
+            </td>
             <td>
-              <a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">発送済</a>
+              <% if purchased_history.shipping == 0 %>
+                <%= link_to '未発送', admin_statuschange_path(purchased_history), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+              <% else %>
+                <%= link_to '発送済み', admin_statuschange_path(purchased_history), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+              <% end %>
             </td>
           </tr>
-          <tr>
-            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">3</th>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">2019/9/2</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">かきく けこさ</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">13090円</td>
-            <td>
-              <a href="#" class="btn btn-outline-light active table-innercustom-a text-danger" role="button" aria-pressed="true">発送済</a>
-            </td>
-          </tr>
-        </tbody>
+        <% end %>
         <!-- 繰り返し終了 -->
-      </table>
-      <!-- 注文一覧,table -->
-    </div>
+      </tbody>
+    </table>
+    <!-- 注文一覧,table -->
   </div>
-  <!-- 注文一覧col -->
+</div>
+<!-- 注文一覧col -->
 </div>
 <!-- 注文一覧row -->
 </div>
@@ -487,39 +500,36 @@
 
 <!-- 顧客一覧table -->
 <div class="row">
-  <div class="col">
-    <div class="table-responsive">
-      <table class="table table-dark table-hover">
-        <!-- 顧客一覧ヘッダ -->
-        <thead>
-          <tr class="">
-            <th scope="col">#</th>
-            <th scope="col">名前</th>
-            <th scope="col">電話番号</th>
-            <th scope="col">メールアドレス</th>
+<div class="col">
+  <div class="table-responsive">
+    <table class="table table-dark table-hover">
+      <!-- 顧客一覧ヘッダ -->
+      <thead>
+        <tr class="">
+          <th scope="col">#</th>
+          <th scope="col">名前</th>
+          <th scope="col">電話番号</th>
+          <th scope="col">メールアドレス</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 繰り返し開始 -->
+        <% @purchased_histories.each do |purchased_history| %>
+          <tr id=<%= "purchased-history#{purchased_history.id}" %>>
+            <th scope="row">
+              <%= purchased_history.id %>
+            </th>
+            <td>
+              <%= purchased_history.user_name %>
+            </td>
+            <td>
+              <%= purchased_history.phone_number %>
+            </td>
+            <td>
+              <%= purchased_history.email_address %>
+            </td>
           </tr>
-        </thead>
-        <!-- 繰り返し -->
-        <tbody>
-          <tr>
-            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">1</th>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">天野 拓哉</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
-          </tr>
-          <tr>
-            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">2</th>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">あいう えお</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
-          </tr>
-          <tr>
-            <th scope="row" data-toggle="modal" data-target="#purchaseHistoryModal">3</th>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">かきく けこさ</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">090-1234-5678</td>
-            <td data-toggle="modal" data-target="#purchaseHistoryModal">abcde@gmail.com</td>
-          </tr>
-        </tbody>
+        <% end %>
         <!-- 繰り返し終了 -->
       </table>
       <!-- 注文一覧,table -->
@@ -539,19 +549,19 @@
   <% @items.each do |item| %>
     <% if item.item_qr.present? %>
       <% qr  = RQRCode::QRCode.new(item.item_qr) %>
-      <% qr_base64 = qr.to_img.resize(300, 300).to_data_url %>
-      <div class="card">
-          <%= image_tag qr_base64, width: '100%' %>
-        <div class="card-body">
-          <h5 class="card-title text-center"><%= item.item_name %></h5>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-</div>
-</div>
-<!-- nav-qr終了 -->
-<!--==================================================================--->
+        <% qr_base64 = qr.to_img.resize(300, 300).to_data_url %>
+          <div class="card">
+            <%= image_tag qr_base64, width: '100%' %>
+            <div class="card-body">
+              <h5 class="card-title text-center"><%= item.item_name %></h5>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <!-- nav-qr終了 -->
+  <!--==================================================================--->
 
 </div>
 <!-- ナビ全体 -->

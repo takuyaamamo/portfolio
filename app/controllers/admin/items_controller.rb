@@ -5,6 +5,7 @@ class Admin::ItemsController < Admin::Base
 
   def index
     @items = Item.all
+    @purchased_histories = PurchasedHistory.all
   end
 
   def show
