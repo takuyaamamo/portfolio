@@ -28,13 +28,11 @@ class PurchasedHistoriesController < ApplicationController
 
   # POST   /purchased_histories カート画面フォームのsubmit後
   def create
-    binding.pry
     if params[:close]# カートの閉じるボタン後
       if session[:cart].present?
         session[:cart] = params[:post][:purchased_item]
       end
     elsif params[:update]# カートの在庫更新ボタン後
-      binding.pry
       if session[:cart].present?
         session[:cart] = params[:post][:purchased_item]
       end

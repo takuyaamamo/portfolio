@@ -41,7 +41,7 @@
             <div class="inline-block count-size-textalign">
               <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
               <div class="item_count_div inline-block count-margin"><%= item_count %></div>
-              <%= purchased_item.number_field :item_count, hidden: true, id: "item_count_input", value: item_count %>
+              <%= purchased_item.number_field :item_count, hidden: true, class: "item_count_input", value: item_count %>
               <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
               <div class="inline-block">
                 理論在庫<p class="inline-block text-right">　<%= Stock.find_by(item_id: item.id).stock_count %>　</p>点
@@ -64,7 +64,7 @@
     総合計
     <div  id="final_amount" class="inline-block"></div>円（税込み）
   </div>
-  <%= form.submit "在庫更新", class: "btn btn-primary" %>
+  <%= form.submit "在庫更新", class: "btn btn-primary", name: "update" %>
   <%= form.submit "Close", class: "btn btn-secondary", name: "close", id: "form_end_button" %>
 </div>
 <% end %>
