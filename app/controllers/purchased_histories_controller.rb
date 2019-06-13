@@ -28,7 +28,9 @@ class PurchasedHistoriesController < ApplicationController
 
   def create
     if params[:close]
-      session[:cart] = params[:post][:purchased_item]
+      if session[:cart].present?
+        session[:cart] = params[:post][:purchased_item]
+      end
     else
     end
   end
@@ -40,7 +42,7 @@ class PurchasedHistoriesController < ApplicationController
     # item_idはstring
     params[:item_id] = params[:post][:purchased_item][:item_id]
     if session[:cart].has_key?(params[:item_id])
-      session[:cart][params[:item_id]]["item_count"] +=  item_count
+      session[:cart][params[:item_id]]["item_count"] = session[:cart][params[:item_id]]["item_count"].to_i + item_count
     else
       session[:cart][params[:item_id]] = item
       @item = Item.find(params[:item_id].to_i)
