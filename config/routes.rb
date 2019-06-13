@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :purchased_histories
     put 'statuschange/:id', to: 'items#statuschange', as: 'statuschange'
     get 'confirm/:id', to: 'items#confirm', as: 'confirm'
+    put 'shippingchange/:id', to: 'purchased_histories#shippingchange', as: 'shippingchange'
   end
   # 一般のページ
   resources :items

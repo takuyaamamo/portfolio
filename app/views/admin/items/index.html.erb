@@ -377,11 +377,11 @@
                 <%= final_price %>円
               <% end %>
             </td>
-            <td>
+            <td id="shippingchange">
               <% if purchased_history.shipping == 0 %>
-                <%= link_to '未発送', admin_statuschange_path(purchased_history), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+                <%= link_to '未発送', admin_shippingchange_path(purchased_history), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
               <% else %>
-                <%= link_to '発送済み', admin_statuschange_path(purchased_history), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+                <%= link_to '発送済', admin_shippingchange_path(purchased_history), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
               <% end %>
             </td>
           </tr>

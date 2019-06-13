@@ -63,6 +63,17 @@ class Admin::PurchasedHistoriesController < Admin::Base
     end
   end
 
+  def shippingchange
+    @purchased_history = PurchasedHistory.find(params[:id])
+    if @purchased_history.shipping == 0
+      @purchased_history.shipping = 1
+      @purchased_history.save
+    else
+      @purchased_history.shipping = 0
+      @purchased_history.save
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_purchased_history
