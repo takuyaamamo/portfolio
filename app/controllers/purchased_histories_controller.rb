@@ -42,18 +42,27 @@ class PurchasedHistoriesController < ApplicationController
           session[:cart].delete(item_id)
         end
       end
-    elsif params[:buy]
+    elsif params[:buy]# カートの銀行振込ボタン後
       if session[:cart].present?
-        binding.pry
-        # params[:purchased_item].each do |item_id, item_count|
-        #   item = Item.find(item_id.to_i)
-        #   stock = Stock.find(item.id)
-        #   stock.stock_count = item_count["item_count"].to_i
-        #   stock.save
-        #   session[:cart].delete(item_id)
+        @purchased_history = PurchasedHistory.new
+        @purchased_history.user_name = params[:user_name]
+        @purchased_history.postal_code = params[:postal_code]
+        @purchased_history.address = params[:address]
+        @purchased_history.phone_number = params[:phone_number]
+        @purchased_history.email_address = params[:email_address]
+        @purchased_history.shipping = 0
+        @purchased_history.save
+        params[:purchased_item].each do |item_id, item_count|
+          @purchased_item = PurchasedItem.new
+          @purchased_item.purchased_history_id = @purchased_history.id
+          @purchased_item.item_id = item_id.to_i
+          @purchased_item.item_count = item_count["item_count"].to_i
+          @purchased_item.save
+          session[:cart].delete(item_id)
         end
-      else
       end
+    else
+    end
   end
 
   # POST   /purchased_histories/sessioncreate 商品詳細画面のsubmit後
