@@ -26,8 +26,15 @@ class PurchasedHistoriesController < ApplicationController
   def edit
   end
 
+  # POST   /purchased_histories カート画面フォームのsubmit後
   def create
-    if params[:close]
+    binding.pry
+    if params[:close]# カートの閉じるボタン後
+      if session[:cart].present?
+        session[:cart] = params[:post][:purchased_item]
+      end
+    elsif params[:update]# カートの在庫更新ボタン後
+      binding.pry
       if session[:cart].present?
         session[:cart] = params[:post][:purchased_item]
       end
@@ -35,14 +42,17 @@ class PurchasedHistoriesController < ApplicationController
     end
   end
 
+  # POST   /purchased_histories/sessioncreate 商品詳細画面のsubmit後
   def sessioncreate
     # item_count
-    item_count = params[:post][:purchased_item][:item_count].to_i
+    item_count = params[:purchased_item][:item_count].to_i
     item = { item_count: item_count }
     # item_idはstring
-    params[:item_id] = params[:post][:purchased_item][:item_id]
+    params[:item_id] = params[:purchased_item][:item_id]
+    # session[:cart]に同じ商品があれば個数を増やす
     if session[:cart].has_key?(params[:item_id])
-      session[:cart][params[:item_id]]["item_count"] = session[:cart][params[:item_id]]["item_count"].to_i + item_count
+      session_item_count = session[:cart][params[:item_id]]["item_count"]
+      session[:cart][params[:item_id]]["item_count"] = session_item_count.to_i + item_count
     else
       session[:cart][params[:item_id]] = item
       @item = Item.find(params[:item_id].to_i)

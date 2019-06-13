@@ -1,5 +1,5 @@
 <!-- Modalボディ部分 -->
-<%= form_with scope: :post, url: sessioncreate_path do |form| %>
+<%= form_with url: sessioncreate_path do |form| %>
 <div class="modal-body">
   <div class="card">
     <% if item.post_images.present? %>
@@ -27,6 +27,11 @@
           <div id="item_count_div" class="inline-block count-margin">1</div>
           <%= purchased_item.number_field :item_count, hidden: true, id: "item_count_input" %>
           <button id="plus" type="button" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
+          <% if admin_signed_in? %>
+          <div class="inline-block">
+            理論在庫<p class="inline-block text-right">　<%= Stock.find_by(item_id: item.id).stock_count %>　</p>点
+          </div>
+          <% end %>
         </div>
       <% end %>
     </li>
