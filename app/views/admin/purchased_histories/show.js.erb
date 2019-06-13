@@ -1,0 +1,5 @@
+// index.html.erb中のDivに対して、新規作成用のformをレンダリング
+console.log('hi');
+$("#ShowHistory").html("<%= escape_javascript(render 'show', purchased_history: @purchased_history, purchased_items: @purchased_items) %>");
+// デフォルトのbootstrapでmodalを開いても良いが、タイミングが早すぎてrender間に合わない
+$("#purchaseHistoryModal").modal("show");

@@ -1,4 +1,4 @@
-class PurchasedHistoriesController < ApplicationController
+class Admin::PurchasedHistoriesController < Admin::Base
   before_action :set_purchased_history, only: [:show, :edit, :update, :destroy]
 
   # GET /purchased_histories
@@ -10,6 +10,8 @@ class PurchasedHistoriesController < ApplicationController
   # GET /purchased_histories/1
   # GET /purchased_histories/1.json
   def show
+    @purchased_history = PurchasedHistory.find(params[:id])
+    @purchased_items = PurchasedItem.where(purchased_history_id: @purchased_history.id)
   end
 
   # GET /purchased_histories/new

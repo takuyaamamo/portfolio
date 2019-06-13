@@ -216,106 +216,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <!-- Modalボディ部分 -->
-        <div class="modal-body">
-
-          <div class="card">
-            <div class="card-body">
-              <dl>
-                <dt>注文日</dt>
-                <dd>2019年9月5日</dd>
-
-                <dt>注文者</dt>
-                <dd>天野 拓哉</dd>
-
-                <dt>メールアドレス</dt>
-                <dd>abcde@gmail.com</dd>
-
-                <dt>電話番号</dt>
-                <dd>080-1234-5678</dd>
-
-                <dt>郵便番号</dt>
-                <dd>〒1240001</dd>
-
-                <dt>住所</dt>
-                <dd>東京都葛飾区12-33-44</dd>
-              </dl>
-            </div>
-          </div>
-
-          <div class="card">
-            <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                1個
-                <div class="inline-block">350</div>円（税込み）
-              </li>
-              <li class="list-group-item">
-                1個
-              </li>
-              <li class="list-group-item">
-                合計
-                <div class="inline-block">350</div>円（税込み）
-              </li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                1個
-                <div class="inline-block">350</div>円（税込み）
-              </li>
-              <li class="list-group-item">
-                1個
-              </li>
-              <li class="list-group-item">
-                合計
-                <div class="inline-block">350</div>円（税込み）
-              </li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                1個
-                <div class="inline-block">350</div>円（税込み）
-              </li>
-              <li class="list-group-item">
-                1個
-              </li>
-              <li class="list-group-item">
-                合計
-                <div class="inline-block">350</div>円（税込み）
-              </li>
-            </ul>
-          </div>
-
+        <div id="ShowHistory"></div>
         </div>
-        <!-- Modalボディ部分終了 -->
-
-        <!-- Modalフッター部分 -->
-        <div class="modal-footer">
-          <div class="inline-block">
-            総合計
-            <div class="inline-block">350</div>円（税込み）
-          </div>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      <!-- Modal部分終了3 -->
+       <!-- Modal部分終了3 -->
     </div>
     <!-- Modal部分終了2 -->
   </div>
@@ -449,26 +352,28 @@
             <% purchased_items.each do |purchased_item| %>
               <% item_price = Item.find(purchased_item.item_id).item_price %>
                 <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
-                  <% final_price = final_price + tax_included_item_price %><% end %>
+                <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
+                  <% final_price = final_price + total_price %>
+                  <% end %>
                   <tr id=<%= "purchased-history#{purchased_history.id}" %>>
                     <th scope="row">
-                      <%= link_to edit_admin_item_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                      <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
                       <%= purchased_history.id %>
                     <% end %>
                   </th>
                   <td>
-                    <%= link_to edit_admin_item_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                    <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
                     <%= purchased_history.created_at.strftime('%Y年%m月%d日') %>
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to edit_admin_item_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                  <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
                   <%= purchased_history.user_name %>
                 <% end %>
               </td>
 
               <td>
-                <%= link_to edit_admin_item_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
                 <%= final_price %>円
               <% end %>
             </td>
