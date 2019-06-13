@@ -30,11 +30,11 @@ class PurchasedHistoriesController < ApplicationController
   def create
     if params[:close]# カートの閉じるボタン後
       if session[:cart].present?
-        session[:cart] = params[:post][:purchased_item]
+        session[:cart] = params[:purchased_item]
       end
     elsif params[:update]# カートの在庫更新ボタン後
       if session[:cart].present?
-        params[:post][:purchased_item].each do |item_id, item_count|
+        params[:purchased_item].each do |item_id, item_count|
           item = Item.find(item_id.to_i)
           stock = Stock.find(item.id)
           stock.stock_count = item_count["item_count"].to_i
@@ -42,9 +42,18 @@ class PurchasedHistoriesController < ApplicationController
           session[:cart].delete(item_id)
         end
       end
-    else
-
-    end
+    elsif params[:buy]
+      if session[:cart].present?
+        binding.pry
+        # params[:purchased_item].each do |item_id, item_count|
+        #   item = Item.find(item_id.to_i)
+        #   stock = Stock.find(item.id)
+        #   stock.stock_count = item_count["item_count"].to_i
+        #   stock.save
+        #   session[:cart].delete(item_id)
+        end
+      else
+      end
   end
 
   # POST   /purchased_histories/sessioncreate 商品詳細画面のsubmit後
