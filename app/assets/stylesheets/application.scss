@@ -109,12 +109,17 @@ button:focus {
 }
 /* ========================================================================== */
 /* ==============================モーダル内デザイン============================= */
+.select-cash-button {
+  display: block;
+}
+
 .display-none {
   display: none;
 }
 
-.apple-pay-size {
-  font-size: 3rem;
+.pay-icon {
+  font-size: 2rem;
+  margin-left: 5%;
 }
 
 .count-size-textalign {
@@ -125,6 +130,10 @@ button:focus {
 .count-margin {
   margin-left: 5%;
   margin-right: 5%;
+}
+
+.text_field_bottom {
+  margin-bottom: 10px;
 }
 
 .inline-block {
@@ -153,3 +162,8 @@ button:focus {
   color: dimgray;
 }
 /* ========================================================================== */
+@media (max-width: 575.98px) {
+  .pay-icon {
+    font-size: 1.5rem;
+  }
+}

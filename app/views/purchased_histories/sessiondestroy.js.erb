@@ -7,13 +7,4 @@ $("#item<%= params[:id] %>").fadeOut().queue(function() {
   <% end %>
 });
 $("#cartitem<%= params[:id] %>").fadeOut();
-// const parentId = document.getElementById('cart-icon');
-// if (parentId.children) {
-//   if(parentId.firstElementChild.classList.contains('cart-list-position')) {
-//     parentId.firstElementChild.classList.remove('cart-list-position')
-//   }
-// } else {
-//   parentId.innerText = "カートは空です。";
-// }
-// 時間があったら上記２つの前の要素を取得しクラスを持っているか持っていないかで条件分岐
 $("#cart-icon").html("<%= escape_javascript(render 'cart_update', item: @item) %>");

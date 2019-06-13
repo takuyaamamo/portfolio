@@ -56,31 +56,78 @@
   <% end %>
 </div>
 <!-- Modalボディ部分終了 -->
-<!-- applepay表示 -->
+<!-- ===========================決済方法選択================================== -->
 <hr>
 <div class="mx-auto">
-  <button class="button-remove-background">
-    <span class="apple-pay-size">
-      <i class="fab fa-apple-pay"></i>
+  <div id="credbutton" class="select-cash-button button-remove-background">
+    <span class="pay-icon">
+      <i class="fas fa-credit-card"></i>
+      <span>クレジットカード</span>
     </span>
-  </button>
+  </div>
+  <div class="form-group count-margin display-none" id="cred-pay-form">
+    <div class="">
+      <h5>・送付先の情報を入力して下さい。</h5>
+    </div>
+    <%= form.label :user_name, "お名前" %>
+    <%= form.text_field :user_name, class: "form-control text_field_bottom" %>
+    <%= form.label :postal_code, "〒"%>
+    <%= form.text_field :postal_code, class: "form-control text_field_bottom" %>
+    <%= form.label :address, "住所"%>
+    <%= form.text_field :address, class: "form-control text_field_bottom" %>
+    <div class="">
+      <h5>・お客様のご連絡先を入力して下さい。</h5>
+    </div>
+    <%= form.label :phone_number, "電話番号"%>
+    <%= form.text_field :phone_number, class: "form-control text_field_bottom" %>
+    <%= form.label :email_address, "メールアドレス"%>
+    <%= form.text_field :email_address, class: "form-control text_field_bottom" %>
+    <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
+  </div>
+
+  <div id="bankbutton" class="select-cash-button button-remove-background">
+    <span class="pay-icon">
+      <i class="fas fa-piggy-bank"></i>
+      <span>銀行振込</span>
+    </span>
+  </div>
+  <div class="form-group count-margin display-none" id="bank-pay-form">
+    <div class="">
+      <h5>・送付先の情報を入力して下さい。</h5>
+    </div>
+    <%= form.label :user_name, "お名前" %>
+    <%= form.text_field :user_name, class: "form-control text_field_bottom" %>
+    <%= form.label :postal_code, "〒"%>
+    <%= form.text_field :postal_code, class: "form-control text_field_bottom" %>
+    <%= form.label :address, "住所"%>
+    <%= form.text_field :address, class: "form-control text_field_bottom" %>
+    <div class="">
+      <h5>・お客様のご連絡先を入力して下さい。</h5>
+    </div>
+    <%= form.label :phone_number, "電話番号"%>
+    <%= form.text_field :phone_number, class: "form-control text_field_bottom" %>
+    <%= form.label :email_address, "メールアドレス"%>
+    <%= form.text_field :email_address, class: "form-control text_field_bottom" %>
+    <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
+  </div>
 </div>
 <br>
+<!-- ======================================================================= -->
+
 <!-- Modalフッター部分 -->
 <div class="modal-footer">
   <div class="inline-block">
     合計
     <div id="final_amount" class="inline-block"></div>円（税込み）
   </div>
-  <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
   <%= form.submit "Close", class: "btn btn-secondary", name: "close", id: "form_end_button" %>
 </div>
 <% end %>
 
 <script type="text/javascript">
-
+// 総合計算出
 finalamount();
-
+// ========================商品ごとのカウント制御===================================
 $(".minus").click(function () {
   // 親要素を取得
   const parent_card = $(this).closest('.card');
@@ -129,7 +176,26 @@ $(".plus").click(function () {
 
   finalamount();
 });
+// ============================================================================= モーダル閉じる
 $("#close_button").click(function () {
   $('#form_end_button').click();
 });
+
+// ==============================決済方法選択制御==================================
+$("#credbutton").click(function () {
+  console.log('hi');
+  if ($('#bank-pay-form').is(':visible')) {
+    $('#bank-pay-form').slideUp();
+  };
+  $('#cred-pay-form').slideDown();
+});
+
+$("#bankbutton").click(function () {
+  console.log('hi');
+  if ($('#cred-pay-form').is(':visible')) {
+    $('#cred-pay-form').slideUp();
+  };
+  $('#bank-pay-form').slideDown();
+});
+// =============================================================================
 </script>
