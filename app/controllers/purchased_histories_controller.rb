@@ -34,9 +34,16 @@ class PurchasedHistoriesController < ApplicationController
       end
     elsif params[:update]# カートの在庫更新ボタン後
       if session[:cart].present?
-        session[:cart] = params[:post][:purchased_item]
+        params[:post][:purchased_item].each do |item_id, item_count|
+          item = Item.find(item_id.to_i)
+          stock = Stock.find(item.id)
+          stock.stock_count = item_count["item_count"].to_i
+          stock.save
+          session[:cart].delete(item_id)
+        end
       end
     else
+
     end
   end
 
