@@ -3,17 +3,20 @@ class Admin::ItemsController < Admin::Base
   before_action :authenticate_admin!
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
+  # GET admin_items GET    /admin/items 管理者画面のトップページ
   def index
     @items = Item.all
     @purchased_histories = PurchasedHistory.all
   end
 
+  # GET admin_item GET    /admin/items/:id アイテムのQRコード表示
   def show
     item = Item.find(params[:id])
     # svgでqr生成
     @qr = RQRCode::QRCode.new(item.item_qr).as_svg.html_safe
   end
 
+  # new_admin_item GET    /admin/items/new アイテム新規登録フォーム表示
   def new
     @item = Item.new
     # refileで画像を投稿できるようにしている
@@ -23,11 +26,7 @@ class Admin::ItemsController < Admin::Base
     @item.tags.build
   end
 
-  def edit
-    @item = Item.find(params[:id])
-    @tags = Tag.new
-  end
-
+  # admin_items POST   /admin/items アイテム新規登録フォームの登録
   def create
     @item = Item.new(item_params)
     respond_to do |format|
@@ -46,6 +45,13 @@ class Admin::ItemsController < Admin::Base
     end
   end
 
+  # edit_admin_item GET    /admin/items/:id/edit アイテムの編集ページ
+  def edit
+    @item = Item.find(params[:id])
+    @tags = Tag.new
+  end
+
+  # admin_item PUT    /admin/items/:id アイテム編集登録
   def update
     @item = Item.find(params[:id])
     @tag = Tag.new(tag_params)
@@ -64,6 +70,7 @@ class Admin::ItemsController < Admin::Base
     end
   end
 
+  # admin_statuschange PUT    /admin/statuschange/:id item_active変更
   def statuschange
     item = Item.find(params[:id])
     if item.item_active == 0
@@ -76,10 +83,12 @@ class Admin::ItemsController < Admin::Base
     redirect_to admin_items_path
   end
 
+  # admin_confirm GET    /admin/confirm/:id 商品削除確認画面
   def confirm
     @item = Item.find(params[:id])
   end
 
+  # admin_item DELETE /admin/items/:id 商品削除確認画面から商品の削除
   def destroy
     respond_to do |format|
       if @item.destroy

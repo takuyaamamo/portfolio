@@ -1,17 +1,6 @@
 class PurchasedHistoriesController < ApplicationController
   before_action :set_purchased_history, only: [:show, :edit, :update, :destroy]
 
-  # GET /purchased_histories
-  # GET /purchased_histories.json
-  def index
-    @purchased_histories = PurchasedHistory.all
-  end
-
-  # GET /purchased_histories/1
-  # GET /purchased_histories/1.json
-  def show
-  end
-
   # GET /purchased_histories/new
   def new
     @cart = session[:cart].map { |item_id, item_count| Item.find(item_id.to_i) }
@@ -22,11 +11,7 @@ class PurchasedHistoriesController < ApplicationController
     end
   end
 
-  # GET /purchased_histories/1/edit
-  def edit
-  end
-
-  # POST   /purchased_histories カート画面フォームのsubmit後
+  # purchased_histories POST   /purchased_histories カート画面フォームのsubmit後
   def create
     if params[:close]# カートの閉じるボタン後
       if session[:cart].present?
@@ -36,7 +21,7 @@ class PurchasedHistoriesController < ApplicationController
       if session[:cart].present?
         params[:purchased_item].each do |item_id, item_count|
           item = Item.find(item_id.to_i)
-          stock = Stock.find(item.id)
+          stock = Stock.find_by(item_id: item.id)
           stock.stock_count = item_count["item_count"].to_i
           stock.save
           session[:cart].delete(item_id)
@@ -65,7 +50,7 @@ class PurchasedHistoriesController < ApplicationController
     end
   end
 
-  # POST   /purchased_histories/sessioncreate 商品詳細画面のsubmit後
+  # sessioncreate POST   /purchased_histories/sessioncreate 商品詳細画面のsubmit後
   def sessioncreate
     # item_count
     item_count = params[:purchased_item][:item_count].to_i
@@ -85,26 +70,7 @@ class PurchasedHistoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /purchased_histories/1
-  # PATCH/PUT /purchased_histories/1.json
-  def update
-    respond_to do |format|
-      if @purchased_history.update(purchased_history_params)
-        format.html { redirect_to @purchased_history, notice: 'Purchased history was successfully updated.' }
-        format.json { render :show, status: :ok, location: @purchased_history }
-      else
-        format.html { render :edit }
-        format.json { render json: @purchased_history.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /purchased_histories/1
-  # DELETE /purchased_histories/1.json
-  def destroy
-  end
-  # DELETE /purchased_histories/1
-  # DELETE /purchased_histories/1.json
+  # sessiondestroy GET    /purchased_histories/sessiondestroy/:id カート画面で商品削除ボタン
   def sessiondestroy
     session[:cart].delete(params[:id])
     @cart = session[:cart].map { |item_id, item_count| Item.find(item_id.to_i) }
