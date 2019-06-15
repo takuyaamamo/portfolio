@@ -17,11 +17,28 @@
   </header>
   <!--====================================================================--->
 
+  <!--========================= 商品登録モーダル ==================================--->
+  <!-- Modal部分 -->
+  <div id="createItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="NewItemLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Modalヘッダー部分 -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="createItemModalLabel">商品登録</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+        </div>
+        <!-- render用div -->
+        <div id="NewItem"></div>
+      </div>
+      <!-- Modal部分終了3 -->
+    </div>
+    <!-- Modal部分終了2 -->
+  </div>
+  <!-- Modal部分終了1 -->
+  <!--====================================================================--->
+
   <!--======================== 商品編集モーダル ==============================--->
-  <!-- 練習用ボタン -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewItemModal" hidden="hidden">
-    商品編集
-  </button>
   <!-- Modal部分 -->
   <div id="NewItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="NewItemLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -32,6 +49,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
         </div>
+        <!-- render用div -->
         <div id="EditItem"></div>
       </div>
       <!-- Modal部分終了3 -->
@@ -42,10 +60,6 @@
   <!--====================================================================--->
 
   <!--========================= 削除確認モーダル ============================--->
-  <!-- 練習用ボタン -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delOKModal" hidden="hidden">
-    Launch demo modal
-  </button>
   <!-- Modal部分 -->
   <div id="delOKModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="NewItemLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -74,108 +88,7 @@
   <!-- Modal部分終了1 -->
   <!--====================================================================--->
 
-  <!--========================= 商品登録モーダル ==================================--->
-  <!-- 練習用ボタン -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createItemModal" hidden="hidden">
-    Launch demo modal
-  </button>
-  <!-- Modal部分 -->
-  <div id="createItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="NewItemLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <!-- Modalヘッダー部分 -->
-        <div class="modal-header">
-          <h5 class="modal-title" id="createItemModalLabel">商品登録</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span></button>
-        </div>
-        <!-- render用div -->
-        <div id="NewItem"></div>
-      </div>
-      <!-- Modal部分終了3 -->
-    </div>
-    <!-- Modal部分終了2 -->
-  </div>
-  <!-- Modal部分終了1 -->
-  <!--====================================================================--->
-
-  <!--========================= 商品編集モーダル ==================================--->
-  <!-- 練習用ボタン -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editItemModal" hidden="hidden">
-    Launch demo modal
-  </button>
-  <!-- Modal部分 -->
-  <div id="editItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="NewItemLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <!-- Modalヘッダー部分 -->
-        <div class="modal-header">
-          <h5 class="modal-title" id="editItemModalLabel">商品編集</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span></button>
-        </div>
-        <!-- Modalボディ部分 -->
-        <div class="modal-body">
-          <div class="container-fluid bd-example-row">
-            <form>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="itemname">商品名</label>
-                  <input type="text" class="form-control" id="itemname" placeholder="日本人形">
-                  <label for="itemimage">商品画像</label>
-                  <input type="file" class="form-control-file" id="itemimage">
-                  <label for="itemmoney">金額</label>
-                  <input type="text" class="form-control" id="itemmoney" placeholder="税抜きカンマ不要">
-                  <label for="itemcount">在庫数</label>
-                  <input type="text" class="form-control" id="itemcount" placeholder="半角">
-                </div>
-                <div class="form-group col-md-6">
-                  <%= image_tag 'AdobeStock_185627039_Preview.jpeg', width: '100%' %>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="itemdescription">商品説明</label>
-                <textarea id="itemdescription" class="form-control" rows="3">まねきねこまねきねこ</textarea>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="tag">タグ選択</label>
-                  <select id="tag" class="form-control">
-                    <option selected="selected">Choose...</option>
-                    <option>...</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="newtag">タグ入力</label>
-                  <input type="text" class="form-control" id="newtag">
-                </div>
-                <div class="form-group col-md-2 d-flex align-items-end">
-                  <button type="button" class="btn btn-link">タグ追加</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Modalボディ部分終了 -->
-          <!-- Modalフッター部分 -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button data-dismiss="modal" data-toggle="modal" data-target="#delOKModal" href="#" class="btn btn-outline-light active text-danger" role="button" aria-pressed="true">削除</button>
-            <button type="button" class="btn btn-primary">編集完了</button>
-          </div>
-        </form>
-      </div>
-      <!-- Modal部分終了3 -->
-    </div>
-    <!-- Modal部分終了2 -->
-  </div>
-  <!-- Modal部分終了1 -->
-  <!--====================================================================--->
-
   <!--========================= QRコード表示モーダル ==================================--->
-  <!-- 練習用ボタン -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#qrItemModal" hidden="hidden">
-    Launch demo modal
-  </button>
   <!-- Modal部分 -->
   <div id="qrItemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrItemModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -201,10 +114,6 @@
   <!--====================================================================--->
 
   <!-- ========================注文履歴表示モーダル========================= -->
-  <!-- モーダル表示ボタンメモ -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseHistoryModal" hidden="hidden">
-    Launch demo modal
-  </button>
   <!-- Modal部分 -->
   <div class="modal fade" id="purchaseHistoryModal" tabindex="-1" role="dialog" aria-labelledby="purchaseHistoryModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -216,9 +125,10 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <!-- render用div -->
         <div id="ShowHistory"></div>
-        </div>
-       <!-- Modal部分終了3 -->
+      </div>
+      <!-- Modal部分終了3 -->
     </div>
     <!-- Modal部分終了2 -->
   </div>
@@ -246,7 +156,7 @@
   </nav>
   <!--====================================================================--->
 
-  <!--====================== ナビ配下ボディ部分 =============================--->
+  <!--====================== ナビ配下ボディ部分全体 ============================--->
   <div class="tab-content" id="nav-tabContent">
 
     <!-- ========================商品一覧table============================= -->
@@ -272,47 +182,49 @@
               </thead>
               <tbody>
                 <!-- 繰り返し開始 -->
-                <% @items.each do |item| %>
-                  <tr id=<%= "item#{item.id}" %>>
-                    <th scope="row">
+                <% if @items.present? %>
+                  <% @items.each do |item| %>
+                    <tr id=<%= "item#{item.id}" %>>
+                      <th scope="row">
+                        <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
+                        <%= item.id %>
+                      <% end %>
+                    </th>
+                    <td>
                       <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
-                      <%= item.id %>
+                      <%= item.item_name %>
                     <% end %>
-                  </th>
+                  </td>
                   <td>
                     <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
-                    <%= item.item_name %>
+                    <%= item.item_price %>
                   <% end %>
                 </td>
+
                 <td>
                   <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
-                  <%= item.item_price %>
+                  <% if item.stock.present? %>
+                    <%= item.stock.stock_count %>
+                  <% end %>
                 <% end %>
               </td>
-
               <td>
-                <%= link_to edit_admin_item_path(item), remote: true, class: "table-innercustom-a area-all" do %>
-                <% if item.stock.present? %>
-                  <%= item.stock.stock_count %>
-                <% end %>
+                <%= link_to admin_item_path(item), remote: true, class: "btn btn-outline-light active table-innercustom-a" do %>
+                <i class="fas fa-qrcode"></i>
               <% end %>
             </td>
             <td>
-              <%= link_to admin_item_path(item), remote: true, class: "btn btn-outline-light active table-innercustom-a" do %>
-              <i class="fas fa-qrcode"></i>
-            <% end %>
-          </td>
-          <td>
-            <% if item.item_active == 0 %>
-              <%= link_to '未販売', admin_statuschange_path(item), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
-            <% else %>
-              <%= link_to '販売中', admin_statuschange_path(item), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
-            <% end %>
-          </td>
-        </tr>
+              <% if item.item_active == 0 %>
+                <%= link_to '未販売', admin_statuschange_path(item), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+              <% else %>
+                <%= link_to '販売中', admin_statuschange_path(item), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
+      <!-- 繰り返し終了 -->
     </tbody>
-    <!-- 繰り返し終了 -->
   </table>
   <!-- 商品一覧,table -->
 </div>
@@ -346,53 +258,54 @@
     <!-- 繰り返し -->
     <tbody>
       <!-- 繰り返し開始 -->
-      <% @purchased_histories.each do |purchased_history| %>
-        <% purchased_items = PurchasedItem.where(purchased_history_id: purchased_history.id) %>
-          <% final_price = 0 %>
-            <% purchased_items.each do |purchased_item| %>
-              <% item_price = Item.find(purchased_item.item_id).item_price %>
-                <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
-                <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
-                  <% final_price = final_price + total_price %>
-                  <% end %>
-                  <tr id=<%= "purchased-history#{purchased_history.id}" %>>
-                    <th scope="row">
+      <% if @purchased_histories.present? %>
+        <% @purchased_histories.each do |purchased_history| %>
+          <% purchased_items = PurchasedItem.where(purchased_history_id: purchased_history.id) %>
+            <% final_price = 0 %>
+              <% purchased_items.each do |purchased_item| %>
+                <% item_price = Item.find(purchased_item.item_id).item_price %>
+                  <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
+                    <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
+                      <% final_price = final_price + total_price %><% end %>
+                      <tr id=<%= "purchased-history#{purchased_history.id}" %>>
+                        <th scope="row">
+                          <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                          <%= purchased_history.id %>
+                        <% end %>
+                      </th>
+                      <td>
+                        <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                        <%= purchased_history.created_at.strftime('%Y年%m月%d日') %>
+                      <% end %>
+                    </td>
+                    <td>
                       <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
-                      <%= purchased_history.id %>
+                      <%= purchased_history.user_name %>
                     <% end %>
-                  </th>
+                  </td>
+
                   <td>
                     <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
-                    <%= purchased_history.created_at.strftime('%Y年%m月%d日') %>
+                    <%= final_price %>円
                   <% end %>
                 </td>
-                <td>
-                  <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
-                  <%= purchased_history.user_name %>
-                <% end %>
-              </td>
-
-              <td>
-                <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
-                <%= final_price %>円
-              <% end %>
-            </td>
-            <td id="shippingchange">
-              <% if purchased_history.shipping == 0 %>
-                <%= link_to '未発送', admin_shippingchange_path(purchased_history), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
-              <% else %>
-                <%= link_to '発送済', admin_shippingchange_path(purchased_history), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        <!-- 繰り返し終了 -->
-      </tbody>
-    </table>
-    <!-- 注文一覧,table -->
+                <td id="shippingchange">
+                  <% if purchased_history.shipping == 0 %>
+                    <%= link_to '未発送', admin_shippingchange_path(purchased_history), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+                  <% else %>
+                    <%= link_to '発送済', admin_shippingchange_path(purchased_history), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+          <!-- 繰り返し終了 -->
+        </tbody>
+      </table>
+      <!-- 注文一覧,table -->
+    </div>
   </div>
-</div>
-<!-- 注文一覧col -->
+  <!-- 注文一覧col -->
 </div>
 <!-- 注文一覧row -->
 </div>
@@ -405,44 +318,46 @@
 
 <!-- 顧客一覧table -->
 <div class="row">
-<div class="col">
-  <div class="table-responsive">
-    <table class="table table-dark table-hover">
-      <!-- 顧客一覧ヘッダ -->
-      <thead>
-        <tr class="">
-          <th scope="col">#</th>
-          <th scope="col">名前</th>
-          <th scope="col">電話番号</th>
-          <th scope="col">メールアドレス</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- 繰り返し開始 -->
-        <% @purchased_histories.each do |purchased_history| %>
-          <tr id=<%= "purchased-history#{purchased_history.id}" %>>
-            <th scope="row">
-              <%= purchased_history.id %>
-            </th>
-            <td>
-              <%= purchased_history.user_name %>
-            </td>
-            <td>
-              <%= purchased_history.phone_number %>
-            </td>
-            <td>
-              <%= purchased_history.email_address %>
-            </td>
+  <div class="col">
+    <div class="table-responsive">
+      <table class="table table-dark table-hover">
+        <!-- 顧客一覧ヘッダ -->
+        <thead>
+          <tr class="">
+            <th scope="col">#</th>
+            <th scope="col">名前</th>
+            <th scope="col">電話番号</th>
+            <th scope="col">メールアドレス</th>
           </tr>
-        <% end %>
-        <!-- 繰り返し終了 -->
-      </table>
-      <!-- 注文一覧,table -->
+        </thead>
+        <tbody>
+          <!-- 繰り返し開始 -->
+          <% if @purchased_histories.present? %>
+            <% @purchased_histories.each do |purchased_history| %>
+              <tr id=<%= "purchased-history#{purchased_history.id}" %>>
+                <th scope="row">
+                  <%= purchased_history.id %>
+                </th>
+                <td>
+                  <%= purchased_history.user_name %>
+                </td>
+                <td>
+                  <%= purchased_history.phone_number %>
+                </td>
+                <td>
+                  <%= purchased_history.email_address %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+          <!-- 繰り返し終了 -->
+        </table>
+        <!-- 注文一覧,table -->
+      </div>
     </div>
+    <!-- 注文一覧col -->
   </div>
-  <!-- 注文一覧col -->
-</div>
-<!-- 注文一覧row -->
+  <!-- 注文一覧row -->
 </div>
 <!-- nav-profile終了 -->
 <!--==================================================================--->
@@ -450,27 +365,31 @@
 <!-- ========================QRtable============================= -->
 <!-- nav-qr -->
 <div class="tab-pane fade" id="nav-qr" role="tabpanel" aria-labelledby="nav-qr-tab">
-<div class="card-columns">
-  <% @items.each do |item| %>
-    <% if item.item_qr.present? %>
-      <% qr  = RQRCode::QRCode.new(item.item_qr) %>
-        <% qr_base64 = qr.to_img.resize(300, 300).to_data_url %>
-          <div class="card">
-            <%= image_tag qr_base64, width: '100%' %>
-            <div class="card-body">
-              <h5 class="card-title text-center"><%= item.item_name %></h5>
-            </div>
-          </div>
+  <div class="card-columns">
+    <!-- 繰り返し開始 -->
+    <% if @items.present? %>
+      <% @items.each do |item| %>
+        <% if item.item_qr.present? %>
+          <% qr  = RQRCode::QRCode.new(item.item_qr) %>
+            <% qr_base64 = qr.to_img.resize(300, 300).to_data_url %>
+              <div class="card">
+                <%= image_tag qr_base64, width: '100%' %>
+                <div class="card-body">
+                  <h5 class="card-title text-center"><%= item.item_name %></h5>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
         <% end %>
-      <% end %>
+        <!-- 繰り返し終了 -->
+      </div>
     </div>
-  </div>
-  <!-- nav-qr終了 -->
-  <!--==================================================================--->
+    <!-- nav-qr終了 -->
+    <!--==================================================================--->
 
-</div>
-<!-- ナビ全体 -->
-<!--====================================================================--->
+  </div>
+  <!-- ナビ全体 -->
+  <!--====================================================================--->
 
 </div>
 <!--ダッシュボード全体container-fluid--->
