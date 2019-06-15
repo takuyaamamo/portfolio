@@ -11,7 +11,6 @@ class Admin::ItemsController < Admin::Base
 
   # GET admin_item GET    /admin/items/:id アイテムのQRコード表示
   def show
-    binding.pry
     item = Item.find(params[:id])
     # svgでqr生成
     @qr = RQRCode::QRCode.new(item.item_qr).as_svg.html_safe
