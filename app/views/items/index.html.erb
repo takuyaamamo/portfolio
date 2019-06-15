@@ -1,0 +1,273 @@
+<!-- ===============================ヘッダー============================== -->
+<header class="sticky-top">
+  <nav class="navbar navbar-light">
+    <a class="navbar-brand">
+      <h1>AMAMIAGE</h1>
+    </a>
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
+</header>
+<!-- ==================================================================== -->
+
+<!-- ===============================メールアイコン============================== -->
+<a class="mail-icon" href="mailto:iamaama703@gmail.com?subject=お問い合わせ&body=お問い合わせ有難う御座います。%0D%0Aご自由にお問い合わせ内容をご記入下さい。">
+  <span class="mail-icon-size">
+    <i class="far fa-envelope"></i>
+  </span>
+</a>
+<!-- ==================================================================== -->
+
+<!-- =============================左下のカート表示============================ -->
+<section class="fixed-bottom cart-section-position">
+  <%= link_to new_purchased_history_path, remote: true, class: "cart-link", id: "cart-icon" do %>
+  <% if @cart.present? %>
+    <% @cart.each do |item| %>
+      <%= button_tag class: "cart-list-position button-remove-background", id: "cart-position" do %>
+      <div class="cart-item-list">
+        <% if item.post_images.present? %>
+          <% item.post_images.each do |image| %>
+            <div>
+              <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color" %>
+            </div>
+          <% end %>
+        <% else %>
+          <div>
+            <%= image_tag '/images/no_image.jpg', size: '400✕400', class: "rounded-circle shadow circle-color" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+<% end %>
+</section>
+<!-- ==================================================================== -->
+
+<!-- ==============================商品詳細モーダル表示============================ -->
+<!-- モーダル表示ボタンメモ -->
+<button type="button" class="btn btn-primary display-none" data-toggle="modal" data-target="#ItemModalCenter">
+Launch demo modal
+</button>
+
+<!-- Modal部分 -->
+<div class="modal fade" id="ItemModalCenter" tabindex="-1" role="dialog" aria-labelledby="ItemModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+<div class="modal-content">
+  <!-- Modalヘッダー部分 -->
+  <div class="modal-header">
+    <h5 class="modal-title" id="ItemModalCenterTitle">商品詳細</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!-- render用div -->
+  <div id="ShowItem"></div>
+</div>
+<!-- Modal部分終了3 -->
+</div>
+<!-- Modal部分終了2 -->
+</div>
+<!-- Modal部分終了1 -->
+<!-- ===================================================================== -->
+
+<!-- ========================カート内容モーダル表示========================= -->
+<!-- モーダル表示ボタンメモ -->
+<button type="button" class="btn btn-primary display-none" data-toggle="modal" data-target="#CartModalCenter">
+Launch demo modal
+</button>
+<!-- Modal部分 -->
+<div class="modal fade" id="CartModalCenter" tabindex="-1" role="dialog" aria-labelledby="CartModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content">
+  <!-- render用div -->
+  <div id="CartItem"></div>
+</div>
+<!-- Modal部分終了3 -->
+</div>
+<!-- Modal部分終了2 -->
+</div>
+<!-- Modal部分終了1 -->
+<!-- ===================================================================== -->
+
+<!-- ============================お土産屋イメージ=========================== -->
+<!-- 背景 -->
+<div class="container-fluid background-hight">
+
+<div class="row  justify-content-center top-margin">
+<div class="col-sm-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-5 d-flex align-items-center">
+        <%= image_tag "/images/AdobeStock_116377647_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
+      </div>
+      <div class="col-7 d-flex align-items-center">
+        <div class="align-self-end">
+          <p>AMAMIAGE</p>
+          <p>日本の文化という</p>
+          <p>ぬくもりを扱う場所。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-sm-4"></div>
+<!-- 右余白 -->
+</div>
+
+<div class="row  justify-content-center top-margin">
+<div class="col-sm-4"></div>
+<!-- 左余白 -->
+<div class="col-sm-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-7 d-flex align-items-center justify-content-end">
+        <div class="align-self-end text-indent-right">
+          <p>AMAMIAGE</p>
+          <p>日本の宝物を</p>
+          <p>国に持ち帰る場所。</p>
+        </div>
+      </div>
+      <div class="col-5 d-flex align-items-center">
+        <%= image_tag "/images/AdobeStock_68581092_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="row  justify-content-center top-margin">
+<div class="col-sm-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-5 d-flex align-items-center">
+        <%= image_tag "/images/AdobeStock_78206029_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
+      </div>
+      <div class="col-7 d-flex align-items-center">
+        <div class="align-self-end">
+          <p>AMAMIAGE</p>
+          <p>友人に日本の</p>
+          <p>おもてなしを配る場所。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-sm-4"></div>
+<!-- 右余白 -->
+</div>
+
+<div class="row  justify-content-center top-margin">
+<div class="col-sm-4"></div>
+<!-- 左余白 -->
+<div class="col-sm-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-7 d-flex align-items-center justify-content-end">
+        <div class="align-self-end">
+          <p>TAKUYA AMANO</p>
+          <p>・PORTFOLIO</p>
+          <p>・CONCEPT</p>
+        </div>
+      </div>
+      <div class="col-5 d-flex align-items-center">
+        <%= image_tag "/images/AdobeStock_185627039_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- ================================================================== -->
+
+<!-- ==========================ポートフォリオ部分========================== -->
+<!-- 背景 -->
+<div class="top-margin background-hight background-shape background-portforio">
+
+<div class="row justify-content-start">
+  <div class="col">
+    <h2 class="top-margin-title">PORTFOLIO</h2>
+    <p class="text-center portforio-text-style">はじめてのポートフォリオ制作です。<br>
+      作業期間は設計含め1ヶ月間で完成させました。<br>
+      Ruby on Railsで作成しており学び始めて<br>
+      3ヶ月目から作成しております。<br>
+      プログラミングが毎日楽しく、<br>
+      このポートフォリオも夢中で作っておりました。<br>
+      楽しんでいただければ幸いです。</p>
+  </div>
+</div>
+<!-- ================================================================== -->
+
+<!-- ==========================コンセプト部分========================== -->
+<!-- 背景 -->
+<div class="top-margin background-hight background-shape background-portforio">
+  <div class="row justify-content-start">
+    <div class="col">
+      <h2 class="top-margin-title">CONCEPT</h2>
+      <p class="text-center portforio-text-style">いかにユーザーが迷わずかってくれるか<br>
+        を目標に作成しています。<br>
+        購入は3タップで行えます。<br>
+        画面遷移は極力行っていません。<br>
+        ユーザーを離れさせず購入まで誘う<br>
+        そんなサイトを目指しています。<br>
+        デザインは勉強中です。</p>
+    </div>
+  </div>
+  <!-- =============================================================== -->
+
+  <!-- ==========================お土産一覧========================== -->
+  <!-- 背景 -->
+  <div class="top-margin background-hight background-shape background-item">
+
+    <div class="row justify-content-start">
+      <div class="col-sm-4">
+        <h2 class="top-margin-title">お土産</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <% if @items.present? %>
+        <% @items.each do |item| %>
+          <% if item.item_active == 1 %>
+            <%= link_to item, class: "col-6 col-md-3 top-margin-item button-remove-background", remote: true,id: "Item#{item.id}", data: {target: "#Item#{item.id}"} do %>
+            <% if item.post_images.present? %>
+              <% item.post_images.each do |image| %>
+                <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+              <% end %>
+            <% else %>
+              <%= image_tag '/images/no_image.jpg', size: '200x200', class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <!-- 商品増殖 -->
+    <% 20.times do %>
+      <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
+        <%= image_tag "/images/AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+      </button>
+    <% end %>
+  </div>
+  <!-- ====================================================================== -->
+
+</div>
+<!-- お土産一覧背景 -->
+</div>
+<!-- コンセプト部分背景 -->
+</div>
+<!-- ポートフォリオ部分背景 -->
+</div>
+<!-- お土産屋イメージ背景 -->
+
+<script type="text/javascript">
+// ==========モーダル制御、URLの最後に#exampleを付けるとそのモーダルが開く==============
+$(function () {
+if (location.hash) {
+let target = location.hash;
+console.log(target);
+$(target)[0].click();
+}
+});
+// ============================================================================
+</script>

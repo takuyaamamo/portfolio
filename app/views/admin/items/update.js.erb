@@ -1,0 +1,7 @@
+console.log(<%= "item#{@item.id}" %>);
+<% if @status == 'success' %>
+  location.reload();
+<%  elsif @status == 'fail' %>
+alert('error!');
+<% end %>
+$("#NewItemModal").modal("hide");

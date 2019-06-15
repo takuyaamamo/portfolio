@@ -1,0 +1,109 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree ./admin
+ */
+ // Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "bootstrap";
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/* ====================bootstrapオーバーライド================================= */
+.container-fluid {
+  padding-right: 0;
+  padding-left: 0;
+}
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 100%;
+}
+.col {
+  padding-left: 0;
+  padding-right: 0;
+}
+.card-columns{
+  -webkit-column-count: 5;
+  -moz-column-count: 5;
+  column-count: 5;
+}
+.table-dark {
+  background-color: #212529;
+}
+/* ========================================================================== */
+
+/* ===============================テーブル==================================== */
+.table-innercustom-a {
+  display: block;
+  border: none;
+  padding: 15px;
+  width: 100%;
+  height: 100%;
+}
+.table-innercustom-th {
+  display: block;
+  vertical-align: inherit;
+  border: none;
+  padding: 15px;
+  width: 100%;
+  height: 100%;
+}
+
+.table td, .table th {
+  line-height: 3.5rem;
+  vertical-align: middle;
+  padding: 5px;
+}
+.area-all{
+  padding: 0;
+  color: white;
+}
+/* ========================================================================== */
+/* ===============================注文履歴==================================== */
+.inline-block {
+  display: inline-block;
+}
+/* ========================================================================== */
+
+@media (max-width: 575.98px) {
+  body {
+    font-size: 0.7rem;
+  }
+  .card-columns{
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+}

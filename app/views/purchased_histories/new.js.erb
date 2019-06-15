@@ -1,0 +1,9 @@
+// index.html.erb中のDivに対して、新規作成用のformをレンダリング
+console.log('hi');
+<% if admin_signed_in? %>
+$("#CartItem").html("<%= escape_javascript(render 'admin_cart', cart: @cart, purchased_history: @purchased_history, purchased_item: @purchased_item) %>");
+<% else %>
+$("#CartItem").html("<%= escape_javascript(render 'cart', cart: @cart, purchased_history: @purchased_history, purchased_item: @purchased_item) %>");
+<% end %>
+// デフォルトのbootstrapでmodalを開いても良いが、タイミングが早すぎてrender間に合わない
+$("#CartModalCenter").modal("show");

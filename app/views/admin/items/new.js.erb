@@ -1,0 +1,4 @@
+// index.html.erb中のDivに対して、新規作成用のformをレンダリング
+$("#NewItem").html("<%= escape_javascript(render 'form', item: @item) %>");
+// デフォルトのbootstrapでmodalを開いても良いが、タイミングが早すぎてrender間に合わない
+$("#createItemModal").modal("show");

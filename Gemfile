@@ -48,6 +48,14 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # ===================================追加gem====================================
+  # コンソールを途中で止めることが出来る
+  gem 'pry-rails'
+  gem 'pry-nav'
+  # エラー画面を見やすくする、コンソールもそこでいじれる
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  # ==============================================================================
 end
 
 group :test do
@@ -63,8 +71,22 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # ===================================追加gem====================================
 # 環境変数を管理
-gem 'dotenv-rails'
+gem 'dotenv-rails', '2.7.2'
 # bootstrap4を導入
 gem 'bootstrap', '~> 4.3.1'
-gem 'jquery-rails'
+gem 'jquery-rails', '4.3.5'
+# 管理者で使用するdeviseの導入
+gem 'devise', '4.6.2'
+# refileはファイルアップロード用のgem
+gem "refile", require: "refile/rails", github: 'manfe/refile'
+# refile-mini_magickはアップロードした画像のリサイズを簡単に実装するgem
+gem "refile-mini_magick", '0.2.0'
+# nestしたformを整形する
+gem "cocoon", '1.2.12'
+# QRコード表示
+gem "rqrcode" , '0.10.1'
+gem "rqrcode_png", '0.1.5'
+gem "chunky_png", '1.3.11'
+# Itemの倫理削除を実装
+gem "paranoia", '2.4.2'
 # ==============================================================================

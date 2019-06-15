@@ -1,0 +1,7 @@
+console.log('hi');
+<% if @status == 'success' %>
+$("tbody").append("<%= j(render("tr", item: @item)) %>");
+<%  elsif @status == 'fail' %>
+alert('error!');
+<% end %>
+$("#createItemModal").modal("hide");

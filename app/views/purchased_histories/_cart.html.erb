@@ -1,0 +1,202 @@
+<%= form_with url: purchased_histories_path do |form| %>
+<!-- Modalヘッダー部分 -->
+<div class="modal-header">
+  <h5 class="modal-title" id="CartModalCenterTitle">カート内容</h5>
+  <button type="button" class="close" aria-label="Close" id="close_button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- Modalボディ部分 -->
+<div class="modal-body" id="card_have">
+  <% @cart.each do |item| %>
+    <!-- 先に税込金額と商品の個数を抜き出しておく -->
+    <% tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil %>
+      <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
+        <div class="card" id="item<%= item.id %>">
+          <div class="cart-del-button">
+            <%= link_to sessiondestroy_path(item.id), remote: true do %>
+            <span aria-hidden="true">
+              <i class="far fa-trash-alt"></i>
+            </span>
+          <% end %>
+        </div>
+        <% if item.post_images.present? %>
+          <% item.post_images.each do |image| %>
+            <%= attachment_image_tag image, :image, :fill, 600, 600, width: "100%" %>
+          <% end %>
+        <% else %>
+          <%= image_tag '/images/no_image.jpg', size: '200x200', width: "100%" %>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= item.item_name %></h5>
+          <p class="card-text"><%= item.item_description %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            1個
+            <div class="inline-block tax_included"><%= tax_included %></div>円（税込み）
+          </li>
+          <li class="list-group-item">
+            <!-- ネストしたフォーム下部javascript管理 -->
+            <%= form.fields_for "purchased_item[]", item do |purchased_item| %>
+            <div class="inline-block count-size-textalign">
+              <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
+              <div class="item_count_div inline-block count-margin"><%= item_count %></div>
+              <%= purchased_item.number_field :item_count, hidden: true, class: "item_count_input", value: item_count %>
+              <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
+            </div>
+          <% end %>
+        </li>
+        <li class="list-group-item">
+          合計
+          <div class="total_price_div inline-block"><%= tax_included * item_count %></div>円（税込み）
+        </li>
+      </ul>
+    </div>
+  <% end %>
+</div>
+<!-- Modalボディ部分終了 -->
+<!-- ===========================決済方法選択================================== -->
+<hr>
+<div class="mx-auto">
+  <div id="credbutton" class="select-cash-button button-remove-background">
+    <span class="pay-icon">
+      <i class="fas fa-credit-card"></i>
+      <span>クレジットカード</span>
+    </span>
+  </div>
+  <div class="form-group count-margin display-none" id="cred-pay-form">
+    <div class="">
+      <h5>・送付先の情報を入力して下さい。</h5>
+    </div>
+    <%= form.label :user_name, "お名前" %>
+    <%= form.text_field :user_name, class: "form-control text_field_bottom" %>
+    <%= form.label :postal_code, "〒"%>
+    <%= form.text_field :postal_code, class: "form-control text_field_bottom" %>
+    <%= form.label :address, "住所"%>
+    <%= form.text_field :address, class: "form-control text_field_bottom" %>
+    <div class="">
+      <h5>・お客様のご連絡先を入力して下さい。</h5>
+    </div>
+    <%= form.label :phone_number, "電話番号"%>
+    <%= form.telephone_field :phone_number, class: "form-control text_field_bottom" %>
+    <%= form.label :email_address, "メールアドレス"%>
+    <%= form.text_field :email_address, class: "form-control text_field_bottom" %>
+    <script src="https://checkout.pay.jp/" class="payjp-button" data-key="<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>"></script>
+  </div>
+
+  <div id="bankbutton" class="select-cash-button button-remove-background">
+    <span class="pay-icon">
+      <i class="fas fa-piggy-bank"></i>
+      <span>銀行振込</span>
+    </span>
+  </div>
+  <div class="form-group count-margin display-none" id="bank-pay-form">
+    <div class="">
+      <h5>・送付先の情報を入力して下さい。</h5>
+    </div>
+    <%= form.label :user_name, "お名前" %>
+    <%= form.text_field :user_name, class: "form-control text_field_bottom" %>
+    <%= form.label :postal_code, "〒"%>
+    <%= form.text_field :postal_code, class: "form-control text_field_bottom" %>
+    <%= form.label :address, "住所"%>
+    <%= form.text_field :address, class: "form-control text_field_bottom" %>
+    <div class="">
+      <h5>・お客様のご連絡先を入力して下さい。</h5>
+    </div>
+    <%= form.label :phone_number, "電話番号"%>
+    <%= form.telephone_field :phone_number, class: "form-control text_field_bottom" %>
+    <%= form.label :email_address, "メールアドレス"%>
+    <%= form.text_field :email_address, class: "form-control text_field_bottom" %>
+    <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
+  </div>
+</div>
+<br>
+<!-- ======================================================================= -->
+
+<!-- Modalフッター部分 -->
+<div class="modal-footer">
+  <div class="inline-block">
+    合計
+    <div id="final_amount" class="inline-block"></div>円（税込み）
+  </div>
+  <%= form.submit "Close", class: "btn btn-secondary", name: "close", id: "form_end_button" %>
+</div>
+<% end %>
+
+<script type="text/javascript">
+// 総合計算出
+finalamount();
+// ========================商品ごとのカウント制御===================================
+$(".minus").click(function () {
+  // 親要素を取得
+  const parent_card = $(this).closest('.card');
+  // 子要素.tax_includedの税込み金額を取得
+  const item_price = parseInt(parent_card.find('.tax_included').text());
+  // 子要素.item_count_divとその個数を取得
+  const item_count_div = parent_card.find('.item_count_div');
+  let item_count = parseInt(item_count_div.text());
+  // 子要素.total_price_divとその金額を取得
+  const total_price_div = parent_card.find('.total_price_div');
+  let total_price = parseInt(total_price_div.text());
+  // 子要素のhiddeninputとそのvalueを取得
+  const item_count_input = parent_card.find('.item_count_input');
+  if (total_price <= item_price && item_count == 1) {
+    console.log("これ以上少なく出来ません");
+  } else {
+    total_price = total_price - item_price;
+    item_count -= 1;
+    item_count_div.text(item_count);
+    item_count_input.val(item_count);
+    console.log(item_count_input.val());
+    total_price_div.text(total_price);
+
+    finalamount();
+  }
+});
+$(".plus").click(function () {
+  // 親要素を取得
+  const parent_card = $(this).closest('.card');
+  // 子要素.tax_includedの税込み金額を取得
+  const item_price = parseInt(parent_card.find('.tax_included').text());
+  // 子要素.item_count_divとその個数を取得
+  const item_count_div = parent_card.find('.item_count_div');
+  let item_count = parseInt(item_count_div.text());
+  // 子要素.total_price_divとその金額を取得
+  const total_price_div = parent_card.find('.total_price_div');
+  let total_price = parseInt(total_price_div.text());
+  // 子要素のhiddeninputを取得
+  const item_count_input = parent_card.find('.item_count_input');
+  total_price = total_price + item_price;
+  item_count += 1;
+  item_count_div.text(item_count);
+  item_count_input.val(item_count);
+  console.log(item_count_input.val());
+  total_price_div.text(total_price);
+
+  finalamount();
+});
+// =============================================================================
+$("#close_button").click(function () {
+  //モーダル閉じる
+  $('#form_end_button').click();
+});
+
+// ==============================決済方法選択制御==================================
+$("#credbutton").click(function () {
+  console.log('hi');
+  if ($('#bank-pay-form').is(':visible')) {
+    $('#bank-pay-form').slideUp();
+  };
+  $('#cred-pay-form').slideDown();
+});
+
+$("#bankbutton").click(function () {
+  console.log('hi');
+  if ($('#cred-pay-form').is(':visible')) {
+    $('#cred-pay-form').slideUp();
+  };
+  $('#bank-pay-form').slideDown();
+});
+// =============================================================================
+</script>

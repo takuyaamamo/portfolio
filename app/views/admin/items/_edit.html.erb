@@ -1,0 +1,115 @@
+<!-- Modalボディ部分 -->
+<%# adminをnamespase化している為model: [ :admin, @item ]として指定 %>
+  <%= form_with model: [ :admin, @item ],url: admin_item_path(@item.id), method: :put do |form| %>
+  <div class="modal-body">
+    <div class="container-fluid bd-example-row">
+      <!-- render用div -->
+      <div id="NewItem"></div>
+      <% if item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(item.errors.count, "error") %>
+            prohibited this item from being saved:</h2>
+
+          <ul>
+            <% item.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <%= form.label :item_name, "商品名" %>
+          <%= form.text_field :item_name, class: "form-control", placeholder: "日本人形" %>
+          <%= form.label :post_images_images, "商品画像" %>
+          <%= form.attachment_field :post_images_images, multiple: true, class: "form-control-file" %>
+          <%= form.label :item_price, "金額" %>
+          <%= form.number_field :item_price, class: "form-control", placeholder: "税抜きカンマ不要" %>
+          <%= form.fields_for :stock do |fin| %>
+          <%= fin.label :stock_count, "在庫数" %>
+          <%= fin.number_field :stock_count, class: "form-control", placeholder: "半角" %>
+        <% end %>
+      </div>
+      <div class="form-group col-md-6">
+        <div class="preview">
+          <% if @item.post_images.present? %>
+            <% @item.post_images.each do |image| %>
+              <%= attachment_image_tag image, :image, width: "100%" %>
+            <% end %>
+          <% else %>
+            <%= image_tag '/images/no_image.jpg', size: '200x200' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= form.label :item_description, "商品説明" %>
+      <%= form.text_area :item_description, class: "form-control", rows: "3" %>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>タグ選択</label>
+        <div class="form_control">
+          <%= collection_check_boxes(:item, :tag_ids, Tag.all, :id, :tag_name) do |tag_name| %>
+          <%= tag_name.label do %>
+          <%= tag_name.check_box %>
+          <%= tag_name.text %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="form-group col-8">
+          <%= fields_for :tag, @Tag do |tag| %>
+          <%= tag.label :tag_name, "タグ入力" %>
+          <%#= render "tag_fields", tag: tag %>
+          <%= tag.text_field :tag_name, class: "form-control", placeholder: "新規追加の場合入力して下さい" %>
+          <% end %>
+      </div>
+      <div class="form-group col-4 d-flex align-items-end">
+        <%#= link_to_add_association "タグ追加", form, :tag %>
+          <button type="button" class="btn btn-link">タグ追加</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Modalボディ部分終了 -->
+<!-- Modalフッター部分 -->
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<%= link_to "削除", admin_confirm_path(@item), remote: true, class: "btn btn-outline-light active text-danger" %>
+<%= form.submit "編集完了", class: "btn btn-primary" %>
+</div>
+<% end %>
+
+<script type="text/javascript">
+$(function () {
+//画像ファイルプレビュー表示のイベント追加 fileを選択時に発火するイベントを登録
+$('form').on('change', 'input[type="file"]', function (e) {
+  var file = e.target.files[0],
+    reader = new FileReader(),
+    $preview = $(".preview");
+  t = this;
+
+  // 画像ファイル以外の場合は何もしない
+  if (file.type.indexOf("image") < 0) {
+    return false;
+  }
+
+  // ファイル読み込みが完了した際のイベント登録
+  reader.onload = (function (file) {
+    return function (e) {
+      //既存のプレビューを削除
+      $preview.empty();
+      // .prevewの領域の中にロードした画像を表示するimageタグを追加
+      $preview.html($('<img>').attr({src: e.target.result, width: "100%", class: "preview", title: file.name}));
+    };
+  })(file);
+
+  reader.readAsDataURL(file);
+});
+});
+</script>

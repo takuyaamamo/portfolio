@@ -1,0 +1,4 @@
+$("#ItemModalCenter").modal("hide");
+<% if @item.present? %>
+$("#cart-icon").append("<%= escape_javascript(render 'cart_add', item: @item) %>");
+<% end %>

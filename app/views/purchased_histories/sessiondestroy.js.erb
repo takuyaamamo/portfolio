@@ -1,0 +1,10 @@
+// index.html.erb中のDivに対して、新規作成用のformをレンダリング
+console.log('hi')
+$("#item<%= params[:id] %>").fadeOut().queue(function() {
+  this.remove();
+  <% unless session[:cart].present? %>
+    $("#CartModalCenter").modal("hide");
+  <% end %>
+});
+$("#cartitem<%= params[:id] %>").fadeOut();
+$("#cart-icon").html("<%= escape_javascript(render 'cart_update', item: @item) %>");
