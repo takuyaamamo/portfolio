@@ -35,7 +35,7 @@
           <% end %>
         <% else %>
           <div>
-            <%= image_tag 'no_image.jpg', size: '400✕400', class: "rounded-circle shadow circle-color" %>
+            <%= image_tag '/images/no_image.jpg', size: '400✕400', class: "rounded-circle shadow circle-color" %>
           </div>
         <% end %>
       </div>
@@ -101,7 +101,7 @@ Launch demo modal
   <div class="container">
     <div class="row">
       <div class="col-5 d-flex align-items-center">
-        <%= image_tag "AdobeStock_116377647_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
+        <%= image_tag "/images/AdobeStock_116377647_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
       </div>
       <div class="col-7 d-flex align-items-center">
         <div class="align-self-end">
@@ -131,7 +131,7 @@ Launch demo modal
         </div>
       </div>
       <div class="col-5 d-flex align-items-center">
-        <%= image_tag "AdobeStock_68581092_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
+        <%= image_tag "/images/AdobeStock_68581092_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
       </div>
     </div>
   </div>
@@ -143,7 +143,7 @@ Launch demo modal
   <div class="container">
     <div class="row">
       <div class="col-5 d-flex align-items-center">
-        <%= image_tag "AdobeStock_78206029_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
+        <%= image_tag "/images/AdobeStock_78206029_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
       </div>
       <div class="col-7 d-flex align-items-center">
         <div class="align-self-end">
@@ -173,7 +173,7 @@ Launch demo modal
         </div>
       </div>
       <div class="col-5 d-flex align-items-center">
-        <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
+        <%= image_tag "/images/AdobeStock_185627039_Preview.jpeg", class: "w-100 rounded-circle shadow circle-color" %>
       </div>
     </div>
   </div>
@@ -236,7 +236,7 @@ Launch demo modal
                 <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
               <% end %>
             <% else %>
-              <%= image_tag 'no_image.jpg', size: '200x200', class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+              <%= image_tag '/images/no_image.jpg', size: '200x200', class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
             <% end %>
           <% end %>
         <% end %>
@@ -245,7 +245,7 @@ Launch demo modal
     <!-- 商品増殖 -->
     <% 20.times do %>
       <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-        <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+        <%= image_tag "/images/AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
       </button>
     <% end %>
   </div>
