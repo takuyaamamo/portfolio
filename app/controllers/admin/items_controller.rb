@@ -11,6 +11,7 @@ class Admin::ItemsController < Admin::Base
 
   # GET admin_item GET    /admin/items/:id アイテムのQRコード表示
   def show
+    binding.pry
     item = Item.find(params[:id])
     # svgでqr生成
     @qr = RQRCode::QRCode.new(item.item_qr).as_svg.html_safe
@@ -32,7 +33,7 @@ class Admin::ItemsController < Admin::Base
     respond_to do |format|
       if @item.save
         # QRコードのURLを生成
-        @item.item_qr = "localhost:3000/#Item#{@item.id}"
+        @item.item_qr = "http://localhost:3000/#Item#{@item.id}"
         @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
