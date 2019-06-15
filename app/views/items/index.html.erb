@@ -63,6 +63,7 @@ Launch demo modal
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  <!-- render用div -->
   <div id="ShowItem"></div>
 </div>
 <!-- Modal部分終了3 -->
@@ -81,172 +82,8 @@ Launch demo modal
 <div class="modal fade" id="CartModalCenter" tabindex="-1" role="dialog" aria-labelledby="CartModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
 <div class="modal-content">
+  <!-- render用div -->
   <div id="CartItem"></div>
-</div>
-<!-- Modal部分終了3 -->
-</div>
-<!-- Modal部分終了2 -->
-</div>
-<!-- Modal部分終了1 -->
-<!-- ===================================================================== -->
-
-<!-- ========================管理者カート内容モーダル表示========================= -->
-<!-- モーダル表示ボタンメモ -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AdminCartModal" hidden="hidden">
-Launch demo modal
-</button>
-<!-- Modal部分 -->
-<div class="modal fade" id="AdminCartModal" tabindex="-1" role="dialog" aria-labelledby="AdminCartModalTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-<div class="modal-content">
-  <!-- Modalヘッダー部分 -->
-  <div class="modal-header">
-    <h5 class="modal-title" id="AdminCartModalTitle">管理者カート内容</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <!-- Modalボディ部分 -->
-  <div class="modal-body">
-    <div class="card">
-      <div class=" cart-del-button">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="far fa-trash-alt"></i>
-          </span>
-        </button>
-      </div>
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", width: "100%" %>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          1個
-          <div class="inline-block">350</div>円（税込み）
-        </li>
-        <li class="list-group-item">
-          <div class="inline-block count-size-textalign">
-            <i class="fas fa-minus-circle"></i>
-            <div class="inline-block count-margin">3</div>
-            <i class="fas fa-plus-circle"></i>
-          </div>
-        </li>
-        <li class="list-group-item">
-          合計
-          <div class="inline-block">350</div>円（税込み）
-        </li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <div class=" cart-del-button">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="far fa-trash-alt"></i>
-          </span>
-        </button>
-      </div>
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", width: "100%" %>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          1個
-          <div class="inline-block">350</div>円（税込み）
-        </li>
-        <li class="list-group-item">
-          <div class="inline-block count-size-textalign">
-            <i class="fas fa-minus-circle"></i>
-            <div class="inline-block count-margin">3</div>
-            <i class="fas fa-plus-circle"></i>
-          </div>
-        </li>
-        <li class="list-group-item">
-          合計
-          <div class="inline-block">350</div>円（税込み）
-        </li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <div class=" cart-del-button">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="far fa-trash-alt"></i>
-          </span>
-        </button>
-      </div>
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", width: "100%" %>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          1個
-          <div class="inline-block">350</div>円（税込み）
-        </li>
-        <li class="list-group-item">
-          <div class="inline-block count-size-textalign">
-            <i class="fas fa-minus-circle"></i>
-            <div class="inline-block count-margin">3</div>
-            <i class="fas fa-plus-circle"></i>
-          </div>
-        </li>
-        <li class="list-group-item">
-          合計
-          <div class="inline-block">350</div>円（税込み）
-        </li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <div class=" cart-del-button">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="far fa-trash-alt"></i>
-          </span>
-        </button>
-      </div>
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", width: "100%" %>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          1個
-          <div class="inline-block">350</div>円（税込み）
-        </li>
-        <li class="list-group-item">
-          <div class="inline-block count-size-textalign">
-            <i class="fas fa-minus-circle"></i>
-            <div class="inline-block count-margin">3</div>
-            <i class="fas fa-plus-circle"></i>
-          </div>
-        </li>
-        <li class="list-group-item">
-          合計
-          <div class="inline-block">350</div>円（税込み）
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!-- Modalボディ部分終了 -->
-  <!-- 総合計表示 -->
-  <hr>
-  <div class="mx-auto">
-    <div class="inline-block">
-      合計
-      <div class="inline-block">350</div>円（税込み）
-    </div>
-  </div>
-  <br>
-  <!-- Modalフッター部分 -->
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">在庫更新</button>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-  </div>
 </div>
 <!-- Modal部分終了3 -->
 </div>
@@ -390,79 +227,27 @@ Launch demo modal
     </div>
 
     <div class="row">
-      <% @items.each do |item| %>
-        <%= link_to item, class: "col-6 col-md-3 top-margin-item button-remove-background", remote: true,id: "Item#{item.id}", data: {target: "#Item#{item.id}"} do %>
-        <% if item.post_images.present? %>
-          <% item.post_images.each do |image| %>
-            <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+      <% if @items.present? %>
+        <% @items.each do |item| %>
+          <%= link_to item, class: "col-6 col-md-3 top-margin-item button-remove-background", remote: true,id: "Item#{item.id}", data: {target: "#Item#{item.id}"} do %>
+          <% if item.post_images.present? %>
+            <% item.post_images.each do |image| %>
+              <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+            <% end %>
+          <% else %>
+            <%= image_tag 'no_image.jpg', size: '200x200', class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
           <% end %>
-        <% else %>
-          <%= image_tag 'no_image.jpg', size: '200x200', class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
         <% end %>
       <% end %>
     <% end %>
+    <!-- 商品増殖 -->
+    <%= 20.times do %>
     <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
       <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
     </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#AdminCartModal">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-    <button type="button" class="col-6 col-md-3 top-margin-item button-remove-background" data-toggle="modal" data-target="#ItemModalCenter">
-      <%= image_tag "AdobeStock_185627039_Preview.jpeg", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-    </button>
-  </div>
-  <!-- ============================================================== -->
+  <% end %>
+</div>
+<!-- ====================================================================== -->
 
 </div>
 <!-- お土産一覧背景 -->
