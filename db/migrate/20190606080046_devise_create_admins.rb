@@ -2,7 +2,10 @@
 
 class DeviseCreateAdmins < ActiveRecord::Migration[5.2]
   def change
-    create_table :admins do |t|
+    # デプロイの為:options => 'ENGINE=InnoDB ROW_FORMAT=DYNAMIC'を追加
+    # MySQL5.6の場合ActiveRecordのstring型カラムがvarchar(255)で定義されるので、
+    # utf8mb4ではインデックスのキープレフィックスが767byteを超えてしまうため
+    create_table :admins, :options => 'ENGINE=InnoDB ROW_FORMAT=DYNAMIC' do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
