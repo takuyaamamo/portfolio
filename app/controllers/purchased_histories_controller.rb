@@ -28,6 +28,7 @@ class PurchasedHistoriesController < ApplicationController
         end
       end
     elsif params[:buy]# カートの銀行振込ボタン後
+      binding.pry
       if session[:cart].present?
         @purchased_history = PurchasedHistory.new
         @purchased_history.user_name = params[:user_name]
