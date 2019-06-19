@@ -1,1 +1,3 @@
-$("#CartModalCenter").modal("hide");
+$("#CartModalCenter").modal("hide").queue(function() {
+  location.reload();
+});
