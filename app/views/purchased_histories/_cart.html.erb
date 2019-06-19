@@ -69,20 +69,22 @@
     <div class="">
       <h5>・送付先の情報を入力して下さい。</h5>
     </div>
-    <%= form.label :user_name, "お名前" %>
-    <%= form.text_field :user_name, class: "form-control text_field_bottom" %>
-    <%= form.label :postal_code, "〒"%>
-    <%= form.text_field :postal_code, class: "form-control text_field_bottom" %>
-    <%= form.label :address, "住所"%>
-    <%= form.text_field :address, class: "form-control text_field_bottom" %>
+    <%= form.fields_for "userinfo", item do |userinfo| %>
+    <%= userinfo.label :user_name, "お名前" %>
+    <%= userinfo.text_field :user_name, class: "form-control text_field_bottom" %>
+    <%= userinfo.label :postal_code, "〒"%>
+    <%= userinfo.text_field :postal_code, class: "form-control text_field_bottom" %>
+    <%= userinfo.label :address, "住所"%>
+    <%= userinfo.text_field :address, class: "form-control text_field_bottom" %>
     <div class="">
       <h5>・お客様のご連絡先を入力して下さい。</h5>
     </div>
-    <%= form.label :phone_number, "電話番号"%>
-    <%= form.telephone_field :phone_number, class: "form-control text_field_bottom" %>
-    <%= form.label :email_address, "メールアドレス"%>
-    <%= form.text_field :email_address, class: "form-control text_field_bottom" %>
+    <%= userinfo.label :phone_number, "電話番号"%>
+    <%= userinfo.telephone_field :phone_number, class: "form-control text_field_bottom" %>
+    <%= userinfo.label :email_address, "メールアドレス"%>
+    <%= userinfo.text_field :email_address, class: "form-control text_field_bottom" %>
     <script src="https://checkout.pay.jp/" class="payjp-button" data-key="<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>"></script>
+    <% end %>
   </div>
 
   <div id="bankbutton" class="select-cash-button button-remove-background">
