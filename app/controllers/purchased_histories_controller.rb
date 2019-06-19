@@ -46,7 +46,7 @@ class PurchasedHistoriesController < ApplicationController
           session[:cart].delete(item_id)
         end
       end
-    elsif params[:payjp-token]
+    elsif params['payjp-token']
       render 'payjp'
     else
     end
