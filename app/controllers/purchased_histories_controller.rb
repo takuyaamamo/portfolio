@@ -46,6 +46,9 @@ class PurchasedHistoriesController < ApplicationController
       )
       purchased_history_save
       redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to root_path }
+      end
       rescue Payjp::CardError
         respond_to do |format|
           format.html { redirect_to root_path, notice: 'カードエラーが発生しました' }
