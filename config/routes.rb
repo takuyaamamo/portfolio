@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :items, only: [:index, :show]
   resources :purchased_histories, only: [:new, :create]
   post 'purchased_histories/sessioncreate', to: 'purchased_histories#sessioncreate', as: 'sessioncreate'
+  post 'purchased_histories/payjp', to: 'purchased_histories#payjp', as: 'payjp'
   get 'purchased_histories/sessiondestroy/:id', to: 'purchased_histories#sessiondestroy', as: 'sessiondestroy'
 
   # refilegem用
