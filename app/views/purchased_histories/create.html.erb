@@ -46,44 +46,27 @@
                   <% else %>
                     <%= image_tag '/images/no_image.jpg', size: '200x200', class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
                   <% end %>
-    <div class="card-body">
-      <h5 class="card-title"><%= item.item_name %></h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        1個
-        <div class="inline-block"><%= tax_included_item_price %></div>円（税込み）
-      </li>
-      <li class="list-group-item">
-        <%= purchased_item.item_count %>個
-      </li>
-      <li class="list-group-item">
-        合計
-        <div class="inline-block"><%= total_price %></div>円（税込み）
-      </li>
-    </ul>
-  </div>
-  <div class="card">
-    <img src="image/AdobeStock_185627039_Preview.jpeg" width="100%">
-    <div class="card-body">
-      <h5 class="card-title">日本人形</h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        1個
-        <div class="inline-block">2345</div>円（税込み）
-      </li>
-      <li class="list-group-item">
-        32個
-      </li>
-      <li class="list-group-item">
-        合計
-        <div class="inline-block">34567</div>円（税込み）
-      </li>
-    </ul>
-  </div>
-<div class="row mb-3">
-  総合計
-  <div class="inline-block"><%= final_price %></div>円（税込み）
-</div>
-</div> <!-- /container -->
+                  <div class="card-body">
+                    <h5 class="card-title"><%= item.item_name %></h5>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      1個
+                      <div class="inline-block"><%= tax_included_item_price %></div>円（税込み）
+                    </li>
+                    <li class="list-group-item">
+                      <%= purchased_item.item_count %>個
+                    </li>
+                    <li class="list-group-item">
+                      合計
+                      <div class="inline-block"><%= total_price %></div>円（税込み）
+                    </li>
+                  </ul>
+                </div>
+              <% end %>
+              <div class="row mb-3">
+                総合計
+                <div class="inline-block"><%= final_price %></div>円（税込み）
+              </div>
+            </div>
+            <!-- /container -->
