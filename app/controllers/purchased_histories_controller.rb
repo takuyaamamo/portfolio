@@ -30,8 +30,30 @@ class PurchasedHistoriesController < ApplicationController
     elsif params[:buy]# カートの銀行振込ボタン後
       purchased_history_save
     elsif params['payjp-token']# クレジット決済ボタンを押したあと
+      # 合計金額計算
+      total_price = 0
+      params[:purchased_item].each do |item_id, item_count|
+        tax_included = (BigDecimal(Item.find(item_id.to_i).item_price) * BigDecimal("1.08")).ceil
+        tax_included = tax_included * item_count["item_count"].to_i
+        total_price = total_price + tax_included
+      end
+      # payjp決済確定
+      Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
+      charge = Payjp::Charge.create(
+        :amount => total_price,
+        :card => params['payjp-token'],
+        :currency => 'jpy',
+      )
       purchased_history_save
+      rescue Payjp::CardError
+        respond_to do |format|
+          format.html { redirect_to root_path, notice: 'カードエラーが発生しました' }
+        end
+      end
     else
+      respond_to do |format|
+        format.html { redirect_to root_path }
+      end
     end
   end
 
