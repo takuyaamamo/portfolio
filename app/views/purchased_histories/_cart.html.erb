@@ -82,9 +82,7 @@
     <%= form.telephone_field :phone_number, class: "form-control text_field_bottom" %>
     <%= form.label :email_address, "メールアドレス"%>
     <%= form.text_field :email_address, class: "form-control text_field_bottom" %>
-    <%= form_with url: payjp_path do |f| %>
     <script src="https://checkout.pay.jp/" class="payjp-button" data-key="<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>"></script>
-    <% end %>
   </div>
 
   <div id="bankbutton" class="select-cash-button button-remove-background">
