@@ -157,6 +157,8 @@ GEM
     orm_adapter (0.5.0)
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
+    payjp (0.0.6)
+      rest-client (~> 2.0)
     popper_js (1.14.5)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -304,6 +306,7 @@ DEPENDENCIES
   jquery-rails (= 4.3.5)
   listen (>= 3.0.5, < 3.2)
   paranoia (= 2.4.2)
+  payjp (= 0.0.6)
   pry-nav
   pry-rails
   puma (~> 3.11)
