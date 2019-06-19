@@ -83,8 +83,8 @@
     <%= userinfo.telephone_field :phone_number, class: "form-control text_field_bottom" %>
     <%= userinfo.label :email_address, "メールアドレス"%>
     <%= userinfo.text_field :email_address, class: "form-control text_field_bottom" %>
-    <% end %>
     <script src="https://checkout.pay.jp/" class="payjp-button" data-key="<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>"></script>
+    <% end %>
   </div>
 
   <div id="bankbutton" class="select-cash-button button-remove-background">
@@ -110,8 +110,8 @@
     <%= userinfo.telephone_field :phone_number, class: "form-control text_field_bottom" %>
     <%= userinfo.label :email_address, "メールアドレス"%>
     <%= userinfo.text_field :email_address, class: "form-control text_field_bottom" %>
-    <% end %>
     <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
+    <% end %>
   </div>
 </div>
 <br>
