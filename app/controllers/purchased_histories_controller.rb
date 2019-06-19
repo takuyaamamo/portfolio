@@ -29,6 +29,7 @@ class PurchasedHistoriesController < ApplicationController
       end
     elsif params[:buy]# カートの銀行振込ボタン後
       purchased_history_save
+      session[:cart].delete(item_id)
     elsif params['payjp-token']# クレジット決済ボタンを押したあと
       purchased_history_save
     else
