@@ -32,7 +32,7 @@ class Admin::ItemsController < Admin::Base
     respond_to do |format|
       if @item.save
         # QRコードのURLを生成
-        @item.item_qr = "http://localhost:3000/#Item#{@item.id}"
+        @item.item_qr = "https://portfolio.amamo.site/#Item#{@item.id}"
         @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
