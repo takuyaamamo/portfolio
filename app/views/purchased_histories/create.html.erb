@@ -1,1 +1,89 @@
-hello
+<div class="container">
+
+  <h1>購入確認</h1>
+  <p class="lead">購入内容が下記でよろしければ購入ボタンを押して下さい。</p>
+
+  <h2 class="mt-4">注文者情報</h2>
+
+  <div class="row mb-3">
+    <dl>
+      <dt>お名前</dt>
+      <dd><%= @purchased_history.user_name %></dd>
+
+      <dt>メールアドレス</dt>
+      <dd><%= @purchased_history.email_address %></dd>
+
+      <dt>電話番号</dt>
+      <dd><%= @purchased_history.phone_number %></dd>
+    </dl>
+  </div>
+
+  <h2 class="mt-4">送付先</h2>
+
+  <div class="row mb-3">
+    <dl>
+      <dt>郵便番号</dt>
+      <dd>〒<%= @purchased_history.postal_code %></dd>
+
+      <dt>住所</dt>
+      <dd><%= @purchased_history.address %></dd>
+    </dl>
+  </div>
+
+  <h2 class="mt-4">ご注文商品</h2>
+  <% final_price = 0 %>
+    <% @purchased_items.each do |purchased_item| %>
+      <% item = Item.find(purchased_item.item_id) %>
+        <% item_price = item.item_price %>
+          <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
+            <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
+              <% final_price = final_price + tax_included_item_price %>
+                <div class="card">
+                  <% if item.post_images.present? %>
+                    <% item.post_images.each do |image| %>
+                      <%= attachment_image_tag image, :image, :fill, 400, 400, class: "mx-auto d-block width-change-item" %>
+                    <% end %>
+                  <% else %>
+                    <%= image_tag '/images/no_image.jpg', size: '200x200', class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+                  <% end %>
+    <div class="card-body">
+      <h5 class="card-title"><%= item.item_name %></h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        1個
+        <div class="inline-block"><%= tax_included_item_price %></div>円（税込み）
+      </li>
+      <li class="list-group-item">
+        <%= purchased_item.item_count %>個
+      </li>
+      <li class="list-group-item">
+        合計
+        <div class="inline-block"><%= total_price %></div>円（税込み）
+      </li>
+    </ul>
+  </div>
+  <div class="card">
+    <img src="image/AdobeStock_185627039_Preview.jpeg" width="100%">
+    <div class="card-body">
+      <h5 class="card-title">日本人形</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        1個
+        <div class="inline-block">2345</div>円（税込み）
+      </li>
+      <li class="list-group-item">
+        32個
+      </li>
+      <li class="list-group-item">
+        合計
+        <div class="inline-block">34567</div>円（税込み）
+      </li>
+    </ul>
+  </div>
+<div class="row mb-3">
+  総合計
+  <div class="inline-block"><%= final_price %></div>円（税込み）
+</div>
+</div> <!-- /container -->

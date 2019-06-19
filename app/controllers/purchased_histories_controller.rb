@@ -28,32 +28,12 @@ class PurchasedHistoriesController < ApplicationController
         end
       end
     elsif params[:buy]# カートの銀行振込ボタン後
-      binding.pry
-      if session[:cart].present?
-        @purchased_history = PurchasedHistory.new
-        @purchased_history.user_name = params[:user_name]
-        @purchased_history.postal_code = params[:postal_code]
-        @purchased_history.address = params[:address]
-        @purchased_history.phone_number = params[:phone_number]
-        @purchased_history.email_address = params[:email_address]
-        @purchased_history.shipping = 0
-        @purchased_history.save
-        params[:purchased_item].each do |item_id, item_count|
-          @purchased_item = PurchasedItem.new
-          @purchased_item.purchased_history_id = @purchased_history.id
-          @purchased_item.item_id = item_id.to_i
-          @purchased_item.item_count = item_count["item_count"].to_i
-          @purchased_item.save
-          session[:cart].delete(item_id)
-        end
-      end
-    elsif params['payjp-token']
+      purchased_history_save
+      session[:cart].delete(item_id)
+    elsif params['payjp-token']# クレジット決済ボタンを押したあと
+      purchased_history_save
     else
     end
-  end
-
-  def payjp
-    render 'new'
   end
 
   # sessioncreate POST   /purchased_histories/sessioncreate 商品詳細画面のsubmit後
@@ -96,5 +76,27 @@ class PurchasedHistoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchased_history_params
       params.require(:purchased_history).permit(:user_name, :postal_code, :address, :phone_number, :email_address, :shipping, :created_at, :updated_at, purchased_items_attributes: [:id, :purchased_history_id, :item_id, :item_count, :_destroy])
+    end
+
+    def purchased_history_save
+      if session[:cart].present?
+        @purchased_history = PurchasedHistory.new
+        @purchased_history.user_name = params['userinfo'][:user_name]
+        @purchased_history.postal_code = params['userinfo'][:postal_code]
+        @purchased_history.address = params['userinfo'][:address]
+        @purchased_history.phone_number = params['userinfo'][:phone_number]
+        @purchased_history.email_address = params['userinfo'][:email_address]
+        @purchased_history.shipping = 0
+        @purchased_history.save
+        params[:purchased_item].each do |item_id, item_count|
+          @purchased_item = PurchasedItem.new
+          @purchased_item.purchased_history_id = @purchased_history.id
+          @purchased_item.item_id = item_id.to_i
+          @purchased_item.item_count = item_count["item_count"].to_i
+          @purchased_item.save
+          # session[:cart].delete(item_id)
+        end
+        @purchased_items = PurchasedItem.where(purchased_history_id: @purchased_history.id)
+      end
     end
 end
