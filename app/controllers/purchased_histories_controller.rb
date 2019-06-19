@@ -47,7 +47,10 @@ class PurchasedHistoriesController < ApplicationController
         end
       end
     elsif params['payjp-token']
-      render 'payjp'
+      # render 'payjp'
+      respond_to do |format|
+        format.js
+      end
     else
     end
   end
