@@ -69,7 +69,11 @@
     <div class="">
       <h5>・送付先の情報を入力して下さい。</h5>
     </div>
+<<<<<<< HEAD
     <%= form.fields_for "userinfo" do |userinfo| %>
+=======
+    <%= form.fields_for "userinfo", item do |userinfo| %>
+>>>>>>> c599c389bae34e1f2db150049af8116bc1a3ee4f
     <%= userinfo.label :user_name, "お名前" %>
     <%= userinfo.text_field :user_name, class: "form-control text_field_bottom" %>
     <%= userinfo.label :postal_code, "〒"%>
