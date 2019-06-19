@@ -53,7 +53,6 @@ class PurchasedHistoriesController < ApplicationController
   end
 
   def payjp
-    render 'new'
   end
 
   # sessioncreate POST   /purchased_histories/sessioncreate 商品詳細画面のsubmit後
