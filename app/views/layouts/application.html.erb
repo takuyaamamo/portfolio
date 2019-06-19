@@ -14,6 +14,27 @@
   </head>
 
   <body>
+    <!-- ===============================ヘッダー============================== -->
+    <header class="sticky-top">
+      <nav class="navbar navbar-light">
+        <a class="navbar-brand">
+          <h1>AMAMIAGE</h1>
+        </a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </nav>
+    </header>
+    <!-- ==================================================================== -->
+
+    <!-- ===============================メールアイコン============================== -->
+    <a class="mail-icon" href="mailto:iamaama703@gmail.com?subject=お問い合わせ&body=お問い合わせ有難う御座います。%0D%0Aご自由にお問い合わせ内容をご記入下さい。">
+      <span class="mail-icon-size">
+        <i class="far fa-envelope"></i>
+      </span>
+    </a>
+    <!-- ==================================================================== -->
     <%= yield %>
   </body>
 </html>
