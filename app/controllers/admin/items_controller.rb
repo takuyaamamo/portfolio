@@ -72,15 +72,14 @@ class Admin::ItemsController < Admin::Base
 
   # admin_statuschange PUT    /admin/statuschange/:id item_active変更
   def statuschange
-    item = Item.find(params[:id])
-    if item.item_active == 0
-      item.item_active = 1
-      item.save
+    @item = Item.find(params[:id])
+    if @item.item_active == 0
+      @item.item_active = 1
+      @item.save
     else
-      item.item_active = 0
-      item.save
+      @item.item_active = 0
+      @item.save
     end
-    redirect_to admin_items_path
   end
 
   # admin_confirm GET    /admin/confirm/:id 商品削除確認画面
