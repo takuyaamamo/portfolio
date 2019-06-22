@@ -37,6 +37,7 @@ class PurchasedHistoriesController < ApplicationController
         tax_included = tax_included * item_count["item_count"].to_i
         total_price = total_price + tax_included
       end
+      begin
       #payjp決済確定
       Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
       Payjp::Charge.create(
