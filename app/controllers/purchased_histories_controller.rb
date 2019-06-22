@@ -37,19 +37,20 @@ class PurchasedHistoriesController < ApplicationController
         tax_included = tax_included * item_count["item_count"].to_i
         total_price = total_price + tax_included
       end
+      begin
       #payjp決済確定
-      # Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
-      # charge = Payjp::Charge.create(
-      #   :amount => total_price,
-      #   :card => params['payjp-token'],
-      #   :currency => 'jpy',
-      # )
+      Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
+      Payjp::Charge.create(
+        :amount => total_price,
+        :card => params['payjp-token'],
+        :currency => 'jpy',
+      )
       purchased_history_save
-      # rescue Payjp::CardError
-      #   respond_to do |format|
-      #     format.html { redirect_to root_path, notice: 'カードエラーが発生しました' }
-      #   end
-      # end
+      rescue Payjp::CardError
+        respond_to do |format|
+          format.html { redirect_to root_path, notice: 'カードエラーが発生しました' }
+        end
+      end
     else
       respond_to do |format|
         format.html { redirect_to root_path }
