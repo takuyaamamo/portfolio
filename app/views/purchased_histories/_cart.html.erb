@@ -11,119 +11,129 @@
   <% @cart.each do |item| %>
     <!-- 先に税込金額と商品の個数を抜き出しておく -->
     <% tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil %>
-      <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
-        <div class="card" id="item<%= item.id %>">
-          <div class="cart-del-button">
-            <%= link_to sessiondestroy_path(item.id), remote: true do %>
-            <span aria-hidden="true">
-              <i class="far fa-trash-alt"></i>
-            </span>
-          <% end %>
-        </div>
-        <% if item.post_images.present? %>
-          <% item.post_images.each do |image| %>
-            <%= attachment_image_tag image, :image, :fill, 600, 600, width: "100%" %>
-          <% end %>
-        <% else %>
-          <%= image_tag '/images/no_image.jpg', size: '200x200', width: "100%" %>
-        <% end %>
-        <div class="card-body">
-          <h5 class="card-title"><%= item.item_name %></h5>
-          <p class="card-text"><%= item.item_description %></p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            1個
-            <div class="inline-block tax_included"><%= tax_included %></div>円（税込み）
-          </li>
-          <li class="list-group-item">
-            <!-- ネストしたフォーム下部javascript管理 -->
-            <%= form.fields_for "purchased_item[]", item do |purchased_item| %>
-            <div class="inline-block count-size-textalign">
-              <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
-              <div class="item_count_div inline-block count-margin"><%= item_count %></div>
-              <%= purchased_item.number_field :item_count, hidden: true, class: "item_count_input", value: item_count %>
-              <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
+      <% stock_count = Stock.find_by(item_id: item.id).stock_count.to_i %>
+        <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
+          <% item_count = stock_count if item_count >= stock_count %>
+            <div class="card" id="item<%= item.id %>">
+              <div class="cart-del-button">
+                <%= link_to sessiondestroy_path(item.id), remote: true do %>
+                <span aria-hidden="true">
+                  <i class="far fa-trash-alt"></i>
+                </span>
+              <% end %>
             </div>
-          <% end %>
-        </li>
-        <li class="list-group-item">
-          合計
-          <div class="total_price_div inline-block"><%= tax_included * item_count %></div>円（税込み）
-        </li>
-      </ul>
-    </div>
-  <% end %>
-</div>
-<!-- Modalボディ部分終了 -->
-<!-- ===========================決済方法選択================================== -->
-<hr>
-<div class="mx-auto">
-  <div id="credbutton" class="select-cash-button button-remove-background">
-    <span class="pay-icon">
-      <i class="fas fa-credit-card"></i>
-      <span>クレジットカード</span>
-    </span>
-  </div>
-  <div class="form-group count-margin display-none" id="cred-pay-form">
-    <div class="">
-      <h5>・送付先の情報を入力して下さい。</h5>
-    </div>
-    <%= form.fields_for "userinfo" do |userinfo| %>
-    <%= userinfo.label :user_name, "お名前" %>
-    <%= userinfo.text_field :user_name, class: "user-name-input form-control text_field_bottom" %>
-    <%= userinfo.label :postal_code, "〒"%>
-    <%= userinfo.text_field :postal_code, class: "postal-code-input form-control text_field_bottom" %>
-    <%= userinfo.label :address, "住所"%>
-    <%= userinfo.text_field :address, class: "address-input form-control text_field_bottom" %>
-    <div class="">
-      <h5>・お客様のご連絡先を入力して下さい。</h5>
-    </div>
-    <%= userinfo.label :phone_number, "電話番号"%>
-    <%= userinfo.telephone_field :phone_number, class: "phone-number-input form-control text_field_bottom" %>
-    <%= userinfo.label :email_address, "メールアドレス"%>
-    <%= userinfo.text_field :email_address, class: "email-address-input form-control text_field_bottom" %>
-    <% end %>
-  <script src="https://checkout.pay.jp/" class="payjp-button" data-key="<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>"></script>
-</div>
+            <% if item.post_images.present? %>
+              <% item.post_images.each do |image| %>
+                <%= attachment_image_tag image, :image, :fill, 600, 600, width: "100%" %>
+              <% end %>
+            <% else %>
+              <%= image_tag '/images/no_image.jpg', size: '200x200', width: "100%" %>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= item.item_name %></h5>
+              <p class="card-text"><%= item.item_description %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                1個
+                <div class="inline-block tax_included"><%= tax_included %></div>円（税込み）
+              </li>
 
-<div id="bankbutton" class="select-cash-button button-remove-background">
-  <span class="pay-icon">
-    <i class="fas fa-piggy-bank"></i>
-    <span>銀行振込</span>
-  </span>
-</div>
-<div class="form-group count-margin display-none" id="bank-pay-form">
-  <div class="">
-    <h5>・送付先の情報を入力して下さい。</h5>
-  </div><%= form.fields_for "userinfo" do |userinfo| %>
-  <%= userinfo.label :user_name, "お名前" %>
-  <%= userinfo.text_field :user_name, class: "user-name-input form-control text_field_bottom" %>
-  <%= userinfo.label :postal_code, "〒"%>
-  <%= userinfo.text_field :postal_code, class: "postal-code-input form-control text_field_bottom" %>
-  <%= userinfo.label :address, "住所"%>
-  <%= userinfo.text_field :address, class: "address-input form-control text_field_bottom" %>
-  <div class="">
-    <h5>・お客様のご連絡先を入力して下さい。</h5>
+              <!-- ===================ここで購入数の増減調節=================== -->
+              <div class="item_stock" hidden="hidden"><%= stock_count %></div>
+              <li class="list-group-item">
+                <!-- ネストしたフォーム下部javascript管理 -->
+                <%= form.fields_for "purchased_item[]", item do |purchased_item| %>
+                <div class="inline-block count-size-textalign">
+                  <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
+                  <div class="item_count_div inline-block count-margin"><%= item_count %></div>
+                  <%= purchased_item.number_field :item_count, hidden: true, class: "item_count_input", value: item_count %>
+                  <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
+                  <div class="inline-block">
+                    <p class="lacking-stock inline-block text-right"></p>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+            <!-- =========================================================== -->
+
+            <li class="list-group-item">
+              合計
+              <div class="total_price_div inline-block"><%= tax_included * item_count %></div>円（税込み）
+            </li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+    <!-- Modalボディ部分終了 -->
+    <!-- =========================決済方法選択================================ -->
+    <hr>
+    <div class="mx-auto">
+      <div id="credbutton" class="select-cash-button button-remove-background">
+        <span class="pay-icon">
+          <i class="fas fa-credit-card"></i>
+          <span>クレジットカード</span>
+        </span>
+      </div>
+      <div class="form-group count-margin display-none" id="cred-pay-form">
+        <div class="">
+          <h5>・送付先の情報を入力して下さい。</h5>
+        </div>
+        <%= form.fields_for "userinfo" do |userinfo| %>
+        <%= userinfo.label :user_name, "お名前" %>
+        <%= userinfo.text_field :user_name, class: "user-name-input form-control text_field_bottom" %>
+        <%= userinfo.label :postal_code, "〒"%>
+        <%= userinfo.text_field :postal_code, class: "postal-code-input form-control text_field_bottom" %>
+        <%= userinfo.label :address, "住所"%>
+        <%= userinfo.text_field :address, class: "address-input form-control text_field_bottom" %>
+        <div class="">
+          <h5>・お客様のご連絡先を入力して下さい。</h5>
+        </div>
+        <%= userinfo.label :phone_number, "電話番号"%>
+        <%= userinfo.telephone_field :phone_number, class: "phone-number-input form-control text_field_bottom" %>
+        <%= userinfo.label :email_address, "メールアドレス"%>
+        <%= userinfo.text_field :email_address, class: "email-address-input form-control text_field_bottom" %>
+      <% end %>
+      <script src="https://checkout.pay.jp/" class="payjp-button" data-key="<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>"></script>
+    </div>
+
+    <div id="bankbutton" class="select-cash-button button-remove-background">
+      <span class="pay-icon">
+        <i class="fas fa-piggy-bank"></i>
+        <span>銀行振込</span>
+      </span>
+    </div>
+    <div class="form-group count-margin display-none" id="bank-pay-form">
+      <div class="">
+        <h5>・送付先の情報を入力して下さい。</h5>
+      </div><%= form.fields_for "userinfo" do |userinfo| %>
+      <%= userinfo.label :user_name, "お名前" %>
+      <%= userinfo.text_field :user_name, class: "user-name-input form-control text_field_bottom" %>
+      <%= userinfo.label :postal_code, "〒"%>
+      <%= userinfo.text_field :postal_code, class: "postal-code-input form-control text_field_bottom" %>
+      <%= userinfo.label :address, "住所"%>
+      <%= userinfo.text_field :address, class: "address-input form-control text_field_bottom" %>
+      <div class="">
+        <h5>・お客様のご連絡先を入力して下さい。</h5>
+      </div>
+      <%= userinfo.label :phone_number, "電話番号"%>
+      <%= userinfo.telephone_field :phone_number, class: "phone-number-input form-control text_field_bottom" %>
+      <%= userinfo.label :email_address, "メールアドレス"%>
+      <%= userinfo.text_field :email_address, class: "email-address-input form-control text_field_bottom" %>
+    <% end %>
+    <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
   </div>
-  <%= userinfo.label :phone_number, "電話番号"%>
-  <%= userinfo.telephone_field :phone_number, class: "phone-number-input form-control text_field_bottom" %>
-  <%= userinfo.label :email_address, "メールアドレス"%>
-  <%= userinfo.text_field :email_address, class: "email-address-input form-control text_field_bottom" %>
-  <% end %>
-  <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
-</div>
 </div>
 <br>
 <!-- ======================================================================= -->
 
 <!-- Modalフッター部分 -->
 <div class="modal-footer">
-<div class="inline-block">
-合計
-<div id="final_amount" class="inline-block"></div>円（税込み）
-</div>
-<%= form.submit "Close", class: "btn btn-secondary", name: "close", id: "form_end_button" %>
+  <div class="inline-block">
+    合計
+    <div id="final_amount" class="inline-block"></div>円（税込み）
+  </div>
+  <%= form.submit "Close", class: "btn btn-secondary", name: "close", id: "form_end_button" %>
 </div>
 <% end %>
 
@@ -132,94 +142,100 @@
 finalamount();
 // ========================商品ごとのカウント制御===================================
 $(".minus").click(function () {
-// 親要素を取得
-const parent_card = $(this).closest('.card');
-// 子要素.tax_includedの税込み金額を取得
-const item_price = parseInt(parent_card.find('.tax_included').text());
-// 子要素.item_count_divとその個数を取得
-const item_count_div = parent_card.find('.item_count_div');
-let item_count = parseInt(item_count_div.text());
-// 子要素.total_price_divとその金額を取得
-const total_price_div = parent_card.find('.total_price_div');
-let total_price = parseInt(total_price_div.text());
-// 子要素のhiddeninputとそのvalueを取得
-const item_count_input = parent_card.find('.item_count_input');
-if (total_price <= item_price && item_count == 1) {
-console.log("これ以上少なく出来ません");
-} else {
-total_price = total_price - item_price;
-item_count -= 1;
-item_count_div.text(item_count);
-item_count_input.val(item_count);
-console.log(item_count_input.val());
-total_price_div.text(total_price);
+  // 親要素を取得
+  const parent_card = $(this).closest('.card');
+  // 子要素.tax_includedの税込み金額を取得
+  const item_price = parseInt(parent_card.find('.tax_included').text());
+  // 子要素.item_count_divとその個数を取得
+  const item_count_div = parent_card.find('.item_count_div');
+  let item_count = parseInt(item_count_div.text());
+  // 子要素.total_price_divとその金額を取得
+  const total_price_div = parent_card.find('.total_price_div');
+  let total_price = parseInt(total_price_div.text());
+  // 子要素のhiddeninputとそのvalueを取得
+  const item_count_input = parent_card.find('.item_count_input');
+  if (total_price <= item_price && item_count == 1) {
+    console.log("これ以上少なく出来ません");
+  } else {
+    total_price = total_price - item_price;
+    item_count -= 1;
+    item_count_div.text(item_count);
+    item_count_input.val(item_count);
+    console.log(item_count_input.val());
+    total_price_div.text(total_price);
 
-finalamount();
-}
+    finalamount();
+  }
 });
 $(".plus").click(function () {
-// 親要素を取得
-const parent_card = $(this).closest('.card');
-// 子要素.tax_includedの税込み金額を取得
-const item_price = parseInt(parent_card.find('.tax_included').text());
-// 子要素.item_count_divとその個数を取得
-const item_count_div = parent_card.find('.item_count_div');
-let item_count = parseInt(item_count_div.text());
-// 子要素.total_price_divとその金額を取得
-const total_price_div = parent_card.find('.total_price_div');
-let total_price = parseInt(total_price_div.text());
-// 子要素のhiddeninputを取得
-const item_count_input = parent_card.find('.item_count_input');
-total_price = total_price + item_price;
-item_count += 1;
-item_count_div.text(item_count);
-item_count_input.val(item_count);
-console.log(item_count_input.val());
-total_price_div.text(total_price);
-
-finalamount();
+  // 親要素を取得
+  const parent_card = $(this).closest('.card');
+  // 子要素.lacking-stockの要素を取得
+  const lacking_stock = parent_card.find('.lacking-stock');
+  // 子要素.item_stockの在庫数を取得
+  const item_stock = parseInt(parent_card.find('.item_stock').text());
+  // 子要素.tax_includedの税込み金額を取得
+  const item_price = parseInt(parent_card.find('.tax_included').text());
+  // 子要素.item_count_divとその個数を取得
+  const item_count_div = parent_card.find('.item_count_div');
+  let item_count = parseInt(item_count_div.text());
+  // 子要素.total_price_divとその金額を取得
+  const total_price_div = parent_card.find('.total_price_div');
+  let total_price = parseInt(total_price_div.text());
+  // 子要素のhiddeninputを取得
+  const item_count_input = parent_card.find('.item_count_input');
+  if (item_count == item_stock) {
+    lacking_stock.text("在庫がありません");
+    console.log("在庫がありません");
+  } else {
+    total_price = total_price + item_price;
+    item_count += 1;
+    item_count_div.text(item_count);
+    item_count_input.val(item_count);
+    console.log(item_count_input.val());
+    total_price_div.text(total_price);
+  }
+  finalamount();
 });
 // =============================================================================
 $("#close_button").click(function () {
-//モーダル閉じる
-$('#form_end_button').click();
+  //モーダル閉じる
+  $('#form_end_button').click();
 });
 
 // ==============================決済方法選択制御==================================
 $("#credbutton").click(function () {
-console.log('hi');
-if ($('#bank-pay-form').is(':visible')) {
-$('#bank-pay-form').slideUp();
-};
-$('#cred-pay-form').slideDown();
+  console.log('hi');
+  if ($('#bank-pay-form').is(':visible')) {
+    $('#bank-pay-form').slideUp();
+  };
+  $('#cred-pay-form').slideDown();
 });
 
 $("#bankbutton").click(function () {
-console.log('hi');
-if ($('#cred-pay-form').is(':visible')) {
-$('#cred-pay-form').slideUp();
-};
-$('#bank-pay-form').slideDown();
-$('button').prop('disabled', true);
+  console.log('hi');
+  if ($('#cred-pay-form').is(':visible')) {
+    $('#cred-pay-form').slideUp();
+  };
+  $('#bank-pay-form').slideDown();
+  $('button').prop('disabled', true);
 });
-// =============================================================================
-// ==============================フォーム同時入力制御==================================
+// ============================================================================= ==============================フォーム同時入力制御==================================
 
 $('.user-name-input').on("keyup change", function () {
-$(".user-name-input").val($(this).val());
+  $(".user-name-input").val($(this).val());
 });
 $('.postal-code-input').on("keyup change", function () {
-$(".postal-code-input").val($(this).val());
+  $(".postal-code-input").val($(this).val());
 });
 $('.address-input').on("keyup change", function () {
-$(".address-input").val($(this).val());
+  $(".address-input").val($(this).val());
 });
 $('.phone-number-input').on("keyup change", function () {
-$(".phone-number-input").val($(this).val());
+  $(".phone-number-input").val($(this).val());
 });
 $('.email-address-input').on("keyup change", function () {
-$(".email-address-input").val($(this).val());
+  $(".email-address-input").val($(this).val());
 });
 // =============================================================================
-
 </script>
