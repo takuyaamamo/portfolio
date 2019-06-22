@@ -49,6 +49,7 @@ class PurchasedHistoriesController < ApplicationController
         respond_to do |format|
           format.html { redirect_to root_path, notice: 'カードエラーが発生しました' }
         end
+      end
     else
       respond_to do |format|
         format.html { redirect_to root_path }
