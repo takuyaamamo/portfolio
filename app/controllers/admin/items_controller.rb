@@ -6,8 +6,8 @@ class Admin::ItemsController < Admin::Base
   # GET admin_items GET    /admin/items 管理者画面のトップページ
   def index
     @items_with_deleted = Item.with_deleted
-    @items = Item.all
-    @purchased_histories = PurchasedHistory.all
+    @items = Item.all.order(created_at: "DESC")
+    @purchased_histories = PurchasedHistory.all.order(created_at: "DESC")
   end
 
   # GET admin_item GET    /admin/items/:id アイテムのQRコード表示
@@ -82,7 +82,7 @@ class Admin::ItemsController < Admin::Base
     @item = Item.find(params[:id])
     @tag = Tag.new(tag_params)
     respond_to do |format|
-      if @item.update(item_params)
+      if @item.create(item_params)
         # タグが空欄の場合保存しないようにする
         if @tag.tag_name?
           @tag.save

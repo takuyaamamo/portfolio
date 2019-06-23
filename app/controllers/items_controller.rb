@@ -9,7 +9,7 @@ class ItemsController < ApplicationController
     else
       @cart = session[:cart].map { |item_id, item_count| Item.find(item_id.to_i) }
     end
-    @items = Item.all
+    @items = Item.all.order(created_at: "DESC")
   end
 
   # item GET    /items/:id アイテムの詳細ページ
