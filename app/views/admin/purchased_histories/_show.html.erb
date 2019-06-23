@@ -24,13 +24,14 @@
       </dl>
     </div>
   </div>
+  <!-- 総合合計金額の計算 -->
   <% final_price = 0 %>
   <% purchased_items.each do |purchased_item| %>
   <% item = Item.find(purchased_item.item_id) %>
   <% item_price = item.item_price %>
   <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
   <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
-  <% final_price = final_price + tax_included_item_price %>
+  <% final_price = final_price + total_price %>
   <div class="card">
     <% if item.post_images.present? %>
       <% item.post_images.each do |image| %>
