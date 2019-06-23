@@ -31,6 +31,24 @@ class Admin::ItemsController < Admin::Base
     @item = Item.new(item_params)
     respond_to do |format|
       if @item.save
+        # cocoonにより新規のタグをついかした場合の記述を検討中
+        # tags = params[:item]["tags_attributes"]
+        # if tags.present?
+        #   tags.each do |id, tag_name|
+        #     if Tag.where(tag_name: tag_name["tag_name"]).present?
+        #       ItemTag.create (
+        #         item_id = @item.id,
+        #         tag_id = Tag.find_by(tag_name: tag_name["tag_name"])
+        #       )
+        #     else
+        #
+        #     end
+        #     end
+        #   if @tag.tag_name?
+        #     @tag.save
+        #     ItemTag.create(item_id: @item.id, tag_id: @tag.id)
+        #   end
+        # end
         # QRコードのURLを生成
         @item.item_qr = "http://localhost:3000/#Item#{@item.id}"
         @item.save
