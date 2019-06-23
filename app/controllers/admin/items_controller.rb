@@ -30,11 +30,14 @@ class Admin::ItemsController < Admin::Base
 
   # admin_items POST   /admin/items アイテム新規登録フォームの登録
   def create
+    # gem cocoonによりネストした増殖フォームは上手に保存してくれている
     @item = Item.new(item_params)
     @tag = Tag.new(tag_params)
     respond_to do |format|
       if @item.save
+        # 一個目のタグ新規追加フォームは以下で制御
         if @tag.tag_name?
+          # タグが空欄の場合保存しないようにする
           @tag.save
           ItemTag.create(item_id: @item.id, tag_id: @tag.id)
         end
@@ -60,12 +63,15 @@ class Admin::ItemsController < Admin::Base
 
   # admin_item PUT    /admin/items/:id アイテム編集登録
   def update
+    # gem cocoonによりネストした増殖フォームは上手に保存してくれている
     @item = Item.find(params[:id])
     @tag = Tag.new(tag_params)
     respond_to do |format|
+
       if @item.update(item_params)
-        # タグが空欄の場合保存しないようにする
+        # 一個目のタグ新規追加フォームは以下で制御
         if @tag.tag_name?
+          # タグが空欄の場合保存しないようにする
           @tag.save
           ItemTag.create(item_id: @item.id, tag_id: @tag.id)
         end
