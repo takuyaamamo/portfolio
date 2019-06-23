@@ -63,12 +63,14 @@
   <!-- ネストフォーム開始 -->
   <div class="col-md-8">
     <div class="row">
+      <%= fields_for :tag, @Tag do |tag| %>
+      <%= tag.label :tag_name, "タグ入力" %>
+    </div>
+    <div class="row">
       <div class="form-group col-8">
-        <%= fields_for :tag, @Tag do |tag| %>
-        <%= tag.label :tag_name, "タグ入力" %>
         <%= tag.text_field :tag_name, class: "form-control", placeholder: "新規追加の場合入力して下さい" %>
       </div>
-      <div id="links" class="form-group col-4 d-flex align-items-end">
+      <div id="links" class="form-group col-4 d-flex">
         <%= link_to_add_association "追加", form, :tags, class: "btn btn-link" %>
       </div>
     </div>
