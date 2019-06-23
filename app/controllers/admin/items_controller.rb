@@ -5,6 +5,7 @@ class Admin::ItemsController < Admin::Base
 
   # GET admin_items GET    /admin/items 管理者画面のトップページ
   def index
+    @items_with_deleted = Item.with_deleted
     @items = Item.all
     @purchased_histories = PurchasedHistory.all
   end

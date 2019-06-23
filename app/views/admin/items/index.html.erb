@@ -257,7 +257,7 @@
           <% purchased_items = PurchasedItem.where(purchased_history_id: purchased_history.id) %>
             <% final_price = 0 %>
               <% purchased_items.each do |purchased_item| %>
-                <% item_price = Item.find(purchased_item.item_id).item_price %>
+                <% item_price = @items_with_deleted.find(purchased_item.item_id).item_price %>
                   <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
                     <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
                       <% final_price = final_price + total_price %><% end %>
