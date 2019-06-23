@@ -57,8 +57,11 @@ class Admin::ItemsController < Admin::Base
     @tag = Tag.new(tag_params)
     respond_to do |format|
       if @item.update(item_params)
-        @tag.save
-        ItemTag.create(item_id: @item.id, tag_id: @tag.id)
+        # タグが空欄の場合保存しないようにする
+        if @tag.tag_name?
+          @tag.save
+          ItemTag.create(item_id: @item.id, tag_id: @tag.id)
+        end
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
         format.js   { @status = "success"}
