@@ -55,17 +55,13 @@
       <div class="form-group col-8">
         <%= form.fields_for :tags do |tag| %>
         <%= tag.label :tag_name, "タグ入力" %>
-        <%#= render "tag_fields", tag: tag %>
           <%= tag.text_field :tag_name, class: "form-control", placeholder: "新規追加の場合入力して下さい", id: "tag" %>
-        <% end %>
       </div>
-      <div class="form-group col-4 d-flex align-items-end">
-        <!-- <div class="links"> -->
-        <%#= link_to_add_association "タグ追加", form, :tags %>
-          <!-- </div> -->
-          <button type="button" class="btn btn-link">タグ追加</button>
+        <div id="links" class="form-group col-4 d-flex align-items-end">
+          <%= link_to_add_association "追加", form, :tags, class: "btn btn-link" %>
         </div>
       </div>
+      <% end %>
     </div>
   </div>
 </div>
