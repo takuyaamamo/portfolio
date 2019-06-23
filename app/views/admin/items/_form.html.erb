@@ -2,6 +2,7 @@
 <%# adminをnamespase化している為model: [ :admin, @item ]として指定 %>
   <%= form_with model: [ :admin, @item ] do |form| %>
   <div class="modal-body">
+    <!-- row -->
     <div class="container-fluid bd-example-row">
       <!-- render用div -->
       <div id="NewItem"></div>
@@ -38,6 +39,7 @@
       <%= form.label :item_description, "商品説明" %>
       <%= form.text_area :item_description, class: "form-control", rows: "3" %>
     </div>
+    <!-- タグ選択とネストフォームを横一列にするdiv -->
     <div class="form-row">
       <div class="form-group col-md-4">
         <label>タグ選択</label>
@@ -50,21 +52,25 @@
       <% end %>
     </div>
   </div>
+  <!-- ネストフォーム開始 -->
   <div class="col-md-8">
     <div class="row">
       <div class="form-group col-8">
-        <%= form.fields_for :tags do |tag| %>
+        <%= form.fields_for :tags, @Tag do |tag| %>
         <%= tag.label :tag_name, "タグ入力" %>
-          <%= tag.text_field :tag_name, class: "form-control", placeholder: "新規追加の場合入力して下さい", id: "tag" %>
+        <%= tag.text_field :tag_name, class: "form-control", placeholder: "新規追加の場合入力して下さい", id: "tag" %>
       </div>
-        <div id="links" class="form-group col-4 d-flex align-items-end">
-          <%= link_to_add_association "追加", form, :tags, class: "btn btn-link" %>
-        </div>
+      <div id="links" class="form-group col-4 d-flex align-items-end">
+        <%= link_to_add_association "追加", form, :tags, class: "btn btn-link" %>
       </div>
-      <% end %>
     </div>
-  </div>
+  <% end %>
 </div>
+<!-- ネストフォーム終了 -->
+</div>
+<!-- タグ選択とネストフォームを横一列にするDiv -->
+</div>
+<!-- row終了 -->
 </div>
 <!-- Modalボディ部分終了 -->
 <!-- Modalフッター部分 -->
@@ -76,36 +82,33 @@
 
 <script type="text/javascript">
 $(function () {
-// =======================画像のプレビュー表示制御=================================
-//画像ファイルプレビュー表示のイベント追加 fileを選択時に発火するイベントを登録
+// =======================画像のプレビュー表示制御================================= 画像ファイルプレビュー表示のイベント追加 fileを選択時に発火するイベントを登録
 $('form').on('change', 'input[type="file"]', function (e) {
-  var file = e.target.files[0],
-    reader = new FileReader(),
-    $preview = $(".preview");
-  t = this;
+var file = e.target.files[0],
+reader = new FileReader(),
+$preview = $(".preview");
+t = this;
 
-  // 画像ファイル以外の場合は何もしない
-  if (file.type.indexOf("image") < 0) {
-    return false;
-  }
+// 画像ファイル以外の場合は何もしない
+if (file.type.indexOf("image") < 0) {
+return false;
+}
 
-  // ファイル読み込みが完了した際のイベント登録
-  reader.onload = (function (file) {
-    return function (e) {
-      //既存のプレビューを削除
-      $preview.empty();
-      // .prevewの領域の中にロードした画像を表示するimageタグを追加
-      $preview.append($('<img>').attr({src: e.target.result, width: "100%", class: "preview", title: file.name}));
-    };
-  })(file);
+// ファイル読み込みが完了した際のイベント登録
+reader.onload = (function (file) {
+return function (e) {
+  //既存のプレビューを削除
+  $preview.empty();
+  // .prevewの領域の中にロードした画像を表示するimageタグを追加
+  $preview.append($('<img>').attr({src: e.target.result, width: "100%", class: "preview", title: file.name}));
+};
+})(file);
 
-  reader.readAsDataURL(file);
+reader.readAsDataURL(file);
 });
-// ============================================================================
-
- // ============================フォーム同時入力制御===============================
+// ============================================================================ ============================フォーム同時入力制御===============================
 $('#item_name').on("keyup change", function () {
-  $("#tag").val($(this).val());
+$("#tag").val($(this).val());
 });
 // ============================================================================
 

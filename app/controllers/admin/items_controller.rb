@@ -19,6 +19,7 @@ class Admin::ItemsController < Admin::Base
   # new_admin_item GET    /admin/items/new アイテム新規登録フォーム表示
   def new
     @item = Item.new
+    @tags = Tag.new
     # refileで画像を投稿できるようにしている
     @item.post_images.build
     @item.item_description = "まねきねこはねこです。"
@@ -29,6 +30,8 @@ class Admin::ItemsController < Admin::Base
   # admin_items POST   /admin/items アイテム新規登録フォームの登録
   def create
     @item = Item.new(item_params)
+    # binding.pry
+    # @tag = Tag.new(tag_params)
     respond_to do |format|
       if @item.save
         # cocoonにより新規のタグをついかした場合の記述を検討中
@@ -52,6 +55,10 @@ class Admin::ItemsController < Admin::Base
         # QRコードのURLを生成
         @item.item_qr = "http://localhost:3000/#Item#{@item.id}"
         @item.save
+        # if @tag.tag_name?
+        #   @tag.save
+        #   ItemTag.create(item_id: @item.id, tag_id: @tag.id)
+        # end
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
         format.js   { @status = "success"}
