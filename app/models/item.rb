@@ -17,7 +17,7 @@ class Item < ApplicationRecord
   # ====================formにhasmanyをネストさせる===============================
   accepts_nested_attributes_for :stock, allow_destroy: true
   accepts_nested_attributes_for :item_tags, allow_destroy: true
-  accepts_nested_attributes_for :tags, allow_destroy: true
+  accepts_nested_attributes_for :tags
   # ===========================================================================
 
 

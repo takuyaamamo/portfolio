@@ -1,1 +1,1 @@
-$("#shippingchange").html("<%= escape_javascript(render 'shippingchange', purchased_history: @purchased_history) %>");
+$("#<%= "shippingchange#{@purchased_history.id}" %>").html("<%= escape_javascript(render 'shippingchange', purchased_history: @purchased_history) %>");

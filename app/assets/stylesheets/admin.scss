@@ -108,6 +108,25 @@
   }
   .responsive-qr-fit {
     height: 270px;
+    width: 82%;
+  }
+  .responsive-qr-fit svg {
+    transform-origin: top left;
+    transform: scale(0.74)
+  }
+}
+@media (max-width: 350px) {
+  body {
+    font-size: 0.7rem;
+  }
+  .card-columns{
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+  .responsive-qr-fit {
+    height: 270px;
+    width: 98%;
   }
   .responsive-qr-fit svg {
     transform-origin: top left;

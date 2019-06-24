@@ -5,8 +5,9 @@ class Admin::ItemsController < Admin::Base
 
   # GET admin_items GET    /admin/items 管理者画面のトップページ
   def index
-    @items = Item.all
-    @purchased_histories = PurchasedHistory.all
+    @items_with_deleted = Item.with_deleted
+    @items = Item.all.order(created_at: "DESC")
+    @purchased_histories = PurchasedHistory.all.order(created_at: "DESC")
   end
 
   # GET admin_item GET    /admin/items/:id アイテムのQRコード表示
@@ -19,18 +20,27 @@ class Admin::ItemsController < Admin::Base
   # new_admin_item GET    /admin/items/new アイテム新規登録フォーム表示
   def new
     @item = Item.new
+    @tags = Tag.new
     # refileで画像を投稿できるようにしている
     @item.post_images.build
     @item.item_description = "まねきねこはねこです。"
     @item.build_stock
-    @item.tags.build
+    # @item.tags.build
   end
 
   # admin_items POST   /admin/items アイテム新規登録フォームの登録
   def create
+    # gem cocoonによりネストした増殖フォームは上手に保存してくれている
     @item = Item.new(item_params)
+    @tag = Tag.new(tag_params)
     respond_to do |format|
       if @item.save
+        # 一個目のタグ新規追加フォームは以下で制御
+        if @tag.tag_name?
+          # タグが空欄の場合保存しないようにする
+          @tag.save
+          ItemTag.create(item_id: @item.id, tag_id: @tag.id)
+        end
         # QRコードのURLを生成
         @item.item_qr = "https://portfolio.amamo.site/#Item#{@item.id}"
         @item.save
@@ -53,12 +63,18 @@ class Admin::ItemsController < Admin::Base
 
   # admin_item PUT    /admin/items/:id アイテム編集登録
   def update
+    # gem cocoonによりネストした増殖フォームは上手に保存してくれている
     @item = Item.find(params[:id])
     @tag = Tag.new(tag_params)
     respond_to do |format|
+
       if @item.update(item_params)
-        @tag.save
-        ItemTag.create(item_id: @item.id, tag_id: @tag.id)
+        # 一個目のタグ新規追加フォームは以下で制御
+        if @tag.tag_name?
+          # タグが空欄の場合保存しないようにする
+          @tag.save
+          ItemTag.create(item_id: @item.id, tag_id: @tag.id)
+        end
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
         format.js   { @status = "success"}
@@ -72,15 +88,14 @@ class Admin::ItemsController < Admin::Base
 
   # admin_statuschange PUT    /admin/statuschange/:id item_active変更
   def statuschange
-    item = Item.find(params[:id])
-    if item.item_active == 0
-      item.item_active = 1
-      item.save
+    @item = Item.find(params[:id])
+    if @item.item_active == 0
+      @item.item_active = 1
+      @item.save
     else
-      item.item_active = 0
-      item.save
+      @item.item_active = 0
+      @item.save
     end
-    redirect_to admin_items_path
   end
 
   # admin_confirm GET    /admin/confirm/:id 商品削除確認画面
