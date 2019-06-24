@@ -15,6 +15,11 @@
  // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
 
+html {
+  // ダブルタップ禁止
+  touch-action: manipulation;
+}
+
 .navbar-brand {
   padding-top: .75rem;
   padding-bottom: .75rem;

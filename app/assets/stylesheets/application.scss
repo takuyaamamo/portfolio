@@ -14,6 +14,11 @@
  */
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
+html {
+  // ダブルタップ禁止
+  touch-action: manipulation;
+}
 /* =====================Bootstrapオーバーライド================================= */
 .row {
   margin-left: 0;

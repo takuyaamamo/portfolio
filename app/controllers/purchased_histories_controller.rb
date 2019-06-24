@@ -46,6 +46,7 @@ class PurchasedHistoriesController < ApplicationController
         :currency => 'jpy',
       )
       purchased_history_save
+      redirect_to root_path
       rescue Payjp::CardError
         respond_to do |format|
           format.html { redirect_to root_path, notice: 'カードエラーが発生しました' }
