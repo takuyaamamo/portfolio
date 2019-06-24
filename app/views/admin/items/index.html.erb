@@ -5,7 +5,10 @@
     <div class="col">
       <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
         <%= link_to "AMAMIAGE", root_path, class: "navbar-brand col-sm-2 col-md-2 mr-0" %>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <%= form_tag admin_items_path, method: 'get', class: 'w-100', id: 'search_form', remote: true do %>
+        <%= text_field_tag :search, '', class: 'form-control search-form form-control-dark w-100', placeholder: 'Enterで検索' %>
+        <%= submit_tag 'Search', name: 'nil', hidden: true, id: 'search_submit' %>
+        <% end %>
         <ul class="navbar-nav px-3">
           <li class="nav-item text-nowrap">
             <%= link_to "Sign out", destroy_admin_session_path, class: "nav-link", method: :delete %>
@@ -174,7 +177,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="searched_item">
                 <!-- 繰り返し開始 -->
                 <% if @items.present? %>
                   <% @items.each do |item| %>
@@ -250,7 +253,7 @@
       </tr>
     </thead>
     <!-- 繰り返し -->
-    <tbody>
+    <tbody id="searched_user_name">
       <!-- 繰り返し開始 -->
       <% if @purchased_histories.present? %>
         <% @purchased_histories.each do |purchased_history| %>
@@ -387,3 +390,16 @@
 
 </div>
 <!--ダッシュボード全体container-fluid--->
+
+<script type="text/javascript">
+// ============================入力エンター時サブミット===============================
+$("#search_form").keypress(function (e) {
+  if( e.which == 13 ) {
+    $('#search_submit').click();
+    // スマホ時以下でキーボード閉じる
+    $("#search_form").blur();
+    return false;
+  }
+});
+// ============================================================================
+</script>

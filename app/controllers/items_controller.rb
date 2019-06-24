@@ -9,7 +9,21 @@ class ItemsController < ApplicationController
     else
       @cart = session[:cart].map { |item_id, item_count| Item.find(item_id.to_i) }
     end
-    @items = Item.all.order(created_at: "DESC")
+    # 商品検索
+    @items = if params[:search].present?
+      # Tagを検索しItemを取り出す
+      tags = Tag.where('tag_name LIKE ?', "%#{params[:search]}%")
+      if tags.present?
+        item_tags_item_id = tags.map { |tag| ItemTag.find_by(id: tag.id).item_id }
+        item_tags_item_id.uniq.map { |item_id| Item.find_by(id: item_id) }
+      else
+        # タグが見つからない場合
+        Item.all.order(created_at: "DESC")
+      end
+    else
+      # 通常表示
+      Item.all.order(created_at: "DESC")
+    end
   end
 
   # item GET    /items/:id アイテムの詳細ページ

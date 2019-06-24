@@ -1,0 +1,22 @@
+var searched = "<%= @searched %>";
+console.log(searched);
+if ( searched == 'item' ) {
+  // itemが取り出せている場合
+  console.log('item');
+  $('#searched_item').html("<%= escape_javascript(render 'searched_item', items: @items) %>");
+  // クリックして該当場所に移動
+  $('#nav-home-tab').click();
+} else if ( searched == 'username' ) {
+  // ユーザー名が取り出せている場合
+  console.log('name');
+  $('#searched_user_name').html("<%= escape_javascript(render 'searched_username', purchased_histories: @purchased_histories, items_with_deleted: @items_with_deleted) %>");
+  $('#nav-profile-tab').click();
+} else if ( searched == 'all' ) {
+  // 空白の場合
+  console.log('all');
+$('#searched_item').html("<%= escape_javascript(render 'searched_item', items: @items) %>");
+$('#searched_user_name').html("<%= escape_javascript(render 'searched_username', purchased_histories: @purchased_histories, items_with_deleted: @items_with_deleted) %>");
+$('#nav-home-tab').click();
+} else {
+  console.log('該当なし');
+}

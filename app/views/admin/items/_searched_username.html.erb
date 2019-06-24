@@ -1,0 +1,43 @@
+<!-- 繰り返し開始 -->
+<% if purchased_histories.present? %>
+  <% purchased_histories.each do |purchased_history| %>
+    <% purchased_items = PurchasedItem.where(purchased_history_id: purchased_history.id) %>
+      <% final_price = 0 %>
+        <% purchased_items.each do |purchased_item| %>
+          <% item_price = items_with_deleted.find(purchased_item.item_id).item_price %>
+            <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
+              <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
+                <% final_price = final_price + total_price %><% end %>
+                <tr id=<%= "purchased-history#{purchased_history.id}" %>>
+                  <th scope="row">
+                    <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                    <%= purchased_history.id %>
+                  <% end %>
+                </th>
+                <td>
+                  <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                  <%= purchased_history.created_at.strftime('%Y年%m月%d日') %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+                <%= purchased_history.user_name %>
+              <% end %>
+            </td>
+
+            <td>
+              <%= link_to admin_purchased_history_path(purchased_history), remote: true, class: "table-innercustom-a area-all" do %>
+              <%= final_price %>円
+            <% end %>
+          </td>
+          <td id=<%= "shippingchange#{purchased_history.id}" %> >
+            <% if purchased_history.shipping == 0 %>
+              <%= link_to '未発送', admin_shippingchange_path(purchased_history), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+            <% else %>
+              <%= link_to '発送済', admin_shippingchange_path(purchased_history), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    <!-- 繰り返し終了 -->
