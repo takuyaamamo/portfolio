@@ -5,22 +5,36 @@ class Admin::ItemsController < Admin::Base
 
   # GET admin_items GET    /admin/items 管理者画面のトップページ
   def index
-    @items = if params[:search].present?
+    if params[:search].present?
       # Tagを検索しItemを取り出す
       tags = Tag.where('tag_name LIKE ?', "%#{params[:search]}%")
+      # ユーザー名を検索しPurchasedHistoryを取り出す
+      purchased_histories = PurchasedHistory.where('user_name LIKE ?', "%#{params[:search]}%")
       if tags.present?
+        # タグが取り出せた場合
         item_tags_item_id = tags.map { |tag| ItemTag.find_by(id: tag.id).item_id }
-        item_tags_item_id.uniq.map { |item_id| Item.find_by(id: item_id) }
+        @items = item_tags_item_id.uniq.map { |item_id| Item.find_by(id: item_id) }
+        # @searchedは次jsファイルの条件分岐用
+        @searched = 'item'
+      elsif purchased_histories.present?
+        # ユーザー名が取り出せた場合
+        @items_with_deleted = Item.with_deleted
+        @purchased_histories = purchased_histories.order(created_at: "DESC")
+        @searched = 'username'
       else
-        # タグが見つからない場合
-        Item.all.order(created_at: "DESC")
+        # タグが見つからない場合通常表示
+        @items = Item.all.order(created_at: "DESC")
+        @items_with_deleted = Item.with_deleted
+        @purchased_histories = PurchasedHistory.all.order(created_at: "DESC")
+        @searched = 'all'
       end
     else
       # 通常表示
-      Item.all.order(created_at: "DESC")
+      @items = Item.all.order(created_at: "DESC")
+      @items_with_deleted = Item.with_deleted
+      @purchased_histories = PurchasedHistory.all.order(created_at: "DESC")
+      @searched = 'all'
     end
-    @items_with_deleted = Item.with_deleted
-    @purchased_histories = PurchasedHistory.all.order(created_at: "DESC")
   end
 
   # GET admin_item GET    /admin/items/:id アイテムのQRコード表示
