@@ -5,10 +5,9 @@
     <h1 class="text-dark">AMAMIAGE</h1>
   <% end %>
   <%= form_tag root_path, method: 'get', class: 'form_inline', remote: true do %>
-  <%= text_field_tag :search, '', class: 'form-control mr-sm-2', placeholder: 'Search' %>
+  <%= text_field_tag :search, '', class: 'form-control search-form mr-sm-2', placeholder: 'Search' %>
   <%= submit_tag 'Search', name: 'nil', class: 'btn btn-outline-success my-2 my-sm-0' %>
 <% end %>
-<!-- <form class="form-inline"> <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> </form> -->
 </nav>
 </header>
 <!-- ==================================================================== -->
