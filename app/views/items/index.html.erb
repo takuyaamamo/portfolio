@@ -13,7 +13,7 @@
           <% end %>
         <% else %>
           <div>
-            <%= image_tag '/images/no_image.jpg', size: '400✕400', class: "rounded-circle shadow circle-color" %>
+            <%= image_tag '/images/no_image.jpg', with: "100%", class: "rounded-circle shadow circle-color" %>
           </div>
         <% end %>
       </div>
@@ -214,7 +214,7 @@ Launch demo modal
                 <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
               <% end %>
             <% else %>
-              <%= image_tag '/images/no_image.jpg', size: '200x200', class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+              <%= image_tag '/images/no_image.jpg', width: "100%", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
             <% end %>
           <% end %>
         <% end %>

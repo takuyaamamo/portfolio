@@ -10,6 +10,7 @@ class Admin::PurchasedHistoriesController < Admin::Base
   def show
     @purchased_history = PurchasedHistory.find(params[:id])
     @purchased_items = PurchasedItem.where(purchased_history_id: @purchased_history.id)
+    @items_with_deleted = Item.with_deleted
   end
 
   # admin_shippingchange PUT    /admin/shippingchange/:id 注文のshipping変更
