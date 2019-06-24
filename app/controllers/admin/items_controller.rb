@@ -5,8 +5,21 @@ class Admin::ItemsController < Admin::Base
 
   # GET admin_items GET    /admin/items 管理者画面のトップページ
   def index
+    @items = if params[:search].present?
+      # Tagを検索しItemを取り出す
+      tags = Tag.where('tag_name LIKE ?', "%#{params[:search]}%")
+      if tags.present?
+        item_tags_item_id = tags.map { |tag| ItemTag.find_by(id: tag.id).item_id }
+        item_tags_item_id.uniq.map { |item_id| Item.find_by(id: item_id) }
+      else
+        # タグが見つからない場合
+        Item.all.order(created_at: "DESC")
+      end
+    else
+      # 通常表示
+      Item.all.order(created_at: "DESC")
+    end
     @items_with_deleted = Item.with_deleted
-    @items = Item.all.order(created_at: "DESC")
     @purchased_histories = PurchasedHistory.all.order(created_at: "DESC")
   end
 
