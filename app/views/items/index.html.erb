@@ -4,7 +4,7 @@
     <%= link_to root_path do %>
     <h1 class="text-dark">AMAMIAGE</h1>
   <% end %>
-  <%= form_tag root_path, method: 'get', class: 'form_inline' do %>
+  <%= form_tag root_path, method: 'get', class: 'form_inline', remote: true do %>
   <%= text_field_tag :search, '', class: 'form-control mr-sm-2', placeholder: 'Search' %>
   <%= submit_tag 'Search', name: 'nil', class: 'btn btn-outline-success my-2 my-sm-0' %>
 <% end %>
@@ -227,7 +227,7 @@ Launch demo modal
   </div>
 </div>
 
-<div class="row">
+<div class="row" id="searched">
   <% if @items.present? %>
     <% @items.compact.each do |item| %>
       <% if item.item_active == 1 %>
