@@ -173,7 +173,7 @@ function onClick() {
   var session = Payjp.applePay.buildSession(paymentRequest, function (result) {
     console.log(result);
     // サーバーにPAY.JPのトークンを渡して、決済完了後にApplePayのペイメントシートを閉じる例
-    $.post("/your_server_endpoint", {token: result.token.id}).done(function () {
+    $.post("/items", {token: result.token.id}).done(function () {
       session.completePayment(ApplePaySession.STATUS_SUCCESS);
     }).fail(function () {
       session.completePayment(ApplePaySession.STATUS_FAILURE);
