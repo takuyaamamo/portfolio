@@ -32,11 +32,15 @@
 <% end %>
 </td>
 <td id=<%= "statuschange#{item.id}" %> >
-<% if item.item_active == 0 %>
-<%= link_to '未販売', admin_statuschange_path(item), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
-<% else %>
-<%= link_to '販売中', admin_statuschange_path(item), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
-<% end %>
+  <% if item.stock.present? && item.stock.stock_count == 0 %>
+    <%= link_to '在庫0', edit_admin_item_path(item), remote: true, class: "btn btn-outline-light active table-innercustom-a text-warning" %>
+  <% else %>
+    <% if item.item_active == 0 %>
+      <%= link_to '未販売', admin_statuschange_path(item), remote: true, method: :put, class: "btn btn-outline-light active table-innercustom-a text-danger" %>
+    <% else %>
+      <%= link_to '販売中', admin_statuschange_path(item), remote: true, method: :put, class: "btn active btn-outline-light table-innercustom-a text-success" %>
+    <% end %>
+  <% end %>
 </td>
 </tr>
 <% end %>
