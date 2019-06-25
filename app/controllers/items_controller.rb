@@ -34,6 +34,25 @@ class ItemsController < ApplicationController
     @purchased_item = PurchasedItem.new
   end
 
+  def create
+    # begin
+    # payjp決済確定
+    # Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
+    # Payjp::Charge.create(
+    #   :amount => "1000",
+    #   :card => params['payjp-token'],
+    #   :currency => 'jpy',
+    # )
+    # purchased_history_save
+    # redirect_to root_path
+    # rescue Payjp::CardError
+    #   respond_to do |format|
+    #     format.html { redirect_to root_path, notice: 'カードエラーが発生しました' }
+    #   end
+    # end
+    redirect_to root_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
