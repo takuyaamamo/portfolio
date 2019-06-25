@@ -11,7 +11,7 @@
         <%= image_tag '/images/no_image.jpg', width: "100%" %>
       <% end %>
       <div class="card-body">
-        <h5 class="card-title"><%= item.item_name %></h5>
+        <h5 class="card-title" id="item_name"><%= item.item_name %></h5>
         <p class="card-text"><%= item.item_description %></p>
       </div>
       <ul class="list-group list-group-flush">
@@ -158,8 +158,15 @@ function onClick() {
   var paymentRequest = {
     countryCode: 'JP',
     currencyCode: 'JPY',
+    requiredShippingAddressFields: {
+      emailAddress: PKContactField,
+      name: PKContactField,
+      phoneNumber: PKContactField,
+      phoneticName: PKContactField,
+      postalAddress: PKContactField
+    },
     total: {
-      label: 'pay.jp sample',
+      label: $("#item_name").text(),
       amount: $("#total_price_div").text()
     }
   };
