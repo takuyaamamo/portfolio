@@ -92,7 +92,7 @@ $(".minus").click(function () {
   let total_price = parseInt(total_price_div.text());
   // 子要素のhiddeninputとそのvalueを取得
   const item_count_input = parent_card.find('.item_count_input');
-  if (total_price <= item_price && item_count == 1) {
+  if (total_price <= item_price && item_count == 0) {
     console.log("これ以上少なく出来ません");
   } else {
     total_price = total_price - item_price;
