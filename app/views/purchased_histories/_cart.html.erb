@@ -14,6 +14,7 @@
       <% stock_count = Stock.find_by(item_id: item.id).stock_count.to_i %>
         <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
           <% item_count = stock_count if item_count >= stock_count %>
+          <% unless stock_count <= 0 || item_count <= 0 %>
             <div class="card" id="item<%= item.id %>">
               <div class="cart-del-button">
                 <%= link_to sessiondestroy_path(item.id), remote: true do %>
@@ -53,7 +54,6 @@
                     <p class="lacking-stock inline-block text-right"></p>
                   </div>
                 </div>
-              <% end %>
             </li>
             <!-- =========================================================== -->
 
@@ -63,6 +63,8 @@
             </li>
           </ul>
         </div>
+        <% end %>
+        <% end %>
       <% end %>
     </div>
     <!-- Modalボディ部分終了 -->
@@ -199,11 +201,13 @@ $(".plus").click(function () {
 });
 // =============================================================================
 
+// ==================================削除関連====================================
 // クリックしたら他のところもクリック
 $("#close_button").click(function () {
   //モーダル閉じる
   $('#form_end_button').click();
 });
+// =============================================================================
 
 // ==============================決済方法選択制御==================================
 $("#credbutton").click(function () {
@@ -222,7 +226,9 @@ $("#bankbutton").click(function () {
   $('#bank-pay-form').slideDown();
   $('button').prop('disabled', true);
 });
-// ============================================================================= ==============================フォーム同時入力制御==================================
+// =============================================================================
+
+// ==============================フォーム同時入力制御==============================
 
 $('.user-name-input').on("keyup change", function () {
   $(".user-name-input").val($(this).val());
