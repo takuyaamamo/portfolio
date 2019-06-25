@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   # 一般のページ
-  resources :items, only: [:index, :show]
+  resources :items, only: [:index, :show, :create]
   resources :purchased_histories, only: [:new, :create]
   post 'purchased_histories/sessioncreate', to: 'purchased_histories#sessioncreate', as: 'sessioncreate'
   get 'purchased_histories/sessiondestroy/:id', to: 'purchased_histories#sessiondestroy', as: 'sessiondestroy'
