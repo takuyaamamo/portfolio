@@ -41,9 +41,9 @@
             <% else %>
               <div class="inline-block">
                 <% if stock == 0 %>
-                <p id="lacking-stock" class="inline-block text-right">在庫がありません</p>
+                  <p id="lacking-stock" class="inline-block text-right">在庫がありません</p>
                 <% else %>
-                <p id="lacking-stock" class="inline-block text-right"></p>
+                  <p id="lacking-stock" class="inline-block text-right"></p>
                 <% end %>
               </div>
             <% end %>
@@ -57,11 +57,15 @@
     </ul>
     <% unless stock == 0 %>
       <div class="card-body mx-auto" id="pay">
+        <div id='notice' style="display:none;"></div>
         <button class="button-remove-background">
           <span class="apple-pay-size">
-            <i class="fab fa-apple-pay"></i>
+            <div id="apple-pay-button-wrapper" style="display:none;">
+              <div id="apple-pay-button" class="apple-pay-button apple-pay-button-black"></div>
+            </div>
           </span>
         </button>
+        <div><p id="result"></p></div>
       </div>
     <% end %>
   </div>
@@ -75,6 +79,7 @@
   <% end %>
 </div>
 <% end %>
+
 <script type="text/javascript">
 // ========================商品ごとのカウント制御===================================
 $("#minus").click(function () {
@@ -137,5 +142,44 @@ $("#plus").click(function () {
     pay.show();
   }
 });
-// ============================================================================
+// ============================================================================ ============================applepay制御=====================================
+Payjp.setPublicKey("<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>");
+// applePayが可能な端末であるか確認
+function checkAvailabilityHandler(available) {
+  if (available) {
+    document.getElementById('apple-pay-button-wrapper').style.display = 'block';
+    document.getElementById('notice').style.display = 'none';
+  } else {
+    document.getElementById('apple-pay-button-wrapper').style.display = 'none';
+    document.getElementById('notice').style.display = 'block';
+  }
+}
+function onClick() {
+  var paymentRequest = {
+    countryCode: 'JP',
+    currencyCode: 'JPY',
+    total: {
+      label: 'pay.jp sample',
+      amount: $("#total_price_div").text()
+    }
+  };
+  var session = Payjp.applePay.buildSession(paymentRequest, function (result) {
+    console.log(result);
+    // サーバーにPAY.JPのトークンを渡して、決済完了後にApplePayのペイメントシートを閉じる例
+    $.post("/your_server_endpoint", {token: result.token.id}).done(function () {
+      session.completePayment(ApplePaySession.STATUS_SUCCESS);
+    }).fail(function () {
+      session.completePayment(ApplePaySession.STATUS_FAILURE);
+    });
+    document.getElementById('result').innerText = 'Token = ' + result.token.id;
+    session.completePayment(ApplePaySession.STATUS_SUCCESS);
+  }, function (e) {
+    console.error(e);
+    alert(e.error.message);
+  });
+  session.begin();
+}
+document.getElementById('apple-pay-button').addEventListener('click', onClick);
+Payjp.applePay.checkAvailability(checkAvailabilityHandler);
+// ======================================================================
 </script>
