@@ -154,13 +154,7 @@ function onClick() {
   var paymentRequest = {
     countryCode: 'JP',
     currencyCode: 'JPY',
-    requiredShippingContactFields: [
-      emailAddress,
-      name,
-      phoneNumber,
-      phoneticName,
-      postalAddress
-    ],
+    requiredShippingContactFields: [postalAddress, phone, email, name],
     total: {
       label: $("#item_name").text(),
       amount: $("#total_price_div").text()
