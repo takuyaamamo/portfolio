@@ -106,15 +106,17 @@
       </span>
     </div>
     <div class="form-group count-margin display-none" id="bank-pay-form">
-      <div class="">
         <h5>・送付先の情報を入力して下さい。</h5>
-      </div><%= form.fields_for "userinfo" do |userinfo| %>
+      <div class="h-adr">
+       <span class="p-country-name" style="display:none;">Japan</span>
+      <%= form.fields_for "userinfo" do |userinfo| %>
       <%= userinfo.label :user_name, "お名前" %>
       <%= userinfo.text_field :user_name, class: "user-name-input form-control text_field_bottom" %>
       <%= userinfo.label :postal_code, "〒"%>
-      <%= userinfo.text_field :postal_code, class: "postal-code-input form-control text_field_bottom" %>
+      <%= userinfo.text_field :postal_code, class: "postal-code-input form-control text_field_bottom p-postal-code" %>
       <%= userinfo.label :address, "住所"%>
-      <%= userinfo.text_field :address, class: "address-input form-control text_field_bottom" %>
+      <%= userinfo.text_field :address, class: "address-input form-control text_field_bottom p-region p-locality p-street-address p-extended-address" %>
+    </div>
       <div class="">
         <h5>・お客様のご連絡先を入力して下さい。</h5>
       </div>
