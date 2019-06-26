@@ -122,6 +122,7 @@ class PurchasedHistoriesController < ApplicationController
           session[:cart].delete(item_id)
         end
         @purchased_items = PurchasedItem.where(purchased_history_id: @purchased_history.id)
+        PortfolioMailer.send_when_buy(@purchased_history).deliver
       end
     end
 end

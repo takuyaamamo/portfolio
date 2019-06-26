@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta content="text/html; charset=UTF-8" />
+</head>
+<body>
+  <!-- Modalボディ部分 -->
+  <div class="modal-body">
+
+    <div class="card">
+      <div class="card-body">
+        <dl>
+          <dt>ご注文日</dt>
+          <dd><%= @purchased_history.created_at.strftime('%Y年%m月%d日') %></dd>
+
+          <dt>ご注文者</dt>
+          <dd><%= @purchased_history.user_name %></dd>
+
+          <dt>メールアドレス</dt>
+          <dd><%= @purchased_history.email_address %></dd>
+
+          <dt>電話番号</dt>
+          <dd><%= @purchased_history.phone_number %></dd>
+
+          <dt>郵便番号</dt>
+          <dd>〒<%= @purchased_history.postal_code %></dd>
+
+          <dt>住所</dt>
+          <dd><%= @purchased_history.address %></dd>
+        </dl>
+      </div>
+    </div>
+    <!-- 総合合計金額の計算 -->
+    <% final_price = 0 %>
+    <% @purchased_items.each do |purchased_item| %>
+    <% item = @items_with_deleted.with_deleted.find(purchased_item.item_id) %>
+    <% item_price = item.item_price %>
+    <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
+    <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
+    <% final_price = final_price + total_price %>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><%= item.item_name %></h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="inline-block">1個<%= tax_included_item_price %>円（税込み）</div>
+        </li>
+        <li class="list-group-item">
+          総数<%= purchased_item.item_count %>個
+        </li>
+        <li class="list-group-item">
+          <div class="inline-block">合計<%= total_price %>円（税込み）</div>
+        </li>
+      </ul>
+    </div>
+    <% end %>
+  </div>
+  <!-- Modalボディ部分終了 -->
+
+  <!-- Modalフッター部分 -->
+  <div class="modal-footer">
+    <div class="inline-block">
+      <div class="inline-block">総合計<%= final_price %>円（税込み）</div>
+    </div>
+  </div>
+  <h1>DEMOの為。商品は送付されません、決済はされません。</h1>
+
+</body>
+</html>

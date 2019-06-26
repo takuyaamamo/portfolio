@@ -35,6 +35,25 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+    # =========ここからアクションメーラー(railsでメールを送信する機能)の設定を行う==========
+
+    # メール配信に失敗した場合にエラーを発生するかどうかを指定
+    config.action_mailer.raise_delivery_errors = true
+    # 配信方法を指定:smtp (default) gmailでの設定となります
+    config.action_mailer.delivery_method = :smtp
+    # :smtpの配信メソッドの詳細設定
+    config.action_mailer.smtp_settings = {
+      # 下記はgmailの設定です。user_name: password:は自分の環境変数にメールアドレスとパスワードを登録して使用して下さい
+        port:                 587,
+        address:              'smtp.gmail.com',
+        domain:               'gmail.com',
+        user_name:            ENV['MAIL_ADDRESS_KEY'],
+        password:             ENV['MAIL_PASSWORD_KEY'],
+        authentication:       'plain',
+        enable_starttls_auto: true
+      }
+    # ============================================================================
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
