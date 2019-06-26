@@ -228,8 +228,8 @@ $("#bankbutton").click(function () {
 });
 // =============================================================================
 
-// ==============================フォーム同時入力制御==============================
-
+// ==============================フォーム制御==============================
+//相互同時入力
 $('.user-name-input').on("keyup change", function () {
   $(".user-name-input").val($(this).val());
 });
@@ -245,5 +245,13 @@ $('.phone-number-input').on("keyup change", function () {
 $('.email-address-input').on("keyup change", function () {
   $(".email-address-input").val($(this).val());
 });
+//フォームエンター制御変更
+  $("input").keydown(function(e) {
+    if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+      return false;
+    } else {
+      return true;
+    }
+  });
 // =============================================================================
 </script>
