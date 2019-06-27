@@ -14,7 +14,7 @@
       <% stock_count = Stock.find_by(item_id: item.id).stock_count.to_i %>
         <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
           <% item_count = stock_count if item_count >= stock_count %>
-          <% unless stock_count <= 0 || item_count <= 0 %>
+          <% if stock_count > 0 || item_count > 0 %>
             <div class="card" id="item<%= item.id %>">
               <div class="cart-del-button">
                 <%= link_to sessiondestroy_path(item.id), remote: true do %>
@@ -64,6 +64,9 @@
           </ul>
         </div>
         <% end %>
+        <% else %>
+          <h5 class="card-title"><%= item.item_name %></h5>
+          <p>上記の在庫が無くなった為購入できません。</p>
         <% end %>
       <% end %>
     </div>

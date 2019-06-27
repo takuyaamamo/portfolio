@@ -27,19 +27,16 @@ class PurchasedHistoriesController < ApplicationController
           session[:cart].delete(item_id)
         end
       end
-      redirect_to root_path
+      redirect_to root_path, notice: '在庫を更新しました'
     elsif params[:buy]# カートの銀行振込ボタン後
       purchased_history_save
-      redirect_to root_path
+      respond_to do |format|
+      format.html {redirect_to root_path, notice: '決済メールを送信しました。'}
+    end
+
     elsif params['payjp-token']# クレジット決済ボタンを押したあと
-      # 合計金額計算
-      total_price = 0
-      params[:purchased_item].each do |item_id, item_count|
-        tax_included = (BigDecimal(Item.find(item_id.to_i).item_price) * BigDecimal("1.08")).ceil
-        tax_included = tax_included * item_count["item_count"].to_i
-        total_price = total_price + tax_included
-      end
       begin
+      purchased_history_save
       #payjp決済確定
       Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
       Payjp::Charge.create(
@@ -47,7 +44,6 @@ class PurchasedHistoriesController < ApplicationController
         :card => params['payjp-token'],
         :currency => 'jpy',
       )
-      purchased_history_save
       redirect_to root_path
       rescue Payjp::CardError
         respond_to do |format|
@@ -113,13 +109,23 @@ class PurchasedHistoriesController < ApplicationController
         @purchased_history.email_address = params['userinfo'][:email_address]
         @purchased_history.shipping = 0
         @purchased_history.save
+        total_price = 0
         params[:purchased_item].each do |item_id, item_count|
-          @purchased_item = PurchasedItem.new
-          @purchased_item.purchased_history_id = @purchased_history.id
-          @purchased_item.item_id = item_id.to_i
-          @purchased_item.item_count = item_count["item_count"].to_i
-          @purchased_item.save
-          session[:cart].delete(item_id)
+          item = Item.find(item_id.to_i)
+          stock = Stock.find_by(item_id: item.id)
+          item_count = item_count["item_count"].to_i
+          if stock.stock_count >= item_count
+            tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil
+            tax_included = tax_included * item_count
+            total_price = total_price + tax_included
+            Stock.find_by(item_id: item.id).decrement!(:stock_count, item_count)
+            @purchased_item = PurchasedItem.new
+            @purchased_item.purchased_history_id = @purchased_history.id
+            @purchased_item.item_id = item_id.to_i
+            @purchased_item.item_count = item_count
+            @purchased_item.save
+            session[:cart].delete(item_id)
+          end
         end
         @purchased_items = PurchasedItem.where(purchased_history_id: @purchased_history.id)
         PortfolioMailer.send_when_buy(@purchased_history).deliver
