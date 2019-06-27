@@ -38,9 +38,10 @@ class PurchasedHistoriesController < ApplicationController
       begin
       purchased_history_save
       #payjp決済確定
+      binding.pry
       Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
       Payjp::Charge.create(
-        :amount => total_price,
+        :amount => @total_price,
         :card => params['payjp-token'],
         :currency => 'jpy',
       )
@@ -109,7 +110,7 @@ class PurchasedHistoriesController < ApplicationController
         @purchased_history.email_address = params['userinfo'][:email_address]
         @purchased_history.shipping = 0
         @purchased_history.save
-        total_price = 0
+        @total_price = 0
         params[:purchased_item].each do |item_id, item_count|
           item = Item.find(item_id.to_i)
           stock = Stock.find_by(item_id: item.id)
@@ -117,7 +118,7 @@ class PurchasedHistoriesController < ApplicationController
           if stock.stock_count >= item_count
             tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil
             tax_included = tax_included * item_count
-            total_price = total_price + tax_included
+            @total_price = @total_price + tax_included
             Stock.find_by(item_id: item.id).decrement!(:stock_count, item_count)
             @purchased_item = PurchasedItem.new
             @purchased_item.purchased_history_id = @purchased_history.id
