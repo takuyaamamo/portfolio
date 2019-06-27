@@ -30,15 +30,12 @@ class PurchasedHistoriesController < ApplicationController
       redirect_to root_path, notice: '在庫を更新しました'
     elsif params[:buy]# カートの銀行振込ボタン後
       purchased_history_save
-      respond_to do |format|
-      format.html {redirect_to root_path, notice: '決済メールを送信しました。'}
-    end
+      redirect_to root_path
 
     elsif params['payjp-token']# クレジット決済ボタンを押したあと
       begin
       purchased_history_save
       #payjp決済確定
-      binding.pry
       Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
       Payjp::Charge.create(
         :amount => @total_price,
