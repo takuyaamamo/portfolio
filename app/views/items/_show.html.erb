@@ -27,10 +27,11 @@
             <button id="minus" type="button" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
             <% if stock == 0 %>
               <div id="item_count_div" class="inline-block count-margin">0</div>
+              <%= purchased_item.number_field :item_count, hidden: true, id: "item_count_input", value: "0" %>
             <% else %>
               <div id="item_count_div" class="inline-block count-margin">1</div>
+              <%= purchased_item.number_field :item_count, hidden: true, id: "item_count_input", value: "1" %>
             <% end %>
-            <%= purchased_item.number_field :item_count, hidden: true, id: "item_count_input" %>
             <button id="plus" type="button" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
             <% if admin_signed_in? %>
               <div class="inline-block">
