@@ -19,10 +19,36 @@
 //= require turbolinks
 //= require_tree
 
-let finalamount = () => {
+// ========================最終合計金額を出す関数==================================
+const finalamount = () => {
   final_amount = 0;
   $(".total_price_div").each(function (index, total_price) {
     final_amount = final_amount + parseInt($(total_price).text());
   });
   $('#final_amount').text(final_amount);
 };
+// ============================================================================
+
+
+// =====================Loading イメージ表示関数==================================
+// 引数： msg 画面に表示する文言
+const dispLoading = (msg) => {
+  // 引数なし（メッセージなし）を許容
+  if( msg == undefined ){
+    msg = "";
+  }
+  // 画面表示メッセージ
+  var dispMsg = "<div class='loadingMsg'>" + msg + "</div>";
+  // ローディング画像が表示されていない場合のみ出力
+  if($("#loading").length == 0){
+    $("body").append("<div id='loading'>" + dispMsg + "</div>");
+  }
+};
+
+// ============================================================================
+
+ // ==========================Loading イメージ削除関数============================
+ const removeLoading = () => {
+  $("#loading").remove();
+};
+// ============================================================================
