@@ -12,8 +12,8 @@ class Admin::ItemsController < Admin::Base
       purchased_histories = PurchasedHistory.where('user_name LIKE ?', "%#{params[:search]}%")
       if tags.present?
         # タグが取り出せた場合
-        item_tags_item_id = tags.map { |tag| ItemTag.find_by(id: tag.id).item_id }
-        @items = item_tags_item_id.uniq.map { |item_id| Item.find_by(id: item_id) }
+        item_tags = tags.map { |tag| ItemTag.where(tag_id: tag.id) }
+        @items = item_tags.flatten!.map { |item_tag| Item.find_by(id: item_tag.item_id) }.uniq
         # @searchedは次jsファイルの条件分岐用
         @searched = 'item'
       elsif purchased_histories.present?
