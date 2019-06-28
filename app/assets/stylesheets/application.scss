@@ -18,7 +18,22 @@
 html {
   // ダブルタップ禁止
   touch-action: manipulation;
+  // リンク移動をスムーズに
+  scroll-behavior: smooth;
 }
+/* =====================ポートフォリオ用リンク================================= */
+.discription-a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  padding-bottom: 20px;
+}
+
+#scroll-portforio, #scroll-concept, #scroll-item {
+  scroll-margin: 70px;
+}
+/* ========================================================================== */
+
 /* =====================Bootstrapオーバーライド================================= */
 .row {
   margin-left: 0;
