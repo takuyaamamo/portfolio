@@ -9,9 +9,9 @@
 # ============================初期管理者作成======================================
 
  Admin.create!(
-   email: 'ama@ama.ama',
-   password: 'amaama',
-   admin_name: 'ama',
+   email: 'aaa@bbb.ccc',
+   password: 'abcabc',
+   admin_name: 'abc',
  )
 
 # =============================================================================
