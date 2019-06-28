@@ -1,23 +1,45 @@
 <!--ダッシュボード全体container-fluid--->
 <div class="container-fluid">
   <!--========================= ヘッダー ===================================--->
-  <header class="row">
-    <div class="col">
-      <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
-        <%= link_to "AMAMIAGE", root_path, class: "navbar-brand col-sm-2 col-md-2 mr-0" %>
-        <%= form_tag admin_items_path, method: 'get', class: 'w-100', id: 'search_form', remote: true do %>
-        <%= text_field_tag :search, '', class: 'form-control search-form form-control-dark w-100', placeholder: 'Enterで検索' %>
-        <%= submit_tag 'Search', name: 'nil', hidden: true, id: 'search_submit' %>
-        <% end %>
-        <ul class="navbar-nav px-3">
-          <li class="nav-item text-nowrap">
-            <%= link_to "Sign out", destroy_admin_session_path, class: "nav-link", method: :delete %>
-            <!-- ログアウトをする -->
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <div class="sticky-top bg-white">
+    <header class="row">
+      <div class="col">
+        <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
+          <%= link_to "AMAMIAGE", root_path, class: "navbar-brand col-sm-2 col-md-2 mr-0" %>
+          <%= form_tag admin_items_path, method: 'get', class: 'w-100', id: 'search_form', remote: true do %>
+          <%= text_field_tag :search, '', class: 'form-control search-form form-control-dark w-100', placeholder: 'Enterで検索' %>
+          <%= submit_tag 'Search', name: 'nil', hidden: true, id: 'search_submit' %>
+          <% end %>
+          <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+              <%= link_to "Sign out", destroy_admin_session_path, class: "nav-link", method: :delete %>
+              <!-- ログアウトをする -->
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+<!-- ナビ部分 -->
+    <nav class="row">
+      <div class="col">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active col-3 hov" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+            <i class="fas fa-briefcase"></i>
+            商品</a>
+            <a class="nav-item nav-link col-3 hov" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+              <i class="fas fa-truck"></i>
+              注文</a>
+              <a class="nav-item nav-link col-3 hov" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
+                <i class="fas fa-address-card"></i>
+                顧客</a>
+                <a class="nav-item nav-link col-3 hov" id="nav-qr-tab" data-toggle="tab" href="#nav-qr" role="tab" aria-controls="nav-qr" aria-selected="false">
+                  <i class="fas fa-qrcode"></i>
+                  QR</a>
+                </div>
+              </div>
+            </nav>
+
+  </div>
   <!--====================================================================--->
 
   <!--========================= 商品登録モーダル ==================================--->
@@ -132,26 +154,6 @@
   <!-- Modal部分終了1 -->
   <!-- ==================================================================== -->
 
-  <!--=========================== ナビ部分 ==================================--->
-  <nav class="row">
-    <div class="col">
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active col-3" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-          <i class="fas fa-briefcase"></i>
-          商品</a>
-        <a class="nav-item nav-link col-3" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
-          <i class="fas fa-truck"></i>
-          注文</a>
-        <a class="nav-item nav-link col-3" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
-          <i class="fas fa-address-card"></i>
-          顧客</a>
-        <a class="nav-item nav-link col-3" id="nav-qr-tab" data-toggle="tab" href="#nav-qr" role="tab" aria-controls="nav-qr" aria-selected="false">
-          <i class="fas fa-qrcode"></i>
-          QR</a>
-      </div>
-    </div>
-  </nav>
-  <!--====================================================================--->
 
   <!--====================== ナビ配下ボディ部分全体 ============================--->
   <div class="tab-content" id="nav-tabContent">
