@@ -105,9 +105,9 @@ Launch demo modal
   </div>
   <div class="col-7 d-flex align-items-center">
     <div class="align-self-end">
-      <p>AMAMIAGE</p>
-      <p>日本の文化という</p>
-      <p>ぬくもりを扱う場所。</p>
+      <a class="discription-a">EC2サイトのポートフォリオです。</a>
+      <a href="#scroll-portforio" class="discription-a">・ポートフォリオについて</a>
+      <a href="#scroll-concept" class="discription-a">・コンセプト</a>
     </div>
   </div>
 </div>
@@ -125,9 +125,9 @@ Launch demo modal
 <div class="row">
   <div class="col-7 d-flex align-items-center justify-content-end">
     <div class="align-self-end text-indent-right">
-      <p>AMAMIAGE</p>
-      <p>日本の宝物を</p>
-      <p>国に持ち帰る場所。</p>
+      <a class="discription-a">トップページ機能</a>
+      <a href="#scroll-item" class="discription-a">①お土産内の商品をクリック！</a>
+      <a class="discription-a">②左下に商品が追加されたらクリック！</a>
     </div>
   </div>
   <div class="col-5 d-flex align-items-center">
@@ -147,9 +147,9 @@ Launch demo modal
   </div>
   <div class="col-7 d-flex align-items-center">
     <div class="align-self-end">
-      <p>AMAMIAGE</p>
-      <p>友人に日本の</p>
-      <p>おもてなしを配る場所。</p>
+      <a href="/admin/items" class="discription-a">管理者ページログイン</a>
+      <a class="discription-a">mail: aaa@bbb.ccc</a>
+      <a class="discription-a">password: abcabc</a>
     </div>
   </div>
 </div>
@@ -167,9 +167,9 @@ Launch demo modal
 <div class="row">
   <div class="col-7 d-flex align-items-center justify-content-end">
     <div class="align-self-end">
-      <p>TAKUYA AMANO</p>
-      <p>・PORTFOLIO</p>
-      <p>・CONCEPT</p>
+      <a href="/admin/items" class="discription-a">管理者ログイン時機能</a>
+      <a class="discription-a">商品登録、編集、QRコード生成</a>
+      <a class="discription-a">QRコードからアクセスすると？</a>
     </div>
   </div>
   <div class="col-5 d-flex align-items-center">
@@ -183,42 +183,45 @@ Launch demo modal
 
 <!-- ==========================ポートフォリオ部分========================== -->
 <!-- 背景 -->
-<div class="top-margin background-hight background-shape background-portforio">
+<div class="top-margin background-hight background-shape background-portforio" id="scroll-portforio">
 
 <div class="row justify-content-start">
 <div class="col">
 <h2 class="top-margin-title">PORTFOLIO</h2>
 <p class="text-center portforio-text-style">はじめてのポートフォリオ制作です。<br>
-  作業期間は設計含め1ヶ月間で完成させました。<br>
-  Ruby on Railsで作成しており学び始めて<br>
-  3ヶ月目から作成しております。<br>
-  プログラミングが毎日楽しく、<br>
+  Ruby on Railsで作成しており、作業期間は設計含め1ヶ月間です。<br>
+  Ruby on Railsで作成しており学び始めて、3ヶ月が経ちました。<br>
+  プログラミングがすごく楽しい日々を過ごしており、最近では<br>
+  エラーを乗り越えた時の幸福感に中毒になりそうな感じがしています<br>
   このポートフォリオも夢中で作っておりました。<br>
-  楽しんでいただければ幸いです。</p>
+  このサイトを楽しく見ていただければ幸いです!</p>
 </div>
 </div>
 <!-- ================================================================== -->
 
 <!-- ==========================コンセプト部分========================== -->
 <!-- 背景 -->
-<div class="top-margin background-hight background-shape background-portforio">
+<div class="top-margin background-hight background-shape background-portforio" id="scroll-concept">
 <div class="row justify-content-start">
 <div class="col">
   <h2 class="top-margin-title">CONCEPT</h2>
   <p class="text-center portforio-text-style">いかにユーザーが迷わずかってくれるか<br>
     を目標に作成しています。<br>
-    購入は3タップで行えます。<br>
-    画面遷移は極力行っていません。<br>
-    ユーザーを離れさせず購入まで誘う<br>
+    Applepayでの購入は2タップで行えます。<br>
+    Ajax縛りに挑戦しており、画面遷移は極力行っていません。<br>
+    閲覧にストレスを感じさせないで購入まで誘う<br>
     そんなサイトを目指しています。<br>
-    デザインは勉強中です。</p>
+    また、実店舗での使用も考えており、QRコードを管理者が読み取ると<br>
+    在庫修正と合計金額計算が出来るようになっています。<br>
+    まだまだ細かい所に手が届いていませんが<br>
+    サイトを見て楽しいと感じでいただければ幸いです！</p>
 </div>
 </div>
 <!-- =============================================================== -->
 
 <!-- ==========================お土産一覧========================== -->
 <!-- 背景 -->
-<div class="top-margin background-hight background-shape background-item pb-5">
+<div class="top-margin background-hight background-shape background-item pb-5" id="scroll-item">
 
 <div class="row justify-content-start">
   <div class="col-sm-4">
