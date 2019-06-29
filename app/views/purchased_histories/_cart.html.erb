@@ -1,4 +1,5 @@
 <%= form_with url: purchased_histories_path do |form| %>
+
 <!-- Modalヘッダー部分 -->
 <div class="modal-header">
   <h5 class="modal-title" id="CartModalCenterTitle">カート内容</h5>
@@ -6,85 +7,88 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+
 <!-- Modalボディ部分 -->
 <div class="modal-body" id="card_have">
+
   <% @cart.each do |item| %>
     <!-- 先に税込金額と商品の個数を抜き出しておく -->
     <% tax_included = (BigDecimal(item.item_price) * BigDecimal("1.08")).ceil %>
-      <% stock_count = Stock.find_by(item_id: item.id).stock_count.to_i %>
-        <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
-          <% item_count = stock_count if item_count >= stock_count %>
-          <% if stock_count > 0 || item_count > 0 %>
-            <div class="card" id="item<%= item.id %>">
-              <div class="cart-del-button">
-                <%= link_to sessiondestroy_path(item.id), remote: true do %>
-                <span aria-hidden="true">
-                  <i class="far fa-trash-alt"></i>
-                </span>
-              <% end %>
-            </div>
-            <% if item.post_images.present? %>
-              <% item.post_images.each do |image| %>
-                <%= attachment_image_tag image, :image, :fill, 600, 600, width: "100%" %>
-              <% end %>
-            <% else %>
-              <%= image_tag '/images/no_image.jpg', width: "100%" %>
-            <% end %>
-            <div class="card-body">
-              <h5 class="card-title"><%= item.item_name %></h5>
-              <p class="card-text"><%= item.item_description %></p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                1個
-                <div class="inline-block tax_included"><%= tax_included %></div>円（税込み）
-              </li>
-
-              <!-- ===================ここで購入数の増減調節=================== -->
-              <div class="item_stock" hidden="hidden"><%= stock_count %></div>
-              <li class="list-group-item">
-                <!-- ネストしたフォーム下部javascript管理 -->
-                <%= form.fields_for "purchased_item[]", item do |purchased_item| %>
-                <div class="inline-block count-size-textalign">
-                  <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
-                  <div class="item_count_div inline-block count-margin"><%= item_count %></div>
-                  <%= purchased_item.number_field :item_count, hidden: true, class: "item_count_input", value: item_count %>
-                  <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
-                  <div class="inline-block">
-                    <p class="lacking-stock inline-block text-right"></p>
-                  </div>
-                </div>
-            </li>
-            <!-- =========================================================== -->
-
-            <li class="list-group-item">
-              合計
-              <div class="total_price_div inline-block"><%= tax_included * item_count %></div>円（税込み）
-            </li>
-          </ul>
-        </div>
-        <% end %>
-        <% else %>
-          <h5 class="card-title"><%= item.item_name %></h5>
-          <p>上記の在庫が無くなった為購入できません。</p>
-        <% end %>
-      <% end %>
-    </div>
-    <!-- Modalボディ部分終了 -->
-    <!-- =========================決済方法選択================================ -->
-    <hr>
-    <div class="mx-auto">
-      <div id="credbutton" class="select-cash-button button-remove-background">
-        <span class="pay-icon">
-          <i class="fas fa-credit-card"></i>
-          <span>クレジットカード</span>
+    <% stock_count = Stock.find_by(item_id: item.id).stock_count.to_i %>
+    <% item_count = session[:cart][item.id.to_s]["item_count"].to_i %>
+    <% item_count = stock_count if item_count >= stock_count %>
+    <% if stock_count > 0 || item_count > 0 %>
+    <div class="card" id="item<%= item.id %>">
+      <div class="cart-del-button">
+        <%= link_to sessiondestroy_path(item.id), remote: true do %>
+        <span aria-hidden="true">
+          <i class="far fa-trash-alt"></i>
         </span>
+        <% end %>
       </div>
-      <div class="form-group count-margin display-none" id="cred-pay-form">
-        <div class="">
-          <h5>・送付先の情報を入力して下さい。</h5>
-        </div>
-        <%= form.fields_for "userinfo" do |userinfo| %>
+      <% if item.post_images.present? %>
+        <% item.post_images.each do |image| %>
+          <%= attachment_image_tag image, :image, :fill, 600, 600, width: "100%" %>
+        <% end %>
+      <% else %>
+        <%= image_tag '/images/no_image.jpg', width: "100%" %>
+      <% end %>
+      <div class="card-body">
+        <h5 class="card-title"><%= item.item_name %></h5>
+        <p class="card-text"><%= item.item_description %></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          1個
+          <div class="inline-block tax_included"><%= tax_included %></div>円（税込み）
+        </li>
+
+        <!-- ===================ここで購入数の増減調節=================== -->
+        <div class="item_stock" hidden="hidden"><%= stock_count %></div>
+        <li class="list-group-item">
+          <!-- ネストしたフォーム下部javascript管理 -->
+          <%= form.fields_for "purchased_item[]", item do |purchased_item| %>
+          <div class="inline-block count-size-textalign">
+            <button type="button" class="minus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">-</button>
+            <div class="item_count_div inline-block count-margin"><%= item_count %></div>
+            <%= purchased_item.number_field :item_count, hidden: true, class: "item_count_input", value: item_count %>
+            <button type="button" class="plus btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
+            <div class="inline-block">
+              <p class="lacking-stock inline-block text-right"></p>
+            </div>
+          </div>
+        </li>
+      <!-- =========================================================== -->
+
+        <li class="list-group-item">
+          合計
+          <div class="total_price_div inline-block"><%= tax_included * item_count %></div>円（税込み）
+        </li>
+      </ul>
+    </div>
+        <% end %>
+      <% else %>
+        <h5 class="card-title"><%= item.item_name %></h5>
+        <p>上記の在庫が無くなった為購入できません。</p>
+      <% end %>
+    <% end %>
+  </div>
+  <!-- Modalボディ部分終了 -->
+
+  <!-- =========================決済方法選択================================ -->
+  <hr>
+  <div class="mx-auto">
+    <div id="credbutton" class="select-cash-button button-remove-background">
+      <span class="pay-icon">
+        <i class="fas fa-credit-card"></i>
+        <span>クレジットカード</span>
+      </span>
+    </div>
+    <div class="form-group count-margin display-none" id="cred-pay-form">
+      <div class="">
+        <h5>・送付先の情報を入力して下さい。</h5>
+      </div>
+      <%= form.fields_for "userinfo" do |userinfo| %>
         <%= userinfo.label :user_name, "お名前" %>
         <%= userinfo.text_field :user_name, class: "user-name-input form-control text_field_bottom", required: "true", placeholder: "山口　百恵 or 山口百恵" %>
         <%= userinfo.label :postal_code, "〒"%>
@@ -99,8 +103,8 @@
         <%= userinfo.label :email_address, "メールアドレス"%>
         <%= userinfo.text_field :email_address, class: "email-address-input form-control text_field_bottom", required: "true", type: "email", placeholder: "abc@abc.abc" %>
       <% end %>
-      <script src="https://checkout.pay.jp/" class="payjp-button" data-key="<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>"></script>
-    </div>
+        <script src="https://checkout.pay.jp/" class="payjp-button" data-key="<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>"></script>
+      </div>
 
     <div id="bankbutton" class="select-cash-button button-remove-background">
       <span class="pay-icon">
@@ -108,29 +112,30 @@
         <span>銀行振込</span>
       </span>
     </div>
+
     <div class="form-group count-margin display-none" id="bank-pay-form">
         <h5>・送付先の情報を入力して下さい。</h5>
       <div class="">
       <%= form.fields_for "userinfo" do |userinfo| %>
-      <%= userinfo.label :user_name, "お名前" %>
-      <%= userinfo.text_field :user_name, class: "user-name-input form-control text_field_bottom", required: "true", placeholder: "山口　百恵 or 山口百恵" %>
-      <%= userinfo.label :postal_code, "〒"%>
-      <%= userinfo.text_field :postal_code, class: "postal-code-input form-control text_field_bottom", required: "true", placeholder: "123-4567 or 1234567" %>
-      <%= userinfo.label :address, "住所"%>
-      <%= userinfo.text_field :address, class: "address-input form-control text_field_bottom", required: "true", placeholder: "県名からお書き下さい" %>
-    </div>
+        <%= userinfo.label :user_name, "お名前" %>
+        <%= userinfo.text_field :user_name, class: "user-name-input form-control text_field_bottom", required: "true", placeholder: "山口　百恵 or 山口百恵" %>
+        <%= userinfo.label :postal_code, "〒"%>
+        <%= userinfo.text_field :postal_code, class: "postal-code-input form-control text_field_bottom", required: "true", placeholder: "123-4567 or 1234567" %>
+        <%= userinfo.label :address, "住所"%>
+        <%= userinfo.text_field :address, class: "address-input form-control text_field_bottom", required: "true", placeholder: "県名からお書き下さい" %>
+      </div>
       <div class="">
         <h5>・お客様のご連絡先を入力して下さい。</h5>
       </div>
-      <%= userinfo.label :phone_number, "電話番号"%>
-      <%= userinfo.telephone_field :phone_number, class: "phone-number-input form-control text_field_bottom", required: "true", type: "tel", inputmode: "tel", placeholder: "090-1234-5678 or 09012345678" %>
-      <%= userinfo.label :email_address, "メールアドレス"%>
-      <%= userinfo.text_field :email_address, class: "email-address-input form-control text_field_bottom", required: "true", type: "email", placeholder: "abc@abc.abc" %>
-    <% end %>
-    <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
+        <%= userinfo.label :phone_number, "電話番号"%>
+        <%= userinfo.telephone_field :phone_number, class: "phone-number-input form-control text_field_bottom", required: "true", type: "tel", inputmode: "tel", placeholder: "090-1234-5678 or 09012345678" %>
+        <%= userinfo.label :email_address, "メールアドレス"%>
+        <%= userinfo.text_field :email_address, class: "email-address-input form-control text_field_bottom", required: "true", type: "email", placeholder: "abc@abc.abc" %>
+      <% end %>
+      <%= form.submit "購入", class: "btn btn-primary", name: "buy" %>
+    </div>
   </div>
-</div>
-<br>
+  <br>
 <!-- ======================================================================= -->
 
 <!-- Modalフッター部分 -->

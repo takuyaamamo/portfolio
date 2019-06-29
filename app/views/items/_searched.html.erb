@@ -2,14 +2,14 @@
   <% items.compact.each do |item| %>
     <% if item.item_active == 1 %>
       <%= link_to item, class: "col-6 col-md-3 top-margin-item button-remove-background", remote: true,id: "Item#{item.id}", data: {target: "#Item#{item.id}"} do %>
-      <% if item.post_images.present? %>
-        <% item.post_images.each do |image| %>
-          <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+        <% if item.post_images.present? %>
+          <% item.post_images.each do |image| %>
+            <%= attachment_image_tag image, :image, :fill, 400, 400, class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+          <% end %>
+        <% else %>
+          <%= image_tag '/images/no_image.jpg', width: "100%", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
         <% end %>
-      <% else %>
-        <%= image_tag '/images/no_image.jpg', width: "100%", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
-<% end %>
 <% end %>

@@ -34,39 +34,39 @@
   <% final_price = 0 %>
     <% @purchased_items.each do |purchased_item| %>
       <% item = Item.find(purchased_item.item_id) %>
-        <% item_price = item.item_price %>
-          <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
-            <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
-              <% final_price = final_price + tax_included_item_price %>
-                <div class="card">
-                  <% if item.post_images.present? %>
-                    <% item.post_images.each do |image| %>
-                      <%= attachment_image_tag image, :image, :fill, 400, 400, class: "mx-auto d-block width-change-item" %>
-                    <% end %>
-                  <% else %>
-                    <%= image_tag '/images/no_image.jpg', width: "100%", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
-                  <% end %>
-                  <div class="card-body">
-                    <h5 class="card-title"><%= item.item_name %></h5>
-                  </div>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      1個
-                      <div class="inline-block"><%= tax_included_item_price %></div>円（税込み）
-                    </li>
-                    <li class="list-group-item">
-                      <%= purchased_item.item_count %>個
-                    </li>
-                    <li class="list-group-item">
-                      合計
-                      <div class="inline-block"><%= total_price %></div>円（税込み）
-                    </li>
-                  </ul>
-                </div>
-              <% end %>
-              <div class="row mb-3">
-                総合計
-                <div class="inline-block"><%= final_price %></div>円（税込み）
-              </div>
-            </div>
-            <!-- /container -->
+      <% item_price = item.item_price %>
+      <% tax_included_item_price = (BigDecimal(item_price) * BigDecimal("1.08")).ceil %>
+      <% total_price = tax_included_item_price * purchased_item.item_count.to_i %>
+      <% final_price = final_price + tax_included_item_price %>
+    <div class="card">
+      <% if item.post_images.present? %>
+        <% item.post_images.each do |image| %>
+          <%= attachment_image_tag image, :image, :fill, 400, 400, class: "mx-auto d-block width-change-item" %>
+        <% end %>
+      <% else %>
+        <%= image_tag '/images/no_image.jpg', width: "100%", class: "rounded-circle shadow circle-color mx-auto d-block width-change-item" %>
+      <% end %>
+      <div class="card-body">
+        <h5 class="card-title"><%= item.item_name %></h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          1個
+          <div class="inline-block"><%= tax_included_item_price %></div>円（税込み）
+        </li>
+        <li class="list-group-item">
+          <%= purchased_item.item_count %>個
+        </li>
+        <li class="list-group-item">
+          合計
+          <div class="inline-block"><%= total_price %></div>円（税込み）
+        </li>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row mb-3">
+    総合計
+    <div class="inline-block"><%= final_price %></div>円（税込み）
+  </div>
+</div>
+<!-- /container -->
