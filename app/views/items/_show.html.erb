@@ -34,8 +34,8 @@
             <% end %>
             <button id="plus" type="button" class="btn btn-primary rounded-circle p-0" style="width:2rem;height:2rem;">＋</button>
             <% if admin_signed_in? %>
-              <div class="inline-block">
-                理論在庫<p class="inline-block text-right">
+              <div class="inline-block" id="stock_field" style="cursor: pointer">
+                理論在庫<p class="inline-block text-right" id="stock">
                   <%= stock %>
                 </p>点
               </div>
@@ -142,6 +142,12 @@ $("#plus").click(function () {
     total_price_div.text(total_price);
     pay.show();
   }
+});
+// 管理者の場合理論在庫をクリックすることにより理論在庫からスタート可能
+$("#stock_field").click(function (){
+  const stock = parseInt($("#stock").text());
+  $("#item_count_input").val(stock);
+  $("#item_count_div").text(stock);
 });
 // ============================================================================ ============================applepay制御=====================================
 Payjp.setPublicKey("<%= ENV['PAYJP_TEST_PUBLIC_KEY'] %>");
