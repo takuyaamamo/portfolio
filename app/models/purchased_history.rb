@@ -3,6 +3,7 @@ class PurchasedHistory < ApplicationRecord
   has_many :purchased_items
   has_many :items, through: :purchased_items
   # ===========================================================================
+  
   # ====================formにhasmanyをネストさせる===============================
   accepts_nested_attributes_for :purchased_items, allow_destroy: true
   # ===========================================================================

@@ -52,7 +52,6 @@ class Admin::ItemsController < Admin::Base
     @item.post_images.build
     @item.item_description = "まねきねこはねこです。"
     @item.build_stock
-    # @item.tags.build
   end
 
   # admin_items POST   /admin/items アイテム新規登録フォームの登録

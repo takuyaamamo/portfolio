@@ -1,34 +1,37 @@
 <!-- Modalボディ部分 -->
 <%# adminをnamespase化している為model: [ :admin, @item ]として指定 %>
-  <%= form_with model: [ :admin, @item ] do |form| %>
-  <div class="modal-body">
-    <!-- row -->
-    <div class="container-fluid bd-example-row">
-      <!-- render用div -->
-      <div id="NewItem"></div>
-      <% if item.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(item.errors.count, "error") %>
-            prohibited this item from being saved:</h2>
+<%= form_with model: [ :admin, @item ] do |form| %>
 
-          <ul>
-            <% item.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <%= form.label :item_name, "商品名" %>
-          <%= form.text_field :item_name, class: "form-control", placeholder: "日本人形", id: "item_name" %>
-          <%= form.label :post_images_images, "商品画像" %>
-          <%= form.attachment_field :post_images_images, multiple: true, class: "form-control-file" %>
-          <%= form.label :item_price, "金額" %>
-          <%= form.number_field :item_price, class: "form-control", placeholder: "税抜きカンマ不要" %>
-          <%= form.fields_for :stock do |stock| %>
-          <%= stock.label :stock_count, "在庫数" %>
-          <%= stock.number_field :stock_count, class: "form-control", placeholder: "半角" %>
+<div class="modal-body">
+  <!-- row -->
+  <div class="container-fluid bd-example-row">
+    <!-- render用div -->
+    <div id="NewItem"></div>
+
+    <!-- エラー時表示 -->
+    <% if item.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(item.errors.count, "error") %>
+          prohibited this item from being saved:</h2>
+        <ul>
+          <% item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :item_name, "商品名" %>
+        <%= form.text_field :item_name, class: "form-control", placeholder: "日本人形", id: "item_name" %>
+        <%= form.label :post_images_images, "商品画像" %>
+        <%= form.attachment_field :post_images_images, multiple: true, class: "form-control-file" %>
+        <%= form.label :item_price, "金額" %>
+        <%= form.number_field :item_price, class: "form-control", placeholder: "税抜きカンマ不要" %>
+        <%= form.fields_for :stock do |stock| %>
+        <%= stock.label :stock_count, "在庫数" %>
+        <%= stock.number_field :stock_count, class: "form-control", placeholder: "半角" %>
         <% end %>
       </div>
       <div class="form-group col-md-6">
@@ -39,46 +42,49 @@
       <%= form.label :item_description, "商品説明" %>
       <%= form.text_area :item_description, class: "form-control", rows: "3" %>
     </div>
+
     <!-- タグ選択とネストフォームを横一列にするdiv -->
     <div class="form-row">
       <div class="form-group col-md-4">
         <label>タグ選択</label>
         <div class="form_control">
           <%= collection_check_boxes(:item, :tag_ids, Tag.all, :id, :tag_name) do |tag_name| %>
-          <%= tag_name.label do %>
-          <%= tag_name.check_box %>
-          <%= tag_name.text %>
+            <%= tag_name.label do %>
+              <%= tag_name.check_box %>
+              <%= tag_name.text %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+    <!-- ネストフォーム開始 -->
+    <div class="col-md-8">
+      <div class="row">
+        <%= fields_for :tag, @Tag do |tag| %>
+        <%= tag.label :tag_name, "タグ入力" %>
+      </div>
+      <div class="row">
+        <div class="form-group col-8">
+          <%= tag.text_field :tag_name, class: "form-control", placeholder: "新規追加の場合入力して下さい", id: "tag" %>
+        </div>
+        <div id="links" class="form-group col-4 d-flex">
+          <%= link_to_add_association "追加", form, :tags, class: "btn btn-link" %>
+        </div>
+      </div>
         <% end %>
-      <% end %>
     </div>
+    <!-- ネストフォーム終了 -->
   </div>
-  <!-- ネストフォーム開始 -->
-  <div class="col-md-8">
-    <div class="row">
-      <%= fields_for :tag, @Tag do |tag| %>
-      <%= tag.label :tag_name, "タグ入力" %>
-    </div>
-    <div class="row">
-      <div class="form-group col-8">
-        <%= tag.text_field :tag_name, class: "form-control", placeholder: "新規追加の場合入力して下さい", id: "tag" %>
-      </div>
-      <div id="links" class="form-group col-4 d-flex">
-        <%= link_to_add_association "追加", form, :tags, class: "btn btn-link" %>
-      </div>
-    </div>
-  <% end %>
-</div>
-<!-- ネストフォーム終了 -->
-</div>
-<!-- タグ選択とネストフォームを横一列にするDiv -->
-</div>
+  <!-- タグ選択とネストフォームを横一列にするDiv -->
+  </div>
 <!-- row終了 -->
 </div>
 <!-- Modalボディ部分終了 -->
+
 <!-- Modalフッター部分 -->
 <div class="modal-footer">
-<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<%= form.submit "登録", class: "btn btn-primary" %>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <%= form.submit "登録", class: "btn btn-primary" %>
 </div>
 <% end %>
 
@@ -110,6 +116,7 @@ return function (e) {
 reader.readAsDataURL(file);
 });
 // ============================================================================
+
 // ============================フォーム同時入力制御===============================
 $('#item_name').on("keyup change", function () {
 $("#tag").val($(this).val());

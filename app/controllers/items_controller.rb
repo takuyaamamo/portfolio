@@ -35,6 +35,7 @@ class ItemsController < ApplicationController
   end
 
   def create
+    # アップルペイ本番仕様の場合以下を利用
     # begin
     # payjp決済確定
     # Payjp.api_key = ENV['PAYJP_TEST_SECRET_KEY']
