@@ -17,3 +17,16 @@ Things you may want to cover:
 >ruby 2.5.5p157
 * Ruby on Rails version
 >Rails 5.2.3
+* Used gem
+>devise
+>kaminari
+>refile
+>pry-byebug
+>better_errors
+>dotenv-rails
+>bootstrap
+>jquery-rails
+>cocoon
+>rqrcode
+>paranoia
+>payjp
