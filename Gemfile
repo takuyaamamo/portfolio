@@ -79,7 +79,7 @@ gem 'dotenv-rails', '2.7.2'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails', '4.3.5'
 # 管理者で使用するdeviseの導入
-gem 'devise', '4.6.2'
+gem 'devise', '4.7.1'
 # refileはファイルアップロード用のgem
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 # refile-mini_magickはアップロードした画像のリサイズを簡単に実装するgem
